@@ -4,6 +4,7 @@
   <artifactId>platform</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
+  
   <modules>
   	<module>platform-core</module>
   	<module>platform-web</module>
