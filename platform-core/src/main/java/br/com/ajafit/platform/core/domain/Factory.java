@@ -5,6 +5,6 @@ import javax.persistence.Entity;
 
 @Entity
 @DiscriminatorValue(value = "FACTORY")
-public class Factory extends Login {
+public class Factory extends Profile {
 
 }

@@ -4,8 +4,8 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity
-@DiscriminatorValue(value = "BALANCE")
-public abstract class Balance extends Profile {
+@DiscriminatorValue(value = "MANAGER")
+public class Manager extends Profile {
 
-	private int value;
+	
 }

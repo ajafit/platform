@@ -1,7 +1,6 @@
 package br.com.ajafit.platform.core.domain;
 
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,12 +14,12 @@ import javax.persistence.TableGenerator;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 // @DiscriminatorColumn(name = "type")
-public abstract class Login {
+public abstract class Profile {
 
 	@Id
-	@TableGenerator(name = "LOGIN_GEN", table = "LOGIN_ID_Generator", pkColumnName = "name", valueColumnName = "sequence", allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.TABLE, generator = "LOGIN_GEN")
-	@Column(name = "login_id")
+	@TableGenerator(name = "PROFILE_GEN", table = "PROFILE_ID_Generator", pkColumnName = "name", valueColumnName = "sequence", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.TABLE, generator = "PROFILE_GEN")
+	@Column(name = "profile_id")
 	private long id;
 
 	private String token;
@@ -32,5 +31,9 @@ public abstract class Login {
 	@ManyToOne
 	@JoinColumn(name = "region_id")
 	private Region region;
+
+	@ManyToOne
+	@JoinColumn(name = "manager_id", nullable = true)
+	private Manager manager;
 
 }
