@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<javaee:web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:javaee="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="WebApp_ID" version="2.5">
+	<javaee:display-name>ajafit</javaee:display-name>
+	<javaee:welcome-file-list>
+		<javaee:welcome-file>index.html</javaee:welcome-file>
+	</javaee:welcome-file-list>
+	<javaee:mime-mapping>
+		<javaee:extension>appcache</javaee:extension>
+		<javaee:mime-type>text/cache-manifest</javaee:mime-type>
+	</javaee:mime-mapping>
+
+	<!-- <web:servlet>
+		<web:servlet-name>FileUpload</web:servlet-name>
+		<web:servlet-class>br.com.siscomgex.atr.boundary.FileUploadServlet</web:servlet-class>
+	</web:servlet>
+	<web:servlet-mapping>
+		<web:servlet-name>FileUpload</web:servlet-name>
+		<web:url-pattern>/requisitos/service/node/doc/in/file/upload</web:url-pattern>
+	</web:servlet-mapping>
+
+
+	<web:servlet>
+		<web:servlet-name>FileDownload</web:servlet-name>
+		<web:servlet-class>br.com.siscomgex.atr.boundary.FileDownloadServlet</web:servlet-class>
+	</web:servlet>
+	<web:servlet-mapping>
+		<web:servlet-name>FileDownload</web:servlet-name>
+		<web:url-pattern>/requisitos/service/node/doc/in/file/download</web:url-pattern>
+	</web:servlet-mapping> -->
+<!-- 
+	<filter>
+		<filter-name>CorsFilter</filter-name>
+		<filter-class>br.com.siscomgex.atr.boundary.CorsFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>CorsFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping> -->
+
+	<!-- <javaee:security-role>
+		<javaee:role-name>role1</javaee:role-name>
+	</javaee:security-role>
+	<javaee:security-constraint>
+		<javaee:web-resource-collection>
+			<javaee:web-resource-name>All Access</javaee:web-resource-name>
+			<javaee:url-pattern>/secure/requisitos/service/*</javaee:url-pattern>
+			<javaee:http-method>GET</javaee:http-method>
+			<javaee:http-method>POST</javaee:http-method>
+		</javaee:web-resource-collection>
+		<javaee:auth-constraint>
+			<javaee:role-name>role1</javaee:role-name>
+		</javaee:auth-constraint>
+	</javaee:security-constraint>
+	<javaee:login-config>
+		<javaee:auth-method>BASIC</javaee:auth-method>
+	</javaee:login-config> -->
+</javaee:web-app>

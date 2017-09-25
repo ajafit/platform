@@ -17,8 +17,8 @@ public class Region {
 	private long id;
 
 	@ManyToOne
-	@JoinColumn(name = "outer_id")
+	@JoinColumn(name = "outer_id", nullable = true)
 	private Region outer;
 
-	private String name;
+	private String descriptions;
 }

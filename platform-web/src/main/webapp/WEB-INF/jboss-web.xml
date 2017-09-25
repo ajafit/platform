@@ -1,0 +1,4 @@
+<jboss-web>
+    <context-root>ajafit</context-root>
+  <!--   <security-domain>customSecurityDomain</security-domain> -->
+</jboss-web>
