@@ -31,8 +31,8 @@ public abstract class BasePersistence {
 	}
 
 	public Collection<Region> filterRegion(String filter) {
-		Query query = em.createQuery("select r from Region r where r.descriptions like '%:FILTER%'");
-		query.setParameter("FILTER", filter);
+		Query query = em.createQuery("select r from Region r where r.descriptions like :FILTER");
+		query.setParameter("FILTER", "%"+filter+"%");
 		return query.getResultList();
 	}
 
