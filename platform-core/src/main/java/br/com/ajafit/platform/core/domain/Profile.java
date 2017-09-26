@@ -36,4 +36,46 @@ public abstract class Profile {
 	@JoinColumn(name = "manager_id", nullable = true)
 	private Manager manager;
 
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
+	public Person getPerson() {
+		return person;
+	}
+
+	public void setPerson(Person person) {
+		this.person = person;
+	}
+
+	public Region getRegion() {
+		return region;
+	}
+
+	public void setRegion(Region region) {
+		this.region = region;
+	}
+
+	public Manager getManager() {
+		return manager;
+	}
+
+	public void setManager(Manager manager) {
+		this.manager = manager;
+	}
+	
+	
+
 }

@@ -164,3 +164,20 @@ insert into region (descriptions,outer_id) select 'Vigário Geral', region_id fro
 insert into region (descriptions,outer_id) select 'Vila da Penha', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
 insert into region (descriptions,outer_id) select 'Vila Kosmos', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
 insert into region (descriptions,outer_id) select 'Vista Alegre', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
+
+
+
+//profiles
+
+insert into person (authtype,birth,email,gender,name,password,register,emailvalidation) values ('LOCAL',to_date('22/08/1979','dd/MM/yyyy'),'alexandre.deassis@yahoo.com','M','alexandre','alexandre123',now(),true); 
+insert into PROFILE_ID_Generator (name, sequence)  values ('Profile',1);
+insert into profile (profile_id,manager_id,person_id,region_id) select 1, null, 1, region_id from region where descriptions = 'Barra da tijuca';
+insert into manager (profile_id) values(1);
+
+insert into person (authtype,birth,email,gender,name,password,register,emailvalidation) values ('LOCAL',to_date('21/08/1982','dd/MM/yyyy'),'deyse.joaquim@gmail.com','F','deyse','deyse123',now(),true); 
+update PROFILE_ID_Generator set sequence = 2 where name = 'Profile';
+insert into profile (profile_id,manager_id,person_id,region_id) select 2, null, 1, region_id from region where descriptions = 'Barra da tijuca';
+insert into factory (profile_id) values(2)
+
+
+
