@@ -7,5 +7,6 @@ import javax.persistence.Entity;
 @DiscriminatorValue(value = "BALANCE")
 public abstract class Balance extends Profile {
 
-	private int value;
+	private String cpf;
+	private String cnpj;
 }

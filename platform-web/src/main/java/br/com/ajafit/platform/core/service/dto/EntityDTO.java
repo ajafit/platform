@@ -10,19 +10,30 @@ import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 
 @XmlRootElement
 @JsonIgnoreProperties(ignoreUnknown = true)
-@JsonSerialize(include = Inclusion.NON_EMPTY)
+@JsonSerialize(include = Inclusion.NON_NULL)
 public class EntityDTO {
 
 	private long id;
 	private String gender;
 	private String name;
+	private String password;
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	private String email;
 	private String descriptions;
 	private Date date;
 	private String validation;
 	private String validationIMGReference;
 	private byte[] validationIMG;
-	
+	private String accessToken;
+
 	public String getValidationIMGReference() {
 		return validationIMGReference;
 	}
@@ -49,6 +60,14 @@ public class EntityDTO {
 
 	public String getValidation() {
 		return validation;
+	}
+
+	public String getAccessToken() {
+		return accessToken;
+	}
+
+	public void setAccessToken(String accessToken) {
+		this.accessToken = accessToken;
 	}
 
 	public void setValidation(String validation) {

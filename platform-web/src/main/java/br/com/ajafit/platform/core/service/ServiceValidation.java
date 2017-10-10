@@ -1,13 +1,24 @@
 package br.com.ajafit.platform.core.service;
 
+import javax.ejb.EJB;
 import javax.validation.ValidationException;
+
+import br.com.ajafit.platform.core.persistence.RatePersistence;
 
 public abstract class ServiceValidation {
 
-	protected void required(String... params) throws ValidationException {
+	@EJB
+	protected RatePersistence persistence;
 
-		for (String string : params) {
-			if (string == null) {
+	protected void validatePermissions(Object... params) throws ValidationException {
+
+		/*jogar excessao caso nao tenha permissao*/
+		
+	}
+	protected void required(Object... params) throws ValidationException {
+
+		for (Object obj : params) {
+			if (obj == null) {
 				throw new ValidationException("required");
 			}
 		}

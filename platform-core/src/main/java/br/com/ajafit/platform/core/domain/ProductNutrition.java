@@ -20,7 +20,10 @@ public class ProductNutrition {
 	@JoinColumn(name = "product_id")
 	private Product product;
 
-	private String description;
-	private double value;
+	@ManyToOne
+	@JoinColumn(name = "nutrition_table_id")
+	private NutritionTable nutritionTable;
+
+	private int value;
 
 }

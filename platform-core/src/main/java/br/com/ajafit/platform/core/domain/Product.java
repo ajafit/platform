@@ -1,23 +1,10 @@
 package br.com.ajafit.platform.core.domain;
 
-import java.util.Collection;
-
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.PrimaryKeyJoinColumn;
 
 @Entity
-public class Product {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "product_id")
-	private long id;
-
+@PrimaryKeyJoinColumn(name = "product_id", referencedColumnName = "saleable_id")
+public class Product extends Saleable {
 
 }

@@ -8,13 +8,42 @@ import br.com.ajafit.platform.core.domain.Coachee;
 import br.com.ajafit.platform.core.domain.Factory;
 import br.com.ajafit.platform.core.domain.Manager;
 import br.com.ajafit.platform.core.domain.Person;
-import br.com.ajafit.platform.core.domain.Region;
 
 public abstract class ProfilePersistence extends BasePersistence {
 
 	public Person createPerson(Person person) {
 		em.persist(person);
 		return person;
+	}
+
+	public Person updatePerson(Person person) {
+		person = em.merge(person);
+		return person;
+	}
+
+	public Collection<Person> filterPersons() {
+		Query query = em.createQuery("select r from Person r order by r.name");
+		query.setMaxResults(50);
+		return query.getResultList();
+	}
+
+	public Collection<Person> filterPersons(String filter) {
+		Query query = em.createQuery("select r from Person r where r.name like :FILTER or r.email like :FILTER");
+		query.setParameter("FILTER", "%" + filter + "%");
+		query.setMaxResults(50);
+		return query.getResultList();
+	}
+
+	public Person getPersonByEmailAndPassword(String email, String password) {
+		Query query = em.createQuery("from Person p where p.email = :EMAIL and p.password = :PASSWORD");
+		query.setParameter("EMAIL", email).setParameter("PASSWORD", password);
+		Collection<Person> col = query.getResultList();
+		if (col.isEmpty()) {
+			return null;
+		} else {
+			return (Person) col.iterator().next();
+		}
+
 	}
 
 	public Person getPersonById(long id) {
@@ -29,9 +58,10 @@ public abstract class ProfilePersistence extends BasePersistence {
 	public Manager getManagerById(long id) {
 		return em.find(Manager.class, id);
 	}
+
 	public Collection<Manager> filterManager(String filter) {
 		Query query = em.createQuery("select r from Manager r where r.name like :FILTER");
-		query.setParameter("FILTER", "%"+filter+"%");
+		query.setParameter("FILTER", "%" + filter + "%");
 		return query.getResultList();
 	}
 

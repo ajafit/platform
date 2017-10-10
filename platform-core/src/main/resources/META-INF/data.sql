@@ -177,7 +177,8 @@ insert into manager (profile_id) values(1);
 insert into person (authtype,birth,email,gender,name,password,register,emailvalidation) values ('LOCAL',to_date('21/08/1982','dd/MM/yyyy'),'deyse.joaquim@gmail.com','F','deyse','deyse123',now(),true); 
 update PROFILE_ID_Generator set sequence = 2 where name = 'Profile';
 insert into profile (profile_id,manager_id,person_id,region_id) select 2, null, 1, region_id from region where descriptions = 'Barra da tijuca';
-insert into factory (profile_id) values(2)
+insert into balance (cnpj, profile_id) values('102.400.0001-99',2);
+insert into factory (factory_id) select profile_id from balance where cnpj = '102.400.0001-99';
 
 
 

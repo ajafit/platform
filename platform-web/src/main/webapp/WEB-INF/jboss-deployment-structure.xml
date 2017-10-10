@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jboss-deployment-structure>
 	<deployment>
-
+	<!-- 	<exclude-subsystems>
+			<subsystem name="jaxrs" />
+			<subsystem name="webservices" />
+		</exclude-subsystems> 
+		<exclusions>
+			<module name="org.codehaus.jettison" />
+		</exclusions>
+		-->
 		<dependencies>
 			<module name="org.codehaus.jackson.jackson-xc" />
 			<module name="org.codehaus.jackson.jackson-jaxrs" />

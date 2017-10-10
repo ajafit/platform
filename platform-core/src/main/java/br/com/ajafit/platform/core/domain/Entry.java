@@ -28,5 +28,6 @@ public abstract class Entry {
 	private Balance balance;
 
 	private Date date;
+	private int profit;
 
 }

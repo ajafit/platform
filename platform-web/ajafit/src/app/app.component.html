@@ -1,0 +1,26 @@
+<nav
+	class="navbar fixed-top navbar-toggleable-sm navbar-inverse bg-inverse">
+	<button class="navbar-toggler navbar-toggler-right" type="button"
+		data-toggle="collapse" data-target="#navbar"
+		aria-controls="navbarNavAltMarkup" aria-expanded="false"
+		aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+	<a class="navbar-brand" href="#">AJAFit</a>
+	<div class="collapse navbar-collapse justify-content-between"
+		id="navbar">
+		<div class="navbar-nav">
+			<a *ngIf="getProfile()" class="nav-item nav-link"
+				routerLink="/profile" routerLinkActive="active">profiles</a> <a
+				*ngIf="getProfile()" class="nav-item nav-link"
+				routerLink="/dashboard" routerLinkActive="active">dashboard</a>
+		</div>
+		<div class="navbar-nav">
+			<a class="nav-item nav-link" href="#">Logout</a>
+		</div>
+	</div>
+</nav>
+
+<div class="box">
+	<router-outlet></router-outlet>
+</div>

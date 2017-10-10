@@ -10,4 +10,6 @@ import javax.persistence.Entity;
 public class Credit extends Entry {
 
 	private Date prediction;
+	private int total;
+	private int taxes;
 }

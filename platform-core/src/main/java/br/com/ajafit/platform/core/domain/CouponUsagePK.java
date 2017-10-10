@@ -18,11 +18,6 @@ public class CouponUsagePK implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "coachee_id")
 	private Coachee coachee;
-	
-	@ManyToOne
-	@JoinColumn(name = "kit_id")
-	private Kit kit;
-	
 
 	@Override
 	public int hashCode() {

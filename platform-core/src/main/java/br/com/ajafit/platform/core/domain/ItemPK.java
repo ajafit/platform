@@ -12,7 +12,7 @@ public class ItemPK implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@ManyToOne
-	@JoinColumn(name = "product_id")
+	@JoinColumn(name = "product_id", nullable = true)
 	private Product product;
 
 	@ManyToOne
@@ -49,6 +49,5 @@ public class ItemPK implements Serializable {
 			return false;
 		return true;
 	}
-	
 
 }

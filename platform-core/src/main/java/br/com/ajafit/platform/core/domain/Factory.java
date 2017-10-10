@@ -1,10 +1,10 @@
 package br.com.ajafit.platform.core.domain;
 
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
 
 @Entity
-@DiscriminatorValue(value = "FACTORY")
-public class Factory extends Profile {
+@PrimaryKeyJoinColumn(name = "factory_id", referencedColumnName = "profile_id")
+public class Factory extends Balance {
 
 }

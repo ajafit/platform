@@ -1,0 +1,22 @@
+
+<div>
+	<h1>Profiles</h1>
+	<!-- <input [(ngModel)]="filter" placeholder="filter"/> -->
+	<input (keyup)="onKey($event)" placeholder="filter"/>
+	<ul class="profiles">
+		<li *ngFor="let pro of profiles"
+			[class.selected]="pro === selectedProfile" (click)="onSelect(pro)">
+			<span class="profile">{{pro.name}}</span>
+		</li>
+	</ul>
+</div>
+
+
+<div *ngIf="selectedProfile">
+	<h2>{{selectedProfile.name | uppercase}} - {{selectedProfile.email}}</h2>
+	<button (click)="goToDetail()">View Details</button>
+</div>
+
+<!-- <div *ngIf="selectedProfile">
+	<app-profile-detail [profile]="selectedProfile"></app-profile-detail>
+</div> -->
