@@ -10,8 +10,16 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
 @Entity
-public class Coupon {
+public @Data class Coupon {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

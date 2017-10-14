@@ -10,20 +10,20 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-@EqualsAndHashCode
 @Getter
 @Setter
+@EqualsAndHashCode
 @Embeddable
-public class ItemPK implements Serializable {
+public class ScreenConfigPK implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@ManyToOne
-	@JoinColumn(name = "saleable_id")
-	private Saleable saleable;
+	@JoinColumn(name = "screen_id")
+	private Screen screen;
 
 	@ManyToOne
-	@JoinColumn(name = "kit_id")
-	private Kit kit;
+	@JoinColumn(name = "coupon_id")
+	private Coupon coupon;
 
 }

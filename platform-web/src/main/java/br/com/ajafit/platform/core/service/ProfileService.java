@@ -15,7 +15,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 
-import org.apache.http.auth.AuthenticationException;
 import org.jboss.logging.Logger;
 
 import br.com.ajafit.platform.core.domain.Manager;

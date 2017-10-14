@@ -7,6 +7,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import br.com.ajafit.platform.core.domain.Region;
+import br.com.ajafit.platform.core.domain.ScreenConfig;
 
 public abstract class BasePersistence {
 
@@ -33,6 +34,13 @@ public abstract class BasePersistence {
 	public Collection<Region> filterRegion(String filter) {
 		Query query = em.createQuery("select r from Region r where r.descriptions like :FILTER");
 		query.setParameter("FILTER", "%"+filter+"%");
+		return query.getResultList();
+	}
+	
+	public Collection<ScreenConfig> findCouponsByScreenCode(String code){
+		
+		Query query = em.createQuery("select c from ScreenConfig c where c.id.screen.code = :CODE");
+		query.setParameter("CODE",code);
 		return query.getResultList();
 	}
 

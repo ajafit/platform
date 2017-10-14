@@ -7,8 +7,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.OneToOne;
 import javax.persistence.TableGenerator;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Saleable {
@@ -21,5 +27,12 @@ public class Saleable {
 
 	private int cost;
 	private int revenueShare;
+
+	private String image;
+	private String name;
+	private String descriptions;
+
+	@OneToOne(mappedBy = "saleable")
+	private PlanCoach planCoach;
 
 }
