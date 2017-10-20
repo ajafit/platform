@@ -8,6 +8,7 @@ const headers = new Headers();
 headers.append('authorization', '1234567890');
 const opts = new RequestOptions();
 opts.headers = headers;
+opts.withCredentials = true;
 
 @Injectable()
 export class ProfileService {
@@ -20,10 +21,16 @@ export class ProfileService {
     return this.getProfiles('e').then(profiles => profiles.find(profile => profile.id === id));
   }
   getProfiles(filter: string): Promise<Profile[]> {
-      return this.http.get(this.profilesURL + filter, opts).toPromise().then(respo => this.parse(respo)).catch(this.error);
+      const options = new RequestOptions();
+      options.withCredentials = true;
+      const a = this.profilesURL + filter;
+      return this.http.get(a,  { withCredentials: true }).toPromise().then(respo => this.parse(respo)).catch(this.error);
   }
   getSelectedProfile(): Profile {
     return this.profile;
+  }
+  cleanSelectedProfile(): void {
+    this.profile = null;
   }
   parse(data: Response): Profile[] {
     return (data.json() as Profile[]);
@@ -33,6 +40,11 @@ export class ProfileService {
   }
   parse2(data: Response): Profile {
     this.profile = (data.json() as Profile);
+    console.log('baca inicio');
+    this.updateProfile(this.profile);
+    console.log('baca meio');
+    this.getProfile(this.profile.id);
+    console.log('baca fim');
     return this.profile;
   }
   getProfilesSlowly(): Promise<Profile[]> {

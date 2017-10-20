@@ -9,6 +9,9 @@ import {ProfileDetailComponent} from './profile/profile-detail.component';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {AuthComponent} from './auth/auth.component';
 
+import {ItemComponent} from './item/item.component';
+
+
 const routes: Routes = [{
   path: 'auth',
   component: AuthComponent
@@ -21,6 +24,9 @@ const routes: Routes = [{
 }, {
   path: 'dashboard',
   component: DashboardComponent
+}, {
+  path: 'item',
+  component: ItemComponent
 }, {
   path: '',
   redirectTo: '/dashboard',

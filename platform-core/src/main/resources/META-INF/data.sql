@@ -202,7 +202,7 @@ update PROFILE_ID_Generator set sequence = 6 where name = 'Profile';
 
 
 insert into SALEABLE_ID_Generator (sequence,name) values(1,'Saleable');
-insert into saleable (saleable_id,cost,revenueshare,name,descriptions,image) select sequence, 1200, 200,'Crepioca de frango','Desc da Crepioca de franco','crepioca/crepioca_frango.png' from SALEABLE_ID_Generator
+insert into saleable (saleable_id,cost,revenueshare,name,descriptions,image) select sequence, 1200, 200,'Crepioca de frango','Desc da Crepioca de frango','crepioca/crepioca_frango.jpg' from SALEABLE_ID_Generator
 insert into product(product_id) select saleable_id from saleable where name = 'Crepioca de frango'
 update SALEABLE_ID_Generator set sequence = 2 where name = 'Saleable';
 
@@ -222,16 +222,16 @@ insert into saleable (saleable_id,cost,revenueshare,name,descriptions,image) sel
 insert into product(product_id) select saleable_id from saleable where name = 'Crepioca de banana'
 update SALEABLE_ID_Generator set sequence = 6 where name = 'Saleable';
 
-insert into saleable (saleable_id,cost,revenueshare,name,descriptions,image) select sequence, 1200, 200,'Crepioca de salmao','Desc da Crepioca de salmao','crepioca/crepioca_salmao.png' from SALEABLE_ID_Generator
-insert into product(product_id) select saleable_id from saleable where name = 'Crepioca de salmao'
+insert into saleable (saleable_id,cost,revenueshare,name,descriptions,image) select sequence, 1200, 200,'Crepioca de salmão','Desc da Crepioca de salmão','crepioca/crepioca_salmao.png' from SALEABLE_ID_Generator
+insert into product(product_id) select saleable_id from saleable where name = 'Crepioca de salmão'
 update SALEABLE_ID_Generator set sequence = 7 where name = 'Saleable';
 
-insert into saleable (saleable_id,cost,revenueshare,name,descriptions,image) select sequence, 1000, 200,'Plano Ajafit basico','Usuario monta seu proprio plano','plano/plano_basico.png' from SALEABLE_ID_Generator
-insert into product(product_id) select saleable_id from saleable where name = 'Plano Ajafit basico'
+insert into saleable (saleable_id,cost,revenueshare,name,descriptions,image) select sequence, 1000, 200,'Plano Ajafit básico','Usuario monta seu plano','plano/plano_basico.png' from SALEABLE_ID_Generator
+insert into product(product_id) select saleable_id from saleable where name = 'Plano AJAFit básico'
 update SALEABLE_ID_Generator set sequence = 8 where name = 'Saleable';
 
-insert into saleable (saleable_id,cost,revenueshare,name,descriptions,image) select sequence, 2000, 400,'Plano Ajafit pronto','Usuario adere a um modelo de plano montado','plano/plano_pronto.png' from SALEABLE_ID_Generator
-insert into product(product_id) select saleable_id from saleable where name = 'Plano Ajafit pronto'
+insert into saleable (saleable_id,cost,revenueshare,name,descriptions,image) select sequence, 2000, 400,'Plano Ajafit pronto','Usuario adere a plano pronto','plano/plano_pronto.png' from SALEABLE_ID_Generator
+insert into product(product_id) select saleable_id from saleable where name = 'Plano AJAFit pronto'
 update SALEABLE_ID_Generator set sequence = 9 where name = 'Saleable';
 
 
@@ -276,9 +276,10 @@ insert into coupon(code,date,discount,expired,seller_id,kit_id) values('b1234567
 insert into coupon(code,date,discount,expired,seller_id,kit_id) values('c1234567890',now(),0,false,5,3);
 insert into coupon(code,date,discount,expired,seller_id,kit_id) values('d1234567890',now(),0,false,5,4);
 insert into coupon(code,date,discount,expired,seller_id,kit_id) values('e1234567890',now(),0,false,5,5);
-insert into coupon(code,date,discount,expired,seller_id,kit_id) values('f1234567890',now(),0,false,5,6);
-insert into coupon(code,date,discount,expired,seller_id,kit_id) values('g1234567890',now(),0,false,5,7);
-insert into coupon(code,date,discount,expired,seller_id,kit_id) values('h1234567890',now(),0,false,5,8);
+insert into coupon(code,date,discount,expired,seller_id,kit_id) values('f1234567890',now(),100,false,5,6); 
+insert into coupon(code,date,discount,expired,seller_id,kit_id) values('g1234567890',now(),150,false,5,7); 
+insert into coupon(code,date,discount,expired,seller_id,kit_id) values('h1234567890',now(),200,false,5,8); 
+insert into coupon(code,date,discount,expired,seller_id,kit_id) values('i1234567890',now(),0,false,5,1);
 
 
 
@@ -291,6 +292,7 @@ insert into screenconfig(screen_id,priority,coupon_id) values(1,2,5);
 insert into screenconfig(screen_id,priority,coupon_id) values(1,2,6);
 insert into screenconfig(screen_id,priority,coupon_id) values(1,2,7);
 insert into screenconfig(screen_id,priority,coupon_id) values(1,2,8);
+insert into screenconfig(screen_id,priority,coupon_id) values(1,2,9);
 
 
 

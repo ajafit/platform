@@ -29,13 +29,17 @@ public class EntityDTOConverter {
 		ScreenItemDTO dto = new ScreenItemDTO();
 		dto.setId(coupon.getId());
 		if (coupon.getKit().getDescriptions() == null) {
-			String desc = getDescriptionsFromItems(coupon.getKit().getItems());
+			String desc = getNameFromItems(coupon.getKit().getItems());
 			dto.setDescriptions(desc);
 
 		} else {
 			dto.setDescriptions(coupon.getKit().getDescriptions());
 		}
-		dto.setImage(coupon.getKit().getImage());
+		if (coupon.getKit().getImage() == null) {
+			dto.setImage(coupon.getKit().getItems().iterator().next().getId().getSaleable().getImage());
+		} else {
+			dto.setImage(coupon.getKit().getImage());
+		}
 
 		LinkedList<ScreenItemDTO> items = new LinkedList<>();
 
@@ -50,10 +54,10 @@ public class EntityDTOConverter {
 		return dto;
 	}
 
-	private static String getDescriptionsFromItems(Collection<Item> items) {
+	private static String getNameFromItems(Collection<Item> items) {
 		StringBuilder bf = new StringBuilder();
 		String delimiter = items.size() > 1 ? "|" : "";
-		items.stream().forEach((Item i) -> bf.append(i.getId().getSaleable().getDescriptions() + delimiter));
+		items.stream().forEach((Item i) -> bf.append(i.getId().getSaleable().getName() + delimiter));
 		return bf.toString();
 	}
 
@@ -63,6 +67,7 @@ public class EntityDTOConverter {
 		dto.setAmount(item.getAmount());
 		dto.setValue(MoneyHelper.toString(item.getId().getSaleable().getCost()));
 		dto.setDescriptions(item.getId().getSaleable().getDescriptions());
+		dto.setImage(item.getId().getSaleable().getImage());
 		return dto;
 	}
 }

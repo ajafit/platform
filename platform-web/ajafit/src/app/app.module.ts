@@ -18,13 +18,19 @@ import {ProfileService} from './profile/profile.service';
 import {AppRoutingModule} from './app-routing.module';
 import {AjafitInterceptor} from './ajafitinterceptor';
 
+import {ItemService} from './item/item.service';
+import {ItemComponent} from './item/item.component';
+import {ItemDetailComponent} from './item/item-detail.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     ProfileComponent,
     ProfileDetailComponent,
     AuthComponent,
-    DashboardComponent
+    DashboardComponent,
+    ItemComponent,
+    ItemDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +41,7 @@ import {AjafitInterceptor} from './ajafitinterceptor';
     TooltipModule.forRoot(),
     ModalModule.forRoot()
   ],
-  providers: [{provide: HTTP_INTERCEPTORS, useClass: AjafitInterceptor, multi: true}, ProfileService],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: AjafitInterceptor, multi: true}, ProfileService, ItemService],
  /* providers: [ProfileService],*/
   bootstrap: [AppComponent]
 })

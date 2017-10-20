@@ -1,30 +1,84 @@
 
+
+
 <div class="wrapper">
-	<div id="carouselExampleSlidesOnly" class="carousel slide"
-		data-ride="carousel">
+	<div id="itemSlideShow" class="carousel slide" data-ride="carousel"
+		data-interval="5000" data-wrap="true" data-pause="false">
 		<div class="carousel-inner">
-			<div class="carousel-item active">
-				<img class="image"
-					src="../assets/ajafit_crepioca_frango.png" alt="First slide">
+
+			<div *ngFor="let item of itemsCarousel; index as xx; first as ff"
+				[ngClass]="getCSSClasses(xx)">
+				<a class="image" routerLink="/auth"><img class="image"
+					src="../assets/{{item.image}}" /></a>
+				<!-- <div class="carousel-caption d-none d-md-block">
+					<h1 style="color: white;">{{item.descriptions}}</h1>
+					<p>{{item.image}}</p>
+				</div>
+ -->
 			</div>
-			<div class="carousel-item">
-				<img class="image"
-					src="../assets/oct.jpg" alt="Second slide">
-			</div>
-			<div class="carousel-item">
-				<img class="image"
-					src="../assets/ajafit_crepioca_frango.png" alt="Third slide">
-			</div>
+
+			<a class="carousel-control-prev" href="#itemSlideShow" role="button"
+				data-slide="prev"> <span class="carousel-control-prev-icon"
+				aria-hidden="true"></span> <span class="sr-only">Previous</span>
+			</a> <a class="carousel-control-next" href="#itemSlideShow" role="button"
+				data-slide="next"> <span class="carousel-control-next-icon"
+				aria-hidden="true"></span> <span class="sr-only">Next</span>
+			</a>
 		</div>
 	</div>
+
+
 </div>
-<div>
-	<h1>DASH</h1>
-	<div class="grid grid-pad">
-		<a *ngFor="let pro of profiles"
-			[routerLink]="['/profile-detail',pro.id]" class="col-1-4">
-			<div class="module profile">{{pro.name}}</div>
-		</a>
+
+
+<!-- <span class="badge badge-default">Default</span>
+<span class="badge badge-primary">Primary</span>
+<span class="badge badge-success">Success</span>
+<span class="badge badge-info">Info</span>
+<span class="badge badge-warning">Warning</span>
+<span class="badge badge-danger">Danger</span>
+ -->
+
+<div class="container"
+	style="margin-top: 10px;">
+	<div class="row align-items-right"
+		style="margin-top: 50px; border-width: 2px;"
+		*ngFor="let i of getRows(); index as idx">
+		<div class="col col-l"
+			*ngFor="let item of itemsHighLight.slice((idx * 3),(idx * 3)+ 3)">
+
+			<div class="card text-center"
+				style="width: 20rem; background-color: #FFF; border-color: #FFF; padding: 5px;">
+				<a href="javascript:alert('visualizar')"> <img
+					class="card-img-top" style="width: 250px; height: 200px;"
+					src="../assets/{{item.image}}" alt="Card image cap">
+				</a>
+
+				<div class="card-block">
+					<div class="card-title" style="max-height:20px;">{{item.descriptions}}</div>
+
+					<div *ngIf="item.valueFinal" class="card-text">
+						<span style="text-decoration: line-through; font-size: x-small;">R${{item.value}}</span>
+						<span style="font-weight: bold; font-size: large;">R${{item.valueFinal}}</span>
+					</div>
+
+					<div *ngIf="!item.valueFinal" class="card-text">
+						<span style="font-weight: bold; font-size: medium;">R${{item.value}}</span>
+					</div>
+					<a href="javascript:alert('comprar')" class="btn btn-primary"
+						style="background-color: #38704b; border-color: #38704b;">Comprar</a>
+				</div>
+			</div>
+		</div>
+
 	</div>
 </div>
 
+
+
+<!-- <div class="alert alert-success alert-dismissible fade show" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+</div> -->

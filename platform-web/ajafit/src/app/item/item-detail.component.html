@@ -1,0 +1,9 @@
+<div *ngIf="profile">
+ <div> profile: {{profile.id}} - {{profile.email}} - {{profile.name}}</div>
+	<hr/>
+  <div *ngIf="profile">Name: <input value="{{profile.name}}" (blur)="changeName($event)"   placeholder="name"></div>
+  <div *ngIf="profile">EMail: <input value="{{profile.email}}" (blur)="changeEmail($event)"   placeholder="e-mail"></div>
+</div>
+<br/>
+<button (click)="goBack()">Back</button>
+

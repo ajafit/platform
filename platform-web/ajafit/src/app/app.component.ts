@@ -27,4 +27,8 @@ export class AppComponent {
     }
     return this.profile;
   }
+  logout(): void {
+    this.profileService.cleanSelectedProfile();
+    console.log('logout _|_');
+  }
 }

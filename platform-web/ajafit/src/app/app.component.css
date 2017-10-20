@@ -1,15 +1,30 @@
 .navbar-nav {
 	flex-direction: row;
+	    color: red;
+}
+.navbar-red {
+	flex-direction: row;
+	color: red;
 }
 
 .nav-link {
 	padding-right: .5rem !important;
 	padding-left: .5rem !important;
+	margin-left: 1rem !important;
+	font-size:16px;
+	font-style: bold;
+	margin-top:30px;
 }
-
+.nav-item {
+	color:red;
+	a{ color:red;}
+}
 .box {
-	margin-top: 60px;
+	margin-top: 10px;
 	width: 100%;
 	/* background-color:gray; */
 	/* border: 3px solid green; */
+}
+.navbar-custom {
+    background-color: #38704b;
 }

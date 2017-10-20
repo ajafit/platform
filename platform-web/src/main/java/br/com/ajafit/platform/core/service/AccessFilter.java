@@ -39,10 +39,25 @@ public class AccessFilter implements Filter {
 			log.info("options..");
 			return;
 		}
+
 		try {
+			String uri = req.getRequestURI();
 			String token = getToken(req);
-			log.info("token: " + token);
+			log.info("token: " + token + "  uri:" + uri);
+
+			if (uri.contains("ajafit/platform/service/profile/person/login")) {
+
+				HttpServletResponse resp = (HttpServletResponse) response;
+				Cookie c = new Cookie("authorization", "1234567890999");
+				c.setDomain("localhost");
+				c.setPath("/");
+				resp.addCookie(c);
+				resp.flushBuffer();
+				log.info("create cookie");
+			}
+
 			chain.doFilter(request, response);
+
 		} catch (NoSuchElementException e) {
 			log.info("nao tem cookie, redireciona para login");
 			HttpServletResponse resp = (HttpServletResponse) response;
