@@ -22,17 +22,17 @@ public class MoneyHelper {
 
 	public static int[] calculate(Coupon coupon) {
 
-		int sumItemsCost = coupon.getKit().getItems().stream().mapToInt((Item i) -> i.getId().getSaleable().getCost())
+		int sumItemsCost = coupon.getKit().getItems().stream().mapToInt((Item i) -> i.getId().getSaleable().getCost() * i.getAmount())
 				.sum();
-		int sumItemsRevenueShare = coupon.getKit().getItems().stream()
-				.mapToInt((Item i) -> i.getId().getSaleable().getRevenueShare()).sum();
+		int sumMaxItemsRevenueShare = coupon.getKit().getItems().stream()
+				.mapToInt((Item i) -> i.getId().getSaleable().getRevenueShare() * i.getAmount()).sum();
 
 		int resp[];
 
 		if (coupon.getDiscount() == 0) {
 			resp = new int[1];
 			resp[0] = sumItemsCost;
-		} else if (coupon.getDiscount() < sumItemsRevenueShare) {
+		} else if (coupon.getDiscount() < sumMaxItemsRevenueShare) {
 			resp = new int[2];
 			resp[0] = sumItemsCost;
 			resp[1] = (sumItemsCost - coupon.getDiscount());

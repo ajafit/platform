@@ -6,7 +6,9 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @XmlRootElement
@@ -16,14 +18,23 @@ import lombok.Setter;
 @Setter
 public class ScreenItemDTO {
 
-	private Long id;
+	private Long screenId;
+	private Long couponId;
+	private Long itemId;
+	private String name;
 	private String descriptions;
-	private String image;
+	private String imageLarge;
+	private String image1;
+	private String image2;
+	private String image3;
+	private String video;
 	private String value;
 	private String valueFinal;
 	private Integer priority;
 	private Integer amount;
-
+	private NutritionInfoDTO[] nutritionInfo;
+	private ReviewDTO[] reviews;
+	private String ingredients;
 	private ScreenItemDTO[] items;
 
 }

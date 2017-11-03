@@ -4,4 +4,6 @@ export class Profile {
   name: string;
   password: string;
   accessToken: string;
+  profiles: string[];
+  profile: string;
 }

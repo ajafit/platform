@@ -5,6 +5,7 @@ import {Profile} from '../profile/profile';
 import {Item} from '../item/item';
 import {ItemService} from '../item/item.service';
 
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -13,7 +14,7 @@ import {ItemService} from '../item/item.service';
   styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit {
-  constructor(private profileService: ProfileService, private itemService: ItemService) {}
+  constructor(private profileService: ProfileService, private itemService: ItemService, private router: Router) {}
   profiles: Profile[];
   items: Item[];
   itemMap: Map<number, Item[]> = new Map<number, Item[]>();
@@ -21,6 +22,7 @@ export class DashboardComponent implements OnInit {
   // itemsHighLight: Highlight[];
   itemsHighLight: Item[];
   fakeArray = new Array(1);
+  selectedItem: Item;
   getProfiles(): void {
     this.profileService.getProfiles('e').then(profiles => this.setProfiles(profiles));
   }
@@ -36,14 +38,18 @@ export class DashboardComponent implements OnInit {
   setItems(items: Item[]): void {
     this.items = items;
     this.itemsCarousel = this.items.filter(item => item.priority === 1);
-    this.itemsHighLight = this.items.filter(item => item.priority === 2);
+    this.itemsHighLight = this.items.filter(item => item.priority !== 1);
   }
   getCSSClasses(index: number): string {
     return index === 0 ? 'carousel-item active' : 'carousel-item';
   }
   getRows(): number[] {
-    const rows = Math.round(this.itemsHighLight.length / 3);
-    console.log('rows:' + rows + ' total: ' + (this.itemsHighLight.length));
+    const lrows = (this.itemsHighLight == null) ? 0 : this.itemsHighLight.length;
+    const rows = Math.round(lrows / 3) + 1;
     return new Array(rows);
+  }
+  goToDetail(item: Item): void {
+    console.log('indo detalhar item' + item);
+    this.router.navigate(['/item-detail', item.screenId, item.couponId]);
   }
 }

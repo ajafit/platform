@@ -6,8 +6,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import br.com.ajafit.platform.core.domain.Coupon;
 import br.com.ajafit.platform.core.domain.Region;
+import br.com.ajafit.platform.core.domain.Screen;
 import br.com.ajafit.platform.core.domain.ScreenConfig;
+import br.com.ajafit.platform.core.domain.ScreenConfigPK;
 
 public abstract class BasePersistence {
 
@@ -33,15 +36,21 @@ public abstract class BasePersistence {
 
 	public Collection<Region> filterRegion(String filter) {
 		Query query = em.createQuery("select r from Region r where r.descriptions like :FILTER");
-		query.setParameter("FILTER", "%"+filter+"%");
+		query.setParameter("FILTER", "%" + filter + "%");
 		return query.getResultList();
 	}
-	
-	public Collection<ScreenConfig> findCouponsByScreenCode(String code){
-		
+
+	public Collection<ScreenConfig> findCouponsByScreenCode(String code) {
+
 		Query query = em.createQuery("select c from ScreenConfig c where c.id.screen.code = :CODE");
-		query.setParameter("CODE",code);
+		query.setParameter("CODE", code);
 		return query.getResultList();
+	}
+
+	public ScreenConfig getScreenConfigById(Long screenId, Long couponId) {
+		Screen screen = em.find(Screen.class, screenId);
+		Coupon coupon = em.find(Coupon.class, couponId);
+		return em.find(ScreenConfig.class, new ScreenConfigPK(screen, coupon));
 	}
 
 }

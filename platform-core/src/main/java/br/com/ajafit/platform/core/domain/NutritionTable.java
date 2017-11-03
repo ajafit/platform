@@ -6,6 +6,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Entity
 public class NutritionTable {
 
@@ -15,5 +20,7 @@ public class NutritionTable {
 	private long id;
 
 	private String name;
+	@Column(length = 4)
+	private String unity;
 
 }

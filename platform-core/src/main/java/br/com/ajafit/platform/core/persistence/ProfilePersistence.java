@@ -1,13 +1,16 @@
 package br.com.ajafit.platform.core.persistence;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 import javax.persistence.Query;
 
+import br.com.ajafit.platform.core.domain.Coach;
 import br.com.ajafit.platform.core.domain.Coachee;
 import br.com.ajafit.platform.core.domain.Factory;
 import br.com.ajafit.platform.core.domain.Manager;
 import br.com.ajafit.platform.core.domain.Person;
+import br.com.ajafit.platform.core.domain.Profile;
 
 public abstract class ProfilePersistence extends BasePersistence {
 
@@ -34,6 +37,16 @@ public abstract class ProfilePersistence extends BasePersistence {
 		return query.getResultList();
 	}
 
+	public Person getPersonByToken(String token) {
+		Query query = em.createQuery("from Person p where p.token = :TOKEN");
+		query.setParameter("TOKEN", token);
+		if (query.getResultList().isEmpty())
+			return null;
+
+		return (Person) query.getResultList().iterator().next();
+
+	}
+
 	public Person getPersonByEmailAndPassword(String email, String password) {
 		Query query = em.createQuery("from Person p where p.email = :EMAIL and p.password = :PASSWORD");
 		query.setParameter("EMAIL", email).setParameter("PASSWORD", password);
@@ -44,6 +57,16 @@ public abstract class ProfilePersistence extends BasePersistence {
 			return (Person) col.iterator().next();
 		}
 
+	}
+
+	public Collection<Profile> getProfilesFromPerson(Person person) {
+		Query query = em.createQuery("from Profile p where p.person = :PERSON");
+		query.setParameter("PERSON", person);
+		/*
+		 * return ((Collection<Profile>) query.getResultList()).stream().filter((Profile
+		 * p) -> !(p instanceof Coach)) .collect(Collectors.toList());
+		 */
+		return query.getResultList();
 	}
 
 	public Person getPersonById(long id) {

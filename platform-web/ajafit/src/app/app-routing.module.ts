@@ -8,13 +8,18 @@ import {ProfileComponent} from './profile/profile.component';
 import {ProfileDetailComponent} from './profile/profile-detail.component';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {AuthComponent} from './auth/auth.component';
+import {AboutComponent} from './about/about.component';
 
 import {ItemComponent} from './item/item.component';
+import {ItemDetailComponent} from './item/item-detail.component';
 
 
 const routes: Routes = [{
   path: 'auth',
   component: AuthComponent
+}, {
+  path: 'about',
+  component: AboutComponent
 }, {
   path: 'profile',
   component: ProfileComponent
@@ -28,9 +33,11 @@ const routes: Routes = [{
   path: 'item',
   component: ItemComponent
 }, {
+  path: 'item-detail/:screen/:coupon',
+  component: ItemDetailComponent
+}, {
   path: '',
-  redirectTo: '/dashboard',
-  pathMatch: 'full'
+  component: DashboardComponent
 }];
 
 @NgModule({

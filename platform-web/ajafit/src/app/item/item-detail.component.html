@@ -1,9 +1,125 @@
-<div *ngIf="profile">
- <div> profile: {{profile.id}} - {{profile.email}} - {{profile.name}}</div>
-	<hr/>
-  <div *ngIf="profile">Name: <input value="{{profile.name}}" (blur)="changeName($event)"   placeholder="name"></div>
-  <div *ngIf="profile">EMail: <input value="{{profile.email}}" (blur)="changeEmail($event)"   placeholder="e-mail"></div>
+<div class="row" style="margin-top: 40px; margin-left: 30px;">
+
+
+	<div class="col-5">
+
+		<div id="itemDetailControls" class="carousel slide"
+			data-ride="carousel">
+			<div class="carousel-inner centered-text"
+				style="background-color: lightgray;">
+
+				<div class="carousel-item active">
+					<img src="../assets/{{item.image1}}" alt="First slide"
+						style="margin: auto; width: 100%; max-height: 300px;">
+				</div>
+				<div class="carousel-item">
+					<img src="../assets/{{item.image2}}" alt="First slide"
+						style="margin: auto; width: 100%;">
+				</div>
+				<div class="carousel-item">
+					<img src="../assets/{{item.image3}}" alt="First slide"
+						style="margin: auto; width: 100%;">
+				</div>
+			</div>
+			<a class="carousel-control-prev" href="#itemDetailControls"
+				role="button" data-slide="prev"> <span
+				class="carousel-control-prev-icon" aria-hidden="true"></span> <span
+				class="sr-only">Previous</span>
+			</a> <a class="carousel-control-next" href="#itemDetailControls"
+				role="button" data-slide="next"> <span
+				class="carousel-control-next-icon" aria-hidden="true"></span> <span
+				class="sr-only">Next</span>
+			</a>
+		</div>
+
+	</div>
+	<div class="col">
+		<div class="card-block">
+			<div class="card-title" style="font-size: 26px;">{{item.name}}</div>
+
+			<div *ngIf="item.valueFinal" class="card-text">
+				<span style="text-decoration: line-through; font-size: x-small;">R${{item.value}}</span>
+				<span style="font-weight: bold; font-size: large;">R${{item.valueFinal}}</span>
+			</div>
+
+			<div *ngIf="!item.valueFinal" class="card-text">
+				<span style="font-weight: bold; font-size: medium;">R${{item.value}}</span>
+			</div>
+			<a href="javascript:alert('comprar')" class="btn btn-primary"
+				style="background-color: #38704b; border-color: #38704b;">Comprar</a>
+		</div>
+
+
+		<ul class="nav nav-tabs" id="myTab" role="tablist">
+			<li class="nav-item"><a class="nav-link active" id="desc-tab"
+				data-toggle="tab" href="#tab_desc" role="tab" aria-controls="home"
+				aria-selected="true">Descrições</a></li>
+			<li class="nav-item"><a class="nav-link" id="info-tab"
+				data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
+				aria-selected="false">Informações nutricionais</a></li>
+			<li class="nav-item"><a class="nav-link" id="ratings-tab"
+				data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
+				aria-selected="false">Classificações & Avaliações</a></li>
+		</ul>
+		
+		
+		<div class="tab-content" id="myTabContent">
+			<div class="tab-pane fade show active" id="tab_desc" role="tabpanel"
+				aria-labelledby="tab_desc">{{item.descriptions}}</div>
+			<div class="tab-pane fade" id="profile" role="tabpanel"
+				aria-labelledby="profile-tab">
+
+				<div class="row" *ngFor="let item of getItems();">
+					<div class="col">
+						{{item.name}}
+						<div class="row"
+							*ngFor="let info of item.nutritionInfo; first as idxxx;"
+							[class.selected]="idxxx">
+							<div class="col">{{info.key}}</div>
+							<div class="col">{{info.value}}</div>
+							<div class="col">
+								{{info.vd}}<span *ngIf="idxxx">VD%</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="tab-pane fade" id="contact" role="tabpanel"
+				aria-labelledby="contact-tab">
+
+				<div class="row" *ngFor="let item of getItems();">
+					<div class="col">
+						{{item.name}}
+						<div class="container-fluid" style="border:10px;;">
+							<div class="row"
+								*ngFor="let info of item.reviews; first as idxxx;">
+								<div class="col">
+									<div class="row">
+										<div class="col">
+											<img alt="pic" class="rounded-circle"
+												style="max-width: 50px; max-height: 50px;"
+												src="./assets/{{info.profileImage}}">
+										</div>
+										<div class="col">{{info.profileName}} {{info.date}}</div>
+
+									</div>
+									<div class="col">{{info.value}}</div>
+									<hr />
+
+								</div>
+								<div class="col">{{info.rate}}</div>
+
+							</div>
+						
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
 </div>
-<br/>
 <button (click)="goBack()">Back</button>
 

@@ -4,19 +4,35 @@
 	<div class="collapse navbar-collapse">
 
 		<ul class="navbar-nav mr-auto mt-2 mt-md-0">
-			<li class="nav-item"><a routerLink="/dashboard"
+			<li class="nav-item"><a routerLink="/"
 				style="margin-left: 32px;"> <img class="navbar-brand"
 					src="assets/logo_ajafit.svg" alt="logo"
 					style="padding: 0px; width: 200px; height: 100px;">
 			</a></li>
-			<li class="nav-item"><a class="nav-item nav-link"
-				routerLink="/about">O QUE É ?</a></li>
-			<li class="nav-item"><a class="nav-item nav-link"
-				routerLink="/about">COACHES</a></li>
-			<li class="nav-item"><a class="nav-item nav-link"
-				routerLink="/about">PLANOS</a></li>
-			<li class="nav-item"><a class="nav-item nav-link"
-				routerLink="/about">PRODUTOS</a></li>
+			<li *ngIf="!getProfile()" class="nav-item">
+				<ul class="navbar-nav mr-auto mt-2 mt-md-0">
+					<li class="nav-item"><a class="nav-item nav-link"
+						routerLink="/about">O QUE É ?</a></li>
+					<li class="nav-item"><a class="nav-item nav-link"
+						routerLink="/about">COACHES</a></li>
+					<li class="nav-item"><a class="nav-item nav-link"
+						routerLink="/about">PLANOS</a></li>
+					<li class="nav-item"><a class="nav-item nav-link"
+						routerLink="/about">PRODUTOS</a></li>
+				</ul>
+			</li>
+			<li *ngIf="getProfile()" class="nav-item">
+				<ul class="navbar-nav mr-auto mt-2 mt-md-0">
+					<li class="nav-item"><a class="nav-item nav-link"
+						routerLink="/about">HOME</a></li>
+					<li class="nav-item"><a class="nav-item nav-link"
+						routerLink="/about">COACHES</a></li>
+					<li class="nav-item"><a class="nav-item nav-link"
+						routerLink="/about">PLANOS</a></li>
+					<li class="nav-item"><a class="nav-item nav-link"
+						routerLink="/about">PRODUTOS</a></li>
+				</ul>
+			</li>
 		</ul>
 		<form class="form-inline">
 			<input class="form-control"
@@ -28,17 +44,34 @@
 					style="-webkit-transform: rotate(45deg); -moz-transform: rotate(-45deg); -o-transform: rotate(-45deg); transform: rotate(-45deg);">&#x26B2;</div>
 			</button>
 		</form>
-		<ul class="nav navbar-nav" style="margin-right: 10px;">
-			<li *ngIf="!getProfile()" class="nav-item"><a class="nav-link"
-				routerLink="/auth"><h6>LOGIN &#xe116;</h6></a></li>
 
-			<li *ngIf="getProfile()" class="nav-item">{{getProfile().name}}<br />
-				<a class="nav-link" routerLink="/dashboard" (click)="logout()">Logout</a>
+		<ul class="navbar-nav mr-auto mt-2 mt-md-0">
+			<li *ngIf="getProfile()">
+				<div class="dropdown">
+					<a class="nav navbar-nav nav-item nav-link" id="dropdownMenuButton"
+						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<fa name="user fa-2x" style="color:blue;"></fa>
+					</a>
+					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+						<a class="dropdown-item" href="#">Perfil({{getProfile().name}})</a>
+						<a class="dropdown-item" href="#">Histórico</a> <a
+							class="dropdown-item" routerLink="/" (click)="logout()">Sair</a>
+
+					</div>
+				</div>
+
 			</li>
+			<li *ngIf="!getProfile()"><a
+				class="nav navbar-nav nav-item nav-link" routerLink="/auth"><fa
+						name="user fa-2x"></fa></a></li>
+			<li><a class="nav navbar-nav nav-item nav-link"
+				routerLink="/cart"><fa name="shopping-cart fa-2x"></fa></a></li>
 		</ul>
+
 	</div>
-	
-	<div data-toggle="collapse" class="navbar-toggler container-fluid" style="border: 0px;">
+
+	<div data-toggle="collapse" class="navbar-toggler container-fluid"
+		style="border: 0px;">
 		<div class="row">
 			<div class="col">
 				<button class="navbar-toggler navbar-toggler-left" type="button"
@@ -69,27 +102,51 @@
 			</div>
 
 			<div class="col">
-				<a routerLink="/dashboard" style="margin-left: 32px;"> <img
+				<a routerLink="/" style="margin-left: 32px;"> <img
 					class="navbar-brand" src="assets/logo_ajafit.svg" alt="logo"
 					style="padding: 0px; width: 200px; height: 100px;">
 				</a>
 			</div>
 
 			<div class="col">
-				<ul class="nav navbar-nav">
+				<!-- <ul class="nav navbar-nav">
 					<li *ngIf="!getProfile()" class="nav-item"><a class="nav-link"
 						routerLink="/auth"><h6>LOGIN</h6></a></li>
 
 					<li *ngIf="getProfile()" class="nav-item">{{getProfile().name}}<br />
-						<a class="nav-link" routerLink="/dashboard" (click)="logout()">Logout</a>
+						<a class="nav-link" routerLink="/" (click)="logout()">Logout</a>
 					</li>
+				</ul> -->
+
+				<ul class="navbar-nav mr-auto mt-2 mt-md-0">
+					<li *ngIf="getProfile()">
+						<div class="dropdown">
+							<a class="nav navbar-nav nav-item nav-link"
+								id="dropdownMenuButton" data-toggle="dropdown"
+								aria-haspopup="true" aria-expanded="false"> <fa
+									name="user fa-2x" style="color:blue;"></fa>
+							</a>
+							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+								<a class="dropdown-item" href="#">Perfil({{getProfile().name}})</a>
+								<a class="dropdown-item" href="#">Histórico</a> <a
+									class="dropdown-item" routerLink="/" (click)="logout()">Sair</a>
+
+							</div>
+						</div>
+
+					</li>
+					<li *ngIf="!getProfile()"><a
+						class="nav navbar-nav nav-item nav-link" routerLink="/auth"><fa
+								name="user fa-2x"></fa></a></li>
+					<li><a class="nav navbar-nav nav-item nav-link"
+						routerLink="/cart"><fa name="shopping-cart fa-2x"></fa></a></li>
 				</ul>
 
 			</div>
 		</div>
 
 	</div>
-	
+
 </nav>
 <div class="box">
 	<router-outlet></router-outlet>

@@ -27,9 +27,7 @@ export class ProfileComponent implements OnInit {
     this.selectedProfile = pro;
   }
   getProfiles(): void {
-    /*this.profileService.getProfiles().then(profiless => this.profiles = profiless);*/
     this.filter = this.filter == null ? '' : this.filter;
-    console.log('filtrando:' + this.filter);
     this.profileService.getProfiles(this.filter).then(profiles => this.setProfiles(profiles));
   }
   ngOnInit(): void {
@@ -39,7 +37,6 @@ export class ProfileComponent implements OnInit {
     this.router.navigate(['/profile-detail', this.selectedProfile.id]);
   }
   setProfiles(profiles: Profile[]) {
-    console.log('profiles: ' + profiles);
     this.profiles = profiles;
   }
 }

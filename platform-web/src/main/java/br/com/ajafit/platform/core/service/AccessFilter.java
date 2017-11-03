@@ -29,6 +29,9 @@ public class AccessFilter implements Filter {
 		log.info("init em filter");
 	}
 
+	private boolean doesItNeedAuthentication(String uri) {
+		return !(uri.contains("ajafit/platform/service/profile/person/login") || uri.contains("ajafit/platform/service/screen"));
+	}
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
@@ -42,10 +45,13 @@ public class AccessFilter implements Filter {
 
 		try {
 			String uri = req.getRequestURI();
-			String token = getToken(req);
-			log.info("token: " + token + "  uri:" + uri);
+			if(doesItNeedAuthentication(uri)) {		
+				String token = getToken(req);
+				log.info("token: " + token + "  uri:" + uri);
+			}
+		
 
-			if (uri.contains("ajafit/platform/service/profile/person/login")) {
+	/*		if (uri.contains("ajafit/platform/service/profile/person/login")) {
 
 				HttpServletResponse resp = (HttpServletResponse) response;
 				Cookie c = new Cookie("authorization", "1234567890999");
@@ -54,7 +60,7 @@ public class AccessFilter implements Filter {
 				resp.addCookie(c);
 				resp.flushBuffer();
 				log.info("create cookie");
-			}
+			}*/
 
 			chain.doFilter(request, response);
 
@@ -69,7 +75,7 @@ public class AccessFilter implements Filter {
 
 	}
 
-	private String getToken(HttpServletRequest request) {
+	public static String getToken(HttpServletRequest request) {
 		String token = request.getHeader("authorization");
 		if (token == null) {
 

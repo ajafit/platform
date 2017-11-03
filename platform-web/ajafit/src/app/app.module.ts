@@ -14,6 +14,8 @@ import {ProfileComponent} from './profile/profile.component';
 import {ProfileDetailComponent} from './profile/profile-detail.component';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {AuthComponent} from './auth/auth.component';
+import {AboutComponent} from './about/about.component';
+
 import {ProfileService} from './profile/profile.service';
 import {AppRoutingModule} from './app-routing.module';
 import {AjafitInterceptor} from './ajafitinterceptor';
@@ -22,12 +24,16 @@ import {ItemService} from './item/item.service';
 import {ItemComponent} from './item/item.component';
 import {ItemDetailComponent} from './item/item-detail.component';
 
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { AngularFontAwesomeModule } from 'angular-font-awesome/angular-font-awesome';
+
 @NgModule({
   declarations: [
     AppComponent,
     ProfileComponent,
     ProfileDetailComponent,
     AuthComponent,
+    AboutComponent,
     DashboardComponent,
     ItemComponent,
     ItemDetailComponent
@@ -39,7 +45,9 @@ import {ItemDetailComponent} from './item/item-detail.component';
     AppRoutingModule,
      BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    NgbModule,
+    AngularFontAwesomeModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AjafitInterceptor, multi: true}, ProfileService, ItemService],
  /* providers: [ProfileService],*/

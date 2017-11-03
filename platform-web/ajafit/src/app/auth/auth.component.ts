@@ -22,6 +22,6 @@ export class AuthComponent implements OnInit {
     this.profileService.login(this.login, this.senha).then(resp => this.navigate(resp));
   }
   navigate(profile: Profile): void {
-    this.router.navigate(['/dashboard']);
+    this.router.navigate(['/']);
   }
 }

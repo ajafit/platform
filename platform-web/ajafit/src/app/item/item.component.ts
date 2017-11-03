@@ -36,7 +36,8 @@ export class ItemComponent implements OnInit {
     this.getProfiles();
   }
   goToDetail(): void {
-    this.router.navigate(['/profile-detail', this.selectedItem.id]);
+    console.log('flamengo');
+    this.router.navigate(['/item-detail', this.selectedItem.screenId, this.selectedItem.couponId]);
   }
   setItems(items: Item[]) {
     console.log('items: ' + items);

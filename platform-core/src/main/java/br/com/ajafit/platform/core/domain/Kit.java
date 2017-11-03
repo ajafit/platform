@@ -1,7 +1,7 @@
 package br.com.ajafit.platform.core.domain;
 
-import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,17 +25,24 @@ public class Kit {
 	@Column(name = "kit_id")
 	private long id;
 
-	private String image;
-
 	private Date date;
 
 	@Column(nullable = true)
 	private boolean client;
-	
+
+	private String imageLarge;
+	private String image1;
+	private String image2;
+	private String image3;
+	private String video;
+
+	private String name;
+
+	@Column(columnDefinition = "text")
 	private String descriptions;
 
 	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "kit_id")
-	private Collection<Item> items;
+	private Set<Item> items;
 
 }

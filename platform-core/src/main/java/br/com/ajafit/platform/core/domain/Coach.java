@@ -5,6 +5,6 @@ import javax.persistence.PrimaryKeyJoinColumn;
 
 @Entity
 @PrimaryKeyJoinColumn(name = "coach_id", referencedColumnName = "profile_id")
-public abstract class Coach extends Balance {
+public class Coach extends Balance {
 
 }

@@ -3,18 +3,13 @@
 
 <div class="wrapper">
 	<div id="itemSlideShow" class="carousel slide" data-ride="carousel"
-		data-interval="5000" data-wrap="true" data-pause="false">
+		data-interval="10000" data-wrap="true" data-pause="false">
 		<div class="carousel-inner">
 
 			<div *ngFor="let item of itemsCarousel; index as xx; first as ff"
 				[ngClass]="getCSSClasses(xx)">
 				<a class="image" routerLink="/auth"><img class="image"
-					src="../assets/{{item.image}}" /></a>
-				<!-- <div class="carousel-caption d-none d-md-block">
-					<h1 style="color: white;">{{item.descriptions}}</h1>
-					<p>{{item.image}}</p>
-				</div>
- -->
+					src="../assets/{{item.imageLarge}}" /></a>
 			</div>
 
 			<a class="carousel-control-prev" href="#itemSlideShow" role="button"
@@ -39,6 +34,7 @@
 <span class="badge badge-danger">Danger</span>
  -->
 
+
 <div class="container"
 	style="margin-top: 10px;">
 	<div class="row align-items-right"
@@ -49,13 +45,13 @@
 
 			<div class="card text-center"
 				style="width: 20rem; background-color: #FFF; border-color: #FFF; padding: 5px;">
-				<a href="javascript:alert('visualizar')"> <img
+				<a (click)="goToDetail(item)"> <img
 					class="card-img-top" style="width: 250px; height: 200px;"
-					src="../assets/{{item.image}}" alt="Card image cap">
+					src="../assets/{{item.image1}}" alt="Card image cap">
 				</a>
 
 				<div class="card-block">
-					<div class="card-title" style="max-height:20px;">{{item.descriptions}}</div>
+					<div class="card-title" style="max-height:20px;">{{item.name}}</div>
 
 					<div *ngIf="item.valueFinal" class="card-text">
 						<span style="text-decoration: line-through; font-size: x-small;">R${{item.value}}</span>

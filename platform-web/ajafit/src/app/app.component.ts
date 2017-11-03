@@ -21,14 +21,13 @@ export class AppComponent {
   profile: Profile;
   getProfile(): Profile {
     this.profile = this.profileService.getSelectedProfile();
-    if (this.router.url === '/dashboard' || this.router.url === '/') {
-    } else if (this.profile == null && this.router.url !== '/auth') {
-      this.router.navigate(['/auth']);
-    }
-    return this.profile;
+  //  if (this.router.url === '/dashboard' || this.router.url === '/') {
+   // } else if (this.profile == null && this.router.url !== '/auth') {
+   //   this.router.navigate(['/auth']);
+   // }
+  return this.profile;
   }
   logout(): void {
-    this.profileService.cleanSelectedProfile();
-    console.log('logout _|_');
+    this.profileService.logout();
   }
 }

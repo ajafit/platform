@@ -1,6 +1,8 @@
 package br.com.ajafit.platform.core.service;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 
 import javax.ejb.Stateless;
@@ -12,8 +14,10 @@ import javax.ws.rs.core.MediaType;
 
 import org.jboss.logging.Logger;
 
+import br.com.ajafit.platform.core.domain.Review;
 import br.com.ajafit.platform.core.domain.ScreenConfig;
 import br.com.ajafit.platform.core.service.dto.EntityDTOConverter;
+import br.com.ajafit.platform.core.service.dto.ReviewDTO;
 import br.com.ajafit.platform.core.service.dto.ScreenItemDTO;
 
 @Path("/service/screen")
@@ -31,6 +35,22 @@ public class ScreenService extends ServiceValidation {
 		Collection<ScreenConfig> screenConfigs = this.persistence.findCouponsByScreenCode(code);
 		screenConfigs.stream().forEach((ScreenConfig c) -> list.add(EntityDTOConverter.parse(c)));
 		return list;
+
+	}
+
+	@GET
+	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
+	@Path("/detail/{screen}/{coupon}")
+	public ScreenItemDTO detail(@PathParam("screen") Long screen, @PathParam("coupon") Long coupon) {
+		required(screen, coupon);
+		ScreenConfig screenConfig = this.persistence.getScreenConfigById(screen, coupon);
+		ScreenItemDTO dto = EntityDTOConverter.parse(screenConfig);
+
+		for (ScreenItemDTO item : dto.getItems()) {
+			Collection<Review> rvs = persistence.getReviews(item.getItemId());
+			item.setReviews(EntityDTOConverter.parse(rvs));
+		}
+		return dto;
 
 	}
 

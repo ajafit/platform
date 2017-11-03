@@ -30,6 +30,7 @@ public class EntityDTO {
 	private String validationIMGReference;
 	private byte[] validationIMG;
 	private String accessToken;
+	private String[] profiles;
 
 
 }

@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.Lob;
 import javax.persistence.OneToOne;
 import javax.persistence.TableGenerator;
 
@@ -28,8 +29,15 @@ public class Saleable {
 	private int cost;
 	private int revenueShare;
 
-	private String image;
+	private String imageLarge;
+	private String image1;
+	private String image2;
+	private String image3;
+	private String video;
+
 	private String name;
+
+	@Column(columnDefinition = "text")
 	private String descriptions;
 
 	@OneToOne(mappedBy = "saleable")

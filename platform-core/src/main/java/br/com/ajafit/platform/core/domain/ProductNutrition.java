@@ -8,6 +8,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Entity
 public class ProductNutrition {
 
@@ -24,6 +29,9 @@ public class ProductNutrition {
 	@JoinColumn(name = "nutrition_table_id")
 	private NutritionTable nutritionTable;
 
-	private int value;
+	private Integer value;
+
+	@Column(nullable = true)
+	private Integer vd;
 
 }
