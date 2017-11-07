@@ -33,32 +33,101 @@
 			</a>
 		</div>
 		<div>
-			<div class="tab-pane fade show active" id="tab_desc" role="tabpanel"
-				aria-labelledby="tab_desc">{{item.descriptions}}</div>
+			<br />
+			<div class="alert alert-info" style="text-align: center;">Especialidades</div>
+			<div class="row">
+				<div class="col-6">.</div>
+				<div class="col" style="text-align: right;">
+					<span>Nota</span>
+				</div>
+				<div class="col">.</div>
+			</div>
+			<div *ngFor="let rel of item.related">
+				<div class="row">
+					<div class="col-6">
+						<div>
+							<img src="../assets/{{rel.image1}}" alt="First slide"
+								style="margin: auto; width: 80px; max-height: 80px;"> <span
+								*ngIf="rel.valueFinal"
+								style="text-decoration: line-through; font-size: 12px;">R${{rel.value}}</span>
+							<span *ngIf="rel.valueFinal"
+								style="font-weight: bold; font-size: 14px;">R${{rel.valueFinal}}</span>
+							<span *ngIf="!rel.valueFinal"
+								style="font-weight: bold; font-size: 14px;">R${{rel.value}}</span>
+
+
+						</div>
+
+
+					</div>
+					<div class="col" style="text-align: right; padding: 15px;">
+						<span>{{rel.rate}}</span>
+					</div>
+					<div class="col">
+						<div style="text-align: center;">
+							<div>
+
+								<a href="javascript:alert('comprar')" class="btn btn-primary"
+									style="background-color: #38704b; border-color: #38704b; font-size: 12px; margin-left: 0px;">Comprar</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">{{rel.name}}</div>
+				</div>
+				<hr />
+
+			</div>
 		</div>
 
 	</div>
 	<div class="col">
 		<div class="card-block">
-			<div class="card-title" style="font-size: 26px;">{{item.name}}</div>
+			<div class="card-title"
+				style="font-size: 28px; font-weight: bold; font-family: sans-serif;">
+				<span style="margin:20px; vertical-align:top; ">{{item.name}}</span>
 
-			<div *ngIf="item.valueFinal" class="card-text">
-				<span style="text-decoration: line-through; font-size: x-small;">R${{item.value}}</span>
-				<span style="font-weight: bold; font-size: large;">R${{item.valueFinal}}</span>
+				<div style="display: inline-block; margin-left:10%;vertical-align:top;">
+					<span *ngIf="item.valueFinal"
+						style="text-decoration: line-through; font-size: x-small;">R${{item.value}}</span>
+					<span *ngIf="item.valueFinal"
+						style="font-weight: bold; font-size: large;">R${{item.valueFinal}}</span>
+
+					<span *ngIf="!item.valueFinal"
+						style="font-weight: bold; font-size: large;">R${{item.value}}</span>
+					<br/>
+					<div style="width:80%; margin:auto;">
+					<a href="javascript:alert('comprar')" class="btn btn-primary"
+						style="background-color: #38704b; border-color: #38704b;">Comprar</a>
+						</div>
+				</div>
+
 			</div>
 
-			<div *ngIf="!item.valueFinal" class="card-text">
-				<span style="font-weight: bold; font-size: medium;">R${{item.value}}</span>
+
+
+			<div style="margin-left: 20px;">
+
+				<div *ngFor="let i of getRates(); index as idx;"
+					style="display: inline;">
+					<fa *ngIf="idx < parse(item.rate)" name="star fa-1x"
+						style="color:gold;"></fa>
+					<fa *ngIf="!(idx < parse(item.rate))" name="star-o fa-1x"
+						style="color:gold;"></fa>
+				</div>
+				<span>({{item.totalReviews}} Avaliações)</span>
+
 			</div>
-			<a href="javascript:alert('comprar')" class="btn btn-primary"
-				style="background-color: #38704b; border-color: #38704b;">Comprar</a>
+			<div style="margin-left: 20px;">{{item.descriptions}}</div>
+			<hr />
+
+
 		</div>
 
 
 		<ul class="nav nav-tabs" id="myTab" role="tablist">
-		<!-- 	<li class="nav-item"><a class="nav-link active" id="desc-tab"
-				data-toggle="tab" href="#tab_desc" role="tab" aria-controls="home"
-				aria-selected="true">Descrições</a></li> -->
+
 			<li class="nav-item"><a class="nav-link active" id="info-tab"
 				data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
 				aria-selected="false">Informações nutricionais</a></li>
@@ -69,13 +138,14 @@
 
 
 		<div class="tab-content" id="myTabContent">
-		
+
 			<div class="tab-pane fade show active" id="profile" role="tabpanel"
 				aria-labelledby="profile-tab">
 
 				<div class="row" *ngFor="let item of getItems();">
 					<div class="col">
-						<div *ngIf="getItems().length > 1" class="alert alert-info" style="width:100%; margin:auto; text-align:center;">{{item.name}}</div>
+						<div *ngIf="getItems().length > 1" class="alert alert-info"
+							style="width: 100%; margin: auto; text-align: center;">{{item.name}}</div>
 						<div class="row"
 							*ngFor="let info of item.nutritionInfo; first as idxxx;"
 							[class.selected]="idxxx">
@@ -85,9 +155,9 @@
 								{{info.vd}}<span *ngIf="idxxx">VD%</span>
 							</div>
 						</div>
-						<br/>
-						Ingredientes:<hr/>
-						<div style="font-style:italic; ">{{item.ingredients}}</div>
+						<br /> Ingredientes:
+						<hr />
+						<div style="font-style: italic;">{{item.ingredients}}</div>
 					</div>
 				</div>
 			</div>
@@ -107,19 +177,22 @@
 											<div style="width: 100%;">
 												<div style="display: inline;">
 													<img alt="pic" class="rounded-circle"
-														style="width: 80px; height: 80px;"
+														style="width: 60px; height: 60px;"
 														src="./assets/{{info.profileImage}}" />
 												</div>
 												<div style="display: inline; text-align: center;">
 													{{info.profileName}}<br /> {{info.date}}
 												</div>
-												<div style="display: inline; margin-left:40%;">
-												<div *ngFor="let i of getRates(); index as idx;" style="display:inline;">
-													<fa *ngIf="idx < info.rate" name="star fa-1x" style="color:gold;"></fa>
-													<fa *ngIf="!(idx < info.rate)" name="star-o fa-1x" style="color:gold;"></fa>
+												<div style="display: inline; margin-left: 40%;">
+													<div *ngFor="let i of getRates(); index as idx;"
+														style="display: inline;">
+														<fa *ngIf="idx < info.rate" name="star fa-1x"
+															style="color:gold;"></fa>
+														<fa *ngIf="!(idx < info.rate)" name="star-o fa-1x"
+															style="color:gold;"></fa>
+													</div>
 												</div>
-												</div>
-												
+
 
 
 											</div>
@@ -143,4 +216,3 @@
 
 			</div>
 		</div>
-		

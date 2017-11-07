@@ -34,6 +34,8 @@ public class ScreenItemDTO {
 	private Integer amountToGetOneFree;
 	private NutritionInfoDTO[] nutritionInfo;
 	private ReviewDTO[] reviews;
+	private String rate;
+	private Integer totalReviews;
 	private String ingredients;
 	private ScreenItemDTO[] items;
 	private ScreenItemDTO[] related;

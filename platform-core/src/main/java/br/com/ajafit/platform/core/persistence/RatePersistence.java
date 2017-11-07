@@ -16,4 +16,12 @@ public class RatePersistence extends DeliveryPersistence {
 		query.setParameter("SALEABLE", saleableId);
 		return query.getResultList();
 	}
+	
+	public Collection<Review> getReviews(Collection<Long> saleableIds) {
+
+		Query query = em.createQuery("select c from Review c where c.id.saleable.id in :SALEABLE");
+		query.setParameter("SALEABLE", saleableIds);
+		return query.getResultList();
+	}
+
 }

@@ -13,7 +13,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@EqualsAndHashCode
+@EqualsAndHashCode(of = { "id" })
 @Entity
 public class Screen {
 

@@ -426,16 +426,18 @@ insert into screenconfig(screen_id,priority,coupon_id) values(1,1,1);
 insert into screenconfig(screen_id,priority,coupon_id) values(1,1,2);
 insert into screenconfig(screen_id,priority,coupon_id) values(1,1,3);
 insert into screenconfig(screen_id,priority,coupon_id) values(1,2,4);
-insert into screenconfig(screen_id,priority,coupon_id) values(1,3,5);
+insert into screenconfig(screen_id,priority,coupon_id) values(1,2,5);
 insert into screenconfig(screen_id,priority,coupon_id) values(1,3,6);
 insert into screenconfig(screen_id,priority,coupon_id) values(1,2,7);
 insert into screenconfig(screen_id,priority,coupon_id) values(1,2,8);
-insert into screenconfig(screen_id,priority,coupon_id) values(1,2,9);
+insert into screenconfig(screen_id,priority,coupon_id) values(1,3,9);
 insert into screenconfig(screen_id,priority,coupon_id) values(1,2,10);
 insert into screenconfig(screen_id,priority,coupon_id) values(1,3,11);
 insert into screenconfig(screen_id,priority,coupon_id) values(1,2,12);
 insert into screenconfig(screen_id,priority,coupon_id) values(1,2,13);
 insert into screenconfig(screen_id,priority,coupon_id) values(1,2,14);
+insert into screenconfig(screen_id,priority,coupon_id) values(1,3,15);
+insert into screenconfig(screen_id,priority,coupon_id) values(1,3,16);
 
 
 

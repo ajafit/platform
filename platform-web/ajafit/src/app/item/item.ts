@@ -1,6 +1,5 @@
 import {NutritionInfo} from './nutritionInfo';
 import {Review} from './review';
-
 export class Item {
   itemId: number;
   couponId: number;
@@ -18,4 +17,7 @@ export class Item {
   items: Item[];
   nutritionInfo: NutritionInfo[];
   reviews: Review[];
+  related: Item[];
+  rate: string;
+  totaReviews: number;
 }

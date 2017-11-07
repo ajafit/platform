@@ -43,6 +43,10 @@ public class EntityDTOConverter {
 		Coupon coupon = screenConfig.getId().getCoupon();
 
 		ScreenItemDTO dto = new ScreenItemDTO();
+		
+		/*se fizer isso vai ser baca!!*/
+		//dto.setItemId(coupon.getKit().getItems().iterator().next().getId().getSaleable().getId());
+		
 		dto.setCouponId(coupon.getId());
 		dto.setScreenId(screenConfig.getId().getScreen().getId());
 		dto.setAmountToGetOneFree(coupon.getAmountToGetOneFree() == 0 ? null : coupon.getAmountToGetOneFree());
@@ -81,6 +85,7 @@ public class EntityDTOConverter {
 		dto.setValueFinal(value.length == 2 ? MoneyHelper.toString(value[1]) : null);
 		dto.setPriority(screenConfig.getPriority());
 
+		
 		/* setting items */
 		LinkedList<ScreenItemDTO> items = new LinkedList<>();
 		coupon.getKit().getItems().stream().forEach((Item i) -> items.add(parse(i)));

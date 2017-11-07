@@ -35,4 +35,9 @@ export class ItemDetailComponent implements OnInit {
   getRates(): number[] {
     return new Array(10);
   }
+  parse(str: string): number {
+   str = str.replace(',' , '.');
+   const resp = Number(str);
+    return resp;
+  }
 }

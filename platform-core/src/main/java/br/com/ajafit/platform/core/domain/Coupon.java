@@ -11,12 +11,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 @Getter
 @Setter
+@EqualsAndHashCode(of = { "id" })
 @ToString
 @Entity
 public @Data class Coupon {
@@ -38,7 +40,7 @@ public @Data class Coupon {
 	private String code;
 
 	private int discount;
-	
+
 	private int amountToGetOneFree;
 
 	private Date date;

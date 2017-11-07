@@ -10,20 +10,24 @@ public class MoneyHelper {
 	private static Logger logger = Logger.getLogger(MoneyHelper.class);
 
 	public static String toString(int value) throws RuntimeException {
+		return toString(value, 2);
+	}
+
+	public static String toString(int value, int zeros) throws RuntimeException {
 		StringBuilder sb = new StringBuilder();
 		sb.append(value);
-		if (sb.length() < 3) {
+		if (sb.length() < zeros - 1) {
 			throw new RuntimeException("invalid money value: " + value);
 		}
 
-		sb.insert(sb.length() - 2, ',');
+		sb.insert(sb.length() - zeros, ',');
 		return sb.toString();
 	}
 
 	public static int[] calculate(Coupon coupon) {
 
-		int sumItemsCost = coupon.getKit().getItems().stream().mapToInt((Item i) -> i.getId().getSaleable().getCost() * i.getAmount())
-				.sum();
+		int sumItemsCost = coupon.getKit().getItems().stream()
+				.mapToInt((Item i) -> i.getId().getSaleable().getCost() * i.getAmount()).sum();
 		int sumMaxItemsRevenueShare = coupon.getKit().getItems().stream()
 				.mapToInt((Item i) -> i.getId().getSaleable().getRevenueShare() * i.getAmount()).sum();
 
