@@ -36,6 +36,7 @@ export class ItemDetailComponent implements OnInit {
     return new Array(10);
   }
   parse(str: string): number {
+    console.log('isso:'+str);
    str = str.replace(',' , '.');
    const resp = Number(str);
     return resp;

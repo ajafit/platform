@@ -34,8 +34,8 @@
 		</div>
 		<div>
 			<br />
-			<div class="alert alert-info" style="text-align: center;">Especialidades</div>
-			<div class="row">
+			<div class="alert alert-info" style="text-align: center;">Sugestões</div>
+			<div class="row" *ngIf="item.related">
 				<div class="col-6">.</div>
 				<div class="col" style="text-align: right;">
 					<span>Nota</span>
@@ -86,9 +86,10 @@
 		<div class="card-block">
 			<div class="card-title"
 				style="font-size: 28px; font-weight: bold; font-family: sans-serif;">
-				<span style="margin:20px; vertical-align:top; ">{{item.name}}</span>
+				<span style="margin: 20px; vertical-align: top;">{{item.name}}</span>
 
-				<div style="display: inline-block; margin-left:10%;vertical-align:top;">
+				<div
+					style="display: inline-block; margin-left: 10%; vertical-align: top;">
 					<span *ngIf="item.valueFinal"
 						style="text-decoration: line-through; font-size: x-small;">R${{item.value}}</span>
 					<span *ngIf="item.valueFinal"
@@ -96,11 +97,11 @@
 
 					<span *ngIf="!item.valueFinal"
 						style="font-weight: bold; font-size: large;">R${{item.value}}</span>
-					<br/>
-					<div style="width:80%; margin:auto;">
-					<a href="javascript:alert('comprar')" class="btn btn-primary"
-						style="background-color: #38704b; border-color: #38704b;">Comprar</a>
-						</div>
+					<br />
+					<div style="width: 80%; margin: auto;">
+						<a href="javascript:alert('comprar')" class="btn btn-primary"
+							style="background-color: #38704b; border-color: #38704b;">Comprar</a>
+					</div>
 				</div>
 
 			</div>
@@ -109,6 +110,7 @@
 
 			<div style="margin-left: 20px;">
 
+				<div *ngIf="item.rate">
 				<div *ngFor="let i of getRates(); index as idx;"
 					style="display: inline;">
 					<fa *ngIf="idx < parse(item.rate)" name="star fa-1x"
@@ -117,7 +119,7 @@
 						style="color:gold;"></fa>
 				</div>
 				<span>({{item.totalReviews}} Avaliações)</span>
-
+			</div>
 			</div>
 			<div style="margin-left: 20px;">{{item.descriptions}}</div>
 			<hr />
@@ -142,22 +144,26 @@
 			<div class="tab-pane fade show active" id="profile" role="tabpanel"
 				aria-labelledby="profile-tab">
 
-				<div class="row" *ngFor="let item of getItems();">
-					<div class="col">
-						<div *ngIf="getItems().length > 1" class="alert alert-info"
-							style="width: 100%; margin: auto; text-align: center;">{{item.name}}</div>
-						<div class="row"
-							*ngFor="let info of item.nutritionInfo; first as idxxx;"
-							[class.selected]="idxxx">
-							<div class="col">{{info.key}}</div>
-							<div class="col">{{info.value}}</div>
-							<div class="col">
-								{{info.vd}}<span *ngIf="idxxx">VD%</span>
+				<div class="container-fluid primary">
+					<div class="row" *ngFor="let item of getItems();">
+						<div class="col">
+							<div *ngIf="getItems().length > 1" class="alert alert-info"
+								style="width: 100%; margin: auto; text-align: center;">{{item.name}}</div>
+							<div class="row"
+								*ngFor="let info of item.nutritionInfo; first as idxxx;"
+								[class.selected]="idxxx">
+								<div class="col">{{info.key}}</div>
+								<div class="col">{{info.value}}</div>
+								<div class="col">
+									{{info.vd}}<span *ngIf="idxxx">VD%</span>
+								</div>
 							</div>
+							<br /> Ingredientes:
+							<hr />
+							<div style="font-style: italic;">{{item.ingredients}}</div>
+							<hr />
+							
 						</div>
-						<br /> Ingredientes:
-						<hr />
-						<div style="font-style: italic;">{{item.ingredients}}</div>
 					</div>
 				</div>
 			</div>

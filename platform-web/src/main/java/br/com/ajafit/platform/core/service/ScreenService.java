@@ -53,17 +53,20 @@ public class ScreenService extends ServiceValidation {
 		int mainTotalReview = 0;
 		for (ScreenItemDTO item : dto.getItems()) {
 			Collection<Review> rvs = persistence.getReviews(item.getItemId());
-			item.setReviews(EntityDTOConverter.parse(rvs));
-			// fillRates(item, persistence);
-			mainTotalRate += rvs.stream().map((Review r) -> r.getRate()).reduce(Integer::sum).get();
-			mainTotalReview += rvs.size();
+			if (!rvs.isEmpty()) {
+				item.setReviews(EntityDTOConverter.parse(rvs));
+
+				mainTotalRate += rvs.stream().map((Review r) -> r.getRate()).reduce(Integer::sum).get();
+				mainTotalReview += rvs.size();
+			}
 
 		}
-		dto.setTotalReviews(mainTotalReview);
 		
+
 		if (mainTotalRate > 0) {
 			int evaluate = ((mainTotalRate * 10) / mainTotalReview);
 			dto.setRate(MoneyHelper.toString(evaluate, 1));
+			dto.setTotalReviews(mainTotalReview);
 		}
 
 		Saleable saleable = screenConfig.getId().getCoupon().getKit().getItems().iterator().next().getId()
