@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute, ParamMap} from '@angular/router';
 import {Location} from '@angular/common';
-
+import {Review} from './review';
 
 import 'rxjs/add/operator/switchMap';
 
@@ -31,5 +31,8 @@ export class ItemDetailComponent implements OnInit {
   }
   getItems(): Item[] {
     return this.item.items;
+  }
+  getRates(): number[] {
+    return new Array(10);
   }
 }

@@ -6,9 +6,7 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @XmlRootElement
@@ -32,9 +30,12 @@ public class ScreenItemDTO {
 	private String valueFinal;
 	private Integer priority;
 	private Integer amount;
+	private Boolean unavailable;
+	private Integer amountToGetOneFree;
 	private NutritionInfoDTO[] nutritionInfo;
 	private ReviewDTO[] reviews;
 	private String ingredients;
 	private ScreenItemDTO[] items;
+	private ScreenItemDTO[] related;
 
 }

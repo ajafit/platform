@@ -7,6 +7,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import br.com.ajafit.platform.core.domain.Coupon;
+import br.com.ajafit.platform.core.domain.ProductType;
 import br.com.ajafit.platform.core.domain.Region;
 import br.com.ajafit.platform.core.domain.Screen;
 import br.com.ajafit.platform.core.domain.ScreenConfig;
@@ -42,8 +43,17 @@ public abstract class BasePersistence {
 
 	public Collection<ScreenConfig> findCouponsByScreenCode(String code) {
 
-		Query query = em.createQuery("select c from ScreenConfig c where c.id.screen.code = :CODE");
+		Query query = em
+				.createQuery("select c from ScreenConfig c where c.id.screen.code = :CODE order by c.priority asc");
 		query.setParameter("CODE", code);
+		return query.getResultList();
+	}
+
+	public Collection<ScreenConfig> findScreenConfigByProductType(ProductType productType) {
+
+		Query query = em.createQuery(
+				"select distinct c from ScreenConfig c join fetch c.id.coupon cc join fetch cc.kit k join fetch k.items i join fetch i.id.saleable where i.id.saleable.type = :TYPE order by c.priority asc");
+		query.setParameter("TYPE", productType);
 		return query.getResultList();
 	}
 

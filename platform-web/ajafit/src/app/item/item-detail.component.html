@@ -1,3 +1,4 @@
+<!-- <button class="btn btn-default" (click)="goBack()">Voltar</button> -->
 <div class="row" style="margin-top: 40px; margin-left: 30px;">
 
 
@@ -31,6 +32,10 @@
 				class="sr-only">Next</span>
 			</a>
 		</div>
+		<div>
+			<div class="tab-pane fade show active" id="tab_desc" role="tabpanel"
+				aria-labelledby="tab_desc">{{item.descriptions}}</div>
+		</div>
 
 	</div>
 	<div class="col">
@@ -51,27 +56,26 @@
 
 
 		<ul class="nav nav-tabs" id="myTab" role="tablist">
-			<li class="nav-item"><a class="nav-link active" id="desc-tab"
+		<!-- 	<li class="nav-item"><a class="nav-link active" id="desc-tab"
 				data-toggle="tab" href="#tab_desc" role="tab" aria-controls="home"
-				aria-selected="true">Descrições</a></li>
-			<li class="nav-item"><a class="nav-link" id="info-tab"
+				aria-selected="true">Descrições</a></li> -->
+			<li class="nav-item"><a class="nav-link active" id="info-tab"
 				data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
 				aria-selected="false">Informações nutricionais</a></li>
 			<li class="nav-item"><a class="nav-link" id="ratings-tab"
 				data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
 				aria-selected="false">Classificações & Avaliações</a></li>
 		</ul>
-		
-		
+
+
 		<div class="tab-content" id="myTabContent">
-			<div class="tab-pane fade show active" id="tab_desc" role="tabpanel"
-				aria-labelledby="tab_desc">{{item.descriptions}}</div>
-			<div class="tab-pane fade" id="profile" role="tabpanel"
+		
+			<div class="tab-pane fade show active" id="profile" role="tabpanel"
 				aria-labelledby="profile-tab">
 
 				<div class="row" *ngFor="let item of getItems();">
 					<div class="col">
-						{{item.name}}
+						<div *ngIf="getItems().length > 1" class="alert alert-info" style="width:100%; margin:auto; text-align:center;">{{item.name}}</div>
 						<div class="row"
 							*ngFor="let info of item.nutritionInfo; first as idxxx;"
 							[class.selected]="idxxx">
@@ -81,45 +85,62 @@
 								{{info.vd}}<span *ngIf="idxxx">VD%</span>
 							</div>
 						</div>
+						<br/>
+						Ingredientes:<hr/>
+						<div style="font-style:italic; ">{{item.ingredients}}</div>
 					</div>
 				</div>
 			</div>
-			
 			<div class="tab-pane fade" id="contact" role="tabpanel"
 				aria-labelledby="contact-tab">
-
-				<div class="row" *ngFor="let item of getItems();">
+				<div class="row" *ngFor="let item of getItems(); index as s;">
 					<div class="col">
-						{{item.name}}
-						<div class="container-fluid" style="border:10px;;">
+						<div *ngIf="getItems().length > 1"
+							style="widtt: 50%; text-align: center;" class="alert alert-info">{{item.name}}</div>
+
+						<div class="container-fluid" style="border: 10px;">
 							<div class="row"
 								*ngFor="let info of item.reviews; first as idxxx;">
 								<div class="col">
 									<div class="row">
 										<div class="col">
-											<img alt="pic" class="rounded-circle"
-												style="max-width: 50px; max-height: 50px;"
-												src="./assets/{{info.profileImage}}">
+											<div style="width: 100%;">
+												<div style="display: inline;">
+													<img alt="pic" class="rounded-circle"
+														style="width: 80px; height: 80px;"
+														src="./assets/{{info.profileImage}}" />
+												</div>
+												<div style="display: inline; text-align: center;">
+													{{info.profileName}}<br /> {{info.date}}
+												</div>
+												<div style="display: inline; margin-left:40%;">
+												<div *ngFor="let i of getRates(); index as idx;" style="display:inline;">
+													<fa *ngIf="idx < info.rate" name="star fa-1x" style="color:gold;"></fa>
+													<fa *ngIf="!(idx < info.rate)" name="star-o fa-1x" style="color:gold;"></fa>
+												</div>
+												</div>
+												
+
+
+											</div>
+											<br />
+											<div>{{info.value}}</div>
+
+											<hr />
+
 										</div>
-										<div class="col">{{info.profileName}} {{info.date}}</div>
+										<!-- <div class="col">{{info.rate}}</div> -->
+
 
 									</div>
-									<div class="col">{{info.value}}</div>
-									<hr />
+
 
 								</div>
-								<div class="col">{{info.rate}}</div>
-
 							</div>
-						
-
 						</div>
 					</div>
 				</div>
+
 			</div>
 		</div>
-
-	</div>
-</div>
-<button (click)="goBack()">Back</button>
-
+		

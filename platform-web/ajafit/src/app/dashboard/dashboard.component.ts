@@ -35,6 +35,7 @@ export class DashboardComponent implements OnInit {
   setProfiles(profiles: Profile[]): void {
     this.profiles = profiles.slice(1);
   }
+  
   setItems(items: Item[]): void {
     this.items = items;
     this.itemsCarousel = this.items.filter(item => item.priority === 1);

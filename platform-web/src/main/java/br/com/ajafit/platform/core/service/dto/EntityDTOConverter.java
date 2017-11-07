@@ -45,6 +45,7 @@ public class EntityDTOConverter {
 		ScreenItemDTO dto = new ScreenItemDTO();
 		dto.setCouponId(coupon.getId());
 		dto.setScreenId(screenConfig.getId().getScreen().getId());
+		dto.setAmountToGetOneFree(coupon.getAmountToGetOneFree() == 0 ? null : coupon.getAmountToGetOneFree());
 
 		/* setting name and descriptions */
 		if (coupon.getKit().getName() == null) {
@@ -102,7 +103,7 @@ public class EntityDTOConverter {
 		NutritionInfoDTO dto = new NutritionInfoDTO();
 		dto.setKey(productNutrition.getNutritionTable().getName());
 		dto.setValue(productNutrition.getValue() + productNutrition.getNutritionTable().getUnity());
-		dto.setVd((productNutrition.getVd() == null) ? null : +productNutrition.getVd() + "%");
+		dto.setVd((productNutrition.getVd() == null) ? null : MoneyHelper.toString(productNutrition.getVd()) + "%");
 		return dto;
 
 	}
@@ -110,14 +111,15 @@ public class EntityDTOConverter {
 	private static String getNameFromItems(Collection<Item> items) {
 		StringBuilder bf = new StringBuilder();
 		String delimiter = items.size() > 1 ? "|" : "";
-		//long count = items.stream().map((Item i) -> i.getId().getSaleable().getName()).count();
+		// long count = items.stream().map((Item i) ->
+		// i.getId().getSaleable().getName()).count();
 		long distinct = items.stream().map((Item i) -> i.getId().getSaleable().getName()).distinct().count();
 		if (distinct > 1) {
 			items.stream().forEach((Item i) -> bf.append(i.getId().getSaleable().getName() + delimiter));
 		} else {
 			String name = items.stream().findFirst().get().getId().getSaleable().getName();
-			bf.append(items.stream().findFirst().get().getAmount());
-			bf.append(" ");
+			// bf.append(items.stream().findFirst().get().getAmount());
+			// bf.append(" ");
 			bf.append(name);
 		}
 

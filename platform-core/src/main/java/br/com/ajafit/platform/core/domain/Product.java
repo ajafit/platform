@@ -5,6 +5,7 @@ import java.util.Collection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 
@@ -19,7 +20,15 @@ public class Product extends Saleable {
 
 	private String ingredients;
 
+	@ManyToOne
+	@JoinColumn(name = "product_type_id")
+	private ProductType type;
+
+	@ManyToOne
+	@JoinColumn(name = "product_flavor_id")
+	private ProductFlavor flavor;
+
 	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "product_id")
-	Collection<ProductNutrition> productNutritions;
+	private Collection<ProductNutrition> productNutritions;
 }

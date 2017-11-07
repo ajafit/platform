@@ -38,6 +38,8 @@ public @Data class Coupon {
 	private String code;
 
 	private int discount;
+	
+	private int amountToGetOneFree;
 
 	private Date date;
 
