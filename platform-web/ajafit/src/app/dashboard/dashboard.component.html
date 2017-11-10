@@ -24,7 +24,7 @@
 
 
 <div class="container"
-	style="margin-top: 10px;">
+	style="margin-top: 10px;" *ngIf="itemsHighLight">
 	<div class="row align-items-right"
 		style="margin-top: 50px; border-width: 2px;"
 		*ngFor="let i of getRows(); index as idx">
@@ -66,3 +66,4 @@
   </button>
   <strong>Holy guacamole!</strong> You should check in on some of those fields below.
 </div> -->
+

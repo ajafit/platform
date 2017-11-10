@@ -30,7 +30,7 @@ public class AccessFilter implements Filter {
 	}
 
 	private boolean doesItNeedAuthentication(String uri) {
-		return !(uri.contains("ajafit/platform/service/profile/person/login") || uri.contains("ajafit/platform/service/screen"));
+		return !(uri.contains("ajafit/platform/service/profile/person/login") || uri.contains("ajafit/platform/service/screen") ||  uri.contains("ajafit/platform/service/cart"));
 	}
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)

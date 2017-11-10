@@ -20,4 +20,5 @@ export class Item {
   related: Item[];
   rate: string;
   totaReviews: number;
+  count: number;
 }

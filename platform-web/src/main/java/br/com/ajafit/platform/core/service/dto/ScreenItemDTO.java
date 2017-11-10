@@ -39,5 +39,6 @@ public class ScreenItemDTO {
 	private String ingredients;
 	private ScreenItemDTO[] items;
 	private ScreenItemDTO[] related;
+	private int count;
 
 }

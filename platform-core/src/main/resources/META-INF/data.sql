@@ -202,6 +202,12 @@ insert into seller (seller_id) values(5);
 update PROFILE_ID_Generator set sequence = 6 where name = 'Profile';
 
 
+insert into profile (profile_id,manager_id,person_id,region_id) select 6, null, 1, region_id from region where descriptions = 'Rio de janeiro - Cidade';
+insert into balance (cpf, profile_id) values('087.907.357-81',6);
+insert into coachee (profile_id) values(6);
+update PROFILE_ID_Generator set sequence = 7 where name = 'Profile';
+
+
 insert into nutritiontable(name,unity) values('Porção','kcal');
 insert into nutritiontable(name,unity) values('Valor energético','g');
 insert into nutritiontable(name,unity) values('Proteinas','g');
@@ -227,10 +233,10 @@ insert into producttype(value) values('Crepioca de Doce de Leite');
 // CREPIOCA DE FRANGO --------------------------------------------
 
 insert into SALEABLE_ID_Generator (sequence,name) values(1,'Saleable');
-insert into saleable (saleable_id,cost,revenueshare,name,descriptions,imageLarge, image1, image2, image3, video) select sequence, 1200, 200,'Crepioca de frango','Desc da Crepioca de frango','crepioca/crepioca_frango_large.jpg','crepioca/crepioca_frango1.jpg','crepioca/crepioca_frango2.jpg','crepioca/crepioca_frango3.jpg','crepioca/crepioca_frango_video.mp4' from SALEABLE_ID_Generator
-insert into product(product_id,product_flavor_id,product_type_id, ingredients) select saleable_id,1,1, 'Peito de frango, creme de ricota, ovos, fecula de mandioca, curry, pimenta do reino, alho, cheiro verde, coentro, sal rosa' from saleable where name = 'Crepioca de frango' ;
+insert into saleable (saleable_id,cost,revenueshare,name,descriptions,imageLarge, image1, image2, image3, video) select sequence, 1200, 200,'Crepioca de Frango','Pacote com 2 Crepiocas de Frango|Cada unidade com 90 g - 21 g de Proteina','crepioca/crepioca_frango_large.jpg','crepioca/crepioca_frango1.jpg','crepioca/crepioca_frango2.jpg','crepioca/crepioca_frango3.jpg','crepioca/crepioca_frango_video.mp4' from SALEABLE_ID_Generator
+insert into product(product_id,product_flavor_id,product_type_id, ingredients) select saleable_id,1,1, 'Peito de frango, creme de ricota, ovos, fecula de mandioca, curry, pimenta do reino, alho, cheiro verde, coentro, sal rosa' from saleable where name = 'Crepioca de Frango' ;
 /*stock and destribuição*/
-with a as (select * from distribution d inner join factory f on f.factory_id = d.factory_id inner join profile p on p.profile_id = f.factory_id inner join person pe on pe.person_id = p.person_id where pe.email = 'deyse.joaquim@gmail.com'), b as (select product_id from product p inner join saleable s on p.product_id = s.saleable_id where s.name='Crepioca de frango') insert into distributionproduct(stock,distribution_id,product_id) select 10, a.distribution_id,b.product_id from a,b;    
+with a as (select * from distribution d inner join factory f on f.factory_id = d.factory_id inner join profile p on p.profile_id = f.factory_id inner join person pe on pe.person_id = p.person_id where pe.email = 'deyse.joaquim@gmail.com'), b as (select product_id from product p inner join saleable s on p.product_id = s.saleable_id where s.name='Crepioca de Frango') insert into distributionproduct(stock,distribution_id,product_id) select 10, a.distribution_id,b.product_id from a,b;    
 
 insert into productnutrition(nutrition_table_id, product_id, value,vd) select nutrition_table_id, 1, 60, null from nutritiontable where name = 'Porção';
 insert into productnutrition(nutrition_table_id, product_id, value,vd) select nutrition_table_id, 1, 125, 624 from nutritiontable where name = 'Valor energético';
@@ -357,7 +363,7 @@ insert into plancoach(signdays,trialdays,plan_id,saleable_id) select 30,7,2,sale
 /*inserindo os kits*/
 
 insert into kit(imageLarge,date,client) values(null,now(),false);
-insert into item(amount,kit_id,saleable_id) select 2,1, saleable_id from saleable where name = 'Crepioca de frango';
+insert into item(amount,kit_id,saleable_id) select 2,1, saleable_id from saleable where name = 'Crepioca de Frango';
 
 
 insert into kit(imageLarge,date,client) values(null,now(),false);
@@ -389,8 +395,8 @@ insert into kit(imageLarge,date,client) values(null,now(),false);
 with a as(select max(kit_id) from kit), b as (select saleable_id from saleable where name = 'Plano AjaFit Pronto') insert into item(amount,kit_id,saleable_id)  select 2,a.*,b.* from a,b;
 
 insert into kit(name, imageLarge, image1, image2, image3, date,client) values('Crepioca Carne + Frango','crepioca/kit_carne_frango_large.jpg','crepioca/kit_carne_frango1.jpg','crepioca/kit_carne_frango2.jpg','crepioca/kit_carne_frango3.jpg' ,now(),false); /*crepicoa de frango + crepioca de carne*/
-with a as(select max(kit_id) from kit), b as (select saleable_id from saleable where name = 'Crepioca de frango') insert into item(amount,kit_id,saleable_id)  select 2,a.*,b.* from a,b;
-with a as(select max(kit_id) from kit), b as (select saleable_id from saleable where name = 'Crepioca de carne') insert into item(amount,kit_id,saleable_id)  select 2,a.*,b.* from a,b;
+with a as(select max(kit_id) from kit), b as (select saleable_id from saleable where name = 'Crepioca de frango') insert into item(amount,kit_id,saleable_id)  select 1,a.*,b.* from a,b;
+with a as(select max(kit_id) from kit), b as (select saleable_id from saleable where name = 'Crepioca de carne') insert into item(amount,kit_id,saleable_id)  select 1,a.*,b.* from a,b;
 
 insert into kit(imageLarge,date,client) values(null,now(),false);
 with a as(select max(kit_id) from kit), b as (select saleable_id from saleable where name = 'Crepioca de frango com Alho Poró') insert into item(amount,kit_id,saleable_id)  select 2,a.*,b.* from a,b;
@@ -414,8 +420,8 @@ insert into coupon(code,date,discount,amountToGetOneFree, expired,seller_id,kit_
 insert into coupon(code,date,discount,amountToGetOneFree, expired,seller_id,kit_id) values('m1234567890',now(),200,0,false,5,12);
 insert into coupon(code,date,discount,amountToGetOneFree, expired,seller_id,kit_id) values('n1234567890',now(),200,0,false,5,13);
 
-insert into coupon(code,date,discount,amountToGetOneFree, expired,seller_id,kit_id) values('o1234567890',now(),100,0,false,5,1);
-insert into coupon(code,date,discount,amountToGetOneFree, expired,seller_id,kit_id) values('p1234567890',now(),100,0,false,5,2);
+insert into coupon(code,date,discount,amountToGetOneFree, expired,seller_id,kit_id) values('o1234567890',now(),300,0,false,5,1);
+insert into coupon(code,date,discount,amountToGetOneFree, expired,seller_id,kit_id) values('p1234567890',now(),200,0,false,5,2);
 insert into coupon(code,date,discount,amountToGetOneFree, expired,seller_id,kit_id) values('q1234567890',now(),0,0,false,5,3);
 
 

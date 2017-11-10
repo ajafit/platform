@@ -93,7 +93,7 @@ public class ProfileService extends ServiceValidation {
 			throw new WebApplicationException("token invalido", 401);
 		}
 		Person person = persistence.getPersonByToken(token);
-		if (person == null) {
+		if (person == null || (person.getTemp() != null) && person.getTemp() == true) {
 			throw new WebApplicationException("token inexistente", 401);
 		}
 		Calendar calTenMinutesAgo = Calendar.getInstance();
@@ -139,7 +139,7 @@ public class ProfileService extends ServiceValidation {
 	public EntityDTO login(EntityDTO dto) {
 		required(dto.getEmail(), dto.getPassword());
 		Person person = persistence.getPersonByEmailAndPassword(dto.getEmail(), dto.getPassword());
-		if (person == null) {
+		if (person == null || (person.getTemp() != null) && person.getTemp() == true) {
 			throw new WebApplicationException("login or password invalid!!", 401);
 		}
 		String token = HashHelper.generateToken(person.getId() + "");

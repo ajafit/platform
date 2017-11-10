@@ -1,5 +1,5 @@
 <!-- <button class="btn btn-default" (click)="goBack()">Voltar</button> -->
-<div class="row" style="margin-top: 40px; margin-left: 30px;">
+<div class="row" style="margin-top: 40px; margin-left: 30px;" *ngIf="item">
 
 
 	<div class="col-5">
@@ -35,49 +35,55 @@
 		<div>
 			<br />
 			<div class="alert alert-info" style="text-align: center;">Sugestões</div>
-			<div class="row" *ngIf="item.related">
-				<div class="col-6">.</div>
-				<div class="col" style="text-align: right;">
-					<span>Nota</span>
+			<div class="row" *ngIf="item">
+				<div class="row" *ngIf="item.related">
+					<div class="col-6">.</div>
+					<div class="col" style="text-align: right;">
+						<span>Nota</span>
+					</div>
+					<div class="col">.</div>
 				</div>
-				<div class="col">.</div>
 			</div>
-			<div *ngFor="let rel of item.related">
-				<div class="row">
-					<div class="col-6">
-						<div>
-							<img src="../assets/{{rel.image1}}" alt="First slide"
-								style="margin: auto; width: 80px; max-height: 80px;"> <span
-								*ngIf="rel.valueFinal"
-								style="text-decoration: line-through; font-size: 12px;">R${{rel.value}}</span>
-							<span *ngIf="rel.valueFinal"
-								style="font-weight: bold; font-size: 14px;">R${{rel.valueFinal}}</span>
-							<span *ngIf="!rel.valueFinal"
-								style="font-weight: bold; font-size: 14px;">R${{rel.value}}</span>
+			<div *ngIf="item && item.related">
+				<div *ngFor="let rel of item.related">
+					<div class="row">
+						<div class="col-6">
+							<div>
+								<img src="../assets/{{rel.image1}}" alt="First slide"
+									style="margin: auto; width: 80px; max-height: 80px;"> <span
+									*ngIf="rel.valueFinal"
+									style="text-decoration: line-through; font-size: 12px;">R${{rel.value}}</span>
+								<span *ngIf="rel.valueFinal"
+									style="font-weight: bold; font-size: 14px;">R${{rel.valueFinal}}</span>
+								<span *ngIf="!rel.valueFinal"
+									style="font-weight: bold; font-size: 14px;">R${{rel.value}}</span>
+
+
+							</div>
 
 
 						</div>
-
-
-					</div>
-					<div class="col" style="text-align: right; padding: 15px;">
-						<span>{{rel.rate}}</span>
-					</div>
-					<div class="col">
-						<div style="text-align: center;">
-							<div>
-
+						<div class="col" style="text-align: right; padding: 15px;">
+							<span>{{rel.rate}}</span>
+						</div>
+						<div class="col">
+							<div style="text-align: center;">
+								<div>
+									<!-- 
 								<a href="javascript:alert('comprar')" class="btn btn-primary"
-									style="background-color: #38704b; border-color: #38704b; font-size: 12px; margin-left: 0px;">Comprar</a>
+									style="background-color: #38704b; border-color: #38704b; font-size: 12px; margin-left: 0px;">Comprar</a> -->
+									<button class="btn btn-success" type="submit"
+										(click)="addItem(rel)">Comprar</button>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-				<div class="row">
-					<div class="col">{{rel.name}}</div>
-				</div>
-				<hr />
+					<div class="row">
+						<div class="col">{{rel.name}}</div>
+					</div>
+					<hr />
 
+				</div>
 			</div>
 		</div>
 
@@ -90,17 +96,24 @@
 
 				<div
 					style="display: inline-block; margin-left: 10%; vertical-align: top;">
-					<span *ngIf="item.valueFinal"
+					<span *ngIf="item && item.valueFinal"
 						style="text-decoration: line-through; font-size: x-small;">R${{item.value}}</span>
-					<span *ngIf="item.valueFinal"
+					<span *ngIf="item && item.valueFinal"
 						style="font-weight: bold; font-size: large;">R${{item.valueFinal}}</span>
 
-					<span *ngIf="!item.valueFinal"
+					<span *ngIf="item && !item.valueFinal"
 						style="font-weight: bold; font-size: large;">R${{item.value}}</span>
 					<br />
 					<div style="width: 80%; margin: auto;">
-						<a href="javascript:alert('comprar')" class="btn btn-primary"
-							style="background-color: #38704b; border-color: #38704b;">Comprar</a>
+						<!-- 	<a routerLink="/item-detail" class="btn btn-primary"
+							style="background-color: #38704b; border-color: #38704b;" (click) = "addItem()">Comprar</a> -->
+						<!-- <button class="btn btn-success" type="submit"
+							(click)="addItem(item)"  data-toggle="modal" data-target=".added">lComprar</button> -->
+							
+							<button class="btn btn-success" type="submit"
+							(click)="addItem(item)"  data-toggle="modal" >Comprar</button>
+
+
 					</div>
 				</div>
 
@@ -110,18 +123,23 @@
 
 			<div style="margin-left: 20px;">
 
-				<div *ngIf="item.rate">
-				<div *ngFor="let i of getRates(); index as idx;"
-					style="display: inline;">
-					<fa *ngIf="idx < parse(item.rate)" name="star fa-1x"
-						style="color:gold;"></fa>
-					<fa *ngIf="!(idx < parse(item.rate))" name="star-o fa-1x"
-						style="color:gold;"></fa>
+				<div *ngIf="item && item.rate">
+					<div *ngFor="let i of getRates(); index as idx;"
+						style="display: inline;">
+						<fa *ngIf="idx < parse(item.rate)" name="star fa-1x"
+							style="color:gold;"></fa>
+						<fa *ngIf="!(idx < parse(item.rate))" name="star-o fa-1x"
+							style="color:gold;"></fa>
+					</div>
+					<span>({{item.totalReviews}} Avaliações)</span>
 				</div>
-				<span>({{item.totalReviews}} Avaliações)</span>
 			</div>
+			<br />
+			<div style="margin-left: 20px;" *ngIf="item">
+				<div *ngFor="let i of getDescriptions(item.descriptions)">
+					{{i}}</div>
+
 			</div>
-			<div style="margin-left: 20px;">{{item.descriptions}}</div>
 			<hr />
 
 
@@ -162,7 +180,7 @@
 							<hr />
 							<div style="font-style: italic;">{{item.ingredients}}</div>
 							<hr />
-							
+
 						</div>
 					</div>
 				</div>
@@ -222,3 +240,26 @@
 
 			</div>
 		</div>
+		
+<!-- <button class="btn btn-primary" data-toggle="modal" data-target=".added">Large modal</button> -->
+
+
+
+<div class="modal fade added"  id="added">
+  <div class="modal-dialog show" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>{{getMessage()}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

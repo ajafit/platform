@@ -64,8 +64,11 @@
 			<li *ngIf="!getProfile()"><a
 				class="nav navbar-nav nav-item nav-link" routerLink="/auth"><fa
 						name="user fa-2x"></fa></a></li>
-			<li><a class="nav navbar-nav nav-item nav-link"
-				routerLink="/cart"><fa name="shopping-cart fa-2x"></fa></a></li>
+			<li>
+				<a class="nav navbar-nav nav-item nav-link"	routerLink="/cart">
+				<fa name="shopping-cart fa-2x"></fa> 
+				<span class="badge">{{cartNumber}}</span></a>
+			</li> 
 		</ul>
 
 	</div>

@@ -10,6 +10,11 @@ import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Entity
 @Table(name = "[order]")
 public class Order {
@@ -20,11 +25,13 @@ public class Order {
 	private long id;
 
 	@ManyToOne
-	@JoinColumns(value = { @JoinColumn(name = "coupon_id"), @JoinColumn(name = "couchee_id") })
+	@JoinColumns(value = { @JoinColumn(name = "couchee_id"), @JoinColumn(name = "coupon_id") })
 	private CouponUsage couponUsage;
 
 	@ManyToOne
 	@JoinColumn(name = "cart_id")
 	private Cart cart;
+
+	private int amount;
 
 }

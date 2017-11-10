@@ -37,6 +37,9 @@ public class Person {
 
 	private Date register;
 
+	@Column(nullable = true)
+	private Boolean temp;
+
 	private String image;
 	@Column(columnDefinition = "character")
 	@Enumerated(EnumType.STRING)
