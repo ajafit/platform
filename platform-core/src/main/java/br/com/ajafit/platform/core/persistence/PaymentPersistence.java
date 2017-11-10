@@ -2,6 +2,9 @@ package br.com.ajafit.platform.core.persistence;
 
 import java.util.Collection;
 
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.Query;
+
 import br.com.ajafit.platform.core.domain.Cart;
 import br.com.ajafit.platform.core.domain.Coachee;
 import br.com.ajafit.platform.core.domain.CouponUsage;
@@ -21,15 +24,22 @@ public abstract class PaymentPersistence extends CoachPersistence {
 		return cart;
 	}
 
+	public void removeCart(Cart cart) {
+		em.remove(cart);
+
+	}
+
 	public Cart getCartByCoachee(Coachee coachee) {
-		try {
-			return (Cart) em.createQuery(
-					"select o.cart from Order o where o.couponUsage.id.coachee = :COACHEE and o.cart.done is false")
-					.setParameter("COACHEE", coachee).getSingleResult();
-		} catch (Exception e) {
-			e.printStackTrace();
+
+		Collection<Cart> carts = em
+				.createQuery(
+						"select o.cart from Order o where o.couponUsage.id.coachee = :COACHEE and o.cart.done is false")
+				.setParameter("COACHEE", coachee).getResultList();
+		if (carts.isEmpty()) {
+			return null;
+		} else {
+			return carts.iterator().next();
 		}
-		return null;
 
 	}
 
@@ -48,15 +58,50 @@ public abstract class PaymentPersistence extends CoachPersistence {
 
 	}
 
+	public void removeOrder(Order order) {
+		em.remove(order);
+
+	}
+
+	public Order getOrderById(long id) {
+		return em.find(Order.class, id);
+	}
+
 	public Collection<Order> getOrdersByCart(Cart cart) {
 
 		return em.createQuery("from Order o where o.cart = :CART").setParameter("CART", cart).getResultList();
 	}
 
-	public CouponUsage createCouponUsage(CouponUsage couponUsage) {
+	public Collection<Order> getOrdersByCouponUsage(CouponUsage couponUsage) {
 
-		em.persist(couponUsage);
-		return couponUsage;
+		return em.createQuery("from Order o where o.couponUsage = :USAGE").setParameter("USAGE", couponUsage)
+				.getResultList();
+	}
+
+	public CouponUsage createOrGetCouponUsage(CouponUsage couponUsage) {
+
+		Query q = em.createQuery("from CouponUsage c where c.id.coupon = :COUPON and c.id.coachee = :COACHEE")
+				.setParameter("COUPON", couponUsage.getId().getCoupon())
+				.setParameter("COACHEE", couponUsage.getId().getCoachee());
+		Collection<CouponUsage> col = q.getResultList();
+		if (col.isEmpty()) {
+			em.persist(couponUsage);
+			return couponUsage;
+		} else {
+			return col.iterator().next();
+		}
+	}
+
+	public CouponUsage updateCouponUsage(CouponUsage couponUsage) {
+
+		return em.merge(couponUsage);
+
+	}
+
+	public void removeCouponUsage(CouponUsage couponUsage) {
+
+		em.remove(couponUsage);
+
 	}
 
 	public CouponUsage getCouponUsageById(CouponUsagePK id) {

@@ -3,7 +3,6 @@ package br.com.ajafit.platform.core.service.dto;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,6 +11,7 @@ import org.jboss.logging.Logger;
 
 import br.com.ajafit.platform.core.domain.Coupon;
 import br.com.ajafit.platform.core.domain.Item;
+import br.com.ajafit.platform.core.domain.Order;
 import br.com.ajafit.platform.core.domain.Person;
 import br.com.ajafit.platform.core.domain.Product;
 import br.com.ajafit.platform.core.domain.ProductNutrition;
@@ -38,23 +38,38 @@ public class EntityDTOConverter {
 		return dto;
 	}
 
+	public static ScreenItemDTO parse(Order order) {
+		ScreenItemDTO dto = new ScreenItemDTO();
+		dto.setItemId(order.getId());
+		Coupon coupon = order.getCouponUsage().getId().getCoupon();
+		dto = fillImagesFromCoupon(coupon, dto);
+		dto.setName(getNameFromCoupon(coupon));
+		dto.setDescriptions(getDescriptionsFromCoupon(coupon));
+		dto.setAmount(order.getAmount());
+		int value[] = MoneyHelper.calculate(coupon);
+		dto.setValue(MoneyHelper.toString(value[0]));
+		dto.setValueFinal(value.length == 2 ? MoneyHelper.toString(value[1]) : null);
+		return dto;
+
+	}
+
 	public static ScreenItemDTO parse(ScreenConfig screenConfig) {
 
 		Coupon coupon = screenConfig.getId().getCoupon();
 
 		ScreenItemDTO dto = new ScreenItemDTO();
-		
-		/*se fizer isso vai ser baca!!*/
-		//dto.setItemId(coupon.getKit().getItems().iterator().next().getId().getSaleable().getId());
-		
+
+		/* se fizer isso vai ser baca!! */
+		// dto.setItemId(coupon.getKit().getItems().iterator().next().getId().getSaleable().getId());
+
 		dto.setCouponId(coupon.getId());
 		dto.setScreenId(screenConfig.getId().getScreen().getId());
 		dto.setAmountToGetOneFree(coupon.getAmountToGetOneFree() == 0 ? null : coupon.getAmountToGetOneFree());
 
 		/* setting name and descriptions */
 		if (coupon.getKit().getName() == null) {
-			String name = getNameFromItems(coupon.getKit().getItems());
-			String desc = getDescriptionsFromItems(coupon.getKit().getItems());
+			String name = getNameFromCoupon(coupon);
+			String desc = getDescriptionsFromCoupon(coupon);
 			dto.setName(name);
 			dto.setDescriptions(desc);
 
@@ -64,6 +79,23 @@ public class EntityDTOConverter {
 		}
 
 		/* setting images and video */
+		dto = fillImagesFromCoupon(coupon, dto);
+
+		/* setting value and priority */
+		int value[] = MoneyHelper.calculate(coupon);
+		dto.setValue(MoneyHelper.toString(value[0]));
+		dto.setValueFinal(value.length == 2 ? MoneyHelper.toString(value[1]) : null);
+		dto.setPriority(screenConfig.getPriority());
+
+		/* setting items */
+		LinkedList<ScreenItemDTO> items = new LinkedList<>();
+		coupon.getKit().getItems().stream().forEach((Item i) -> items.add(parse(i)));
+		dto.setItems(items.toArray(new ScreenItemDTO[0]));
+
+		return dto;
+	}
+
+	private static ScreenItemDTO fillImagesFromCoupon(Coupon coupon, ScreenItemDTO dto) {
 		if (coupon.getKit().getImage1() == null) {
 			dto.setImageLarge(coupon.getKit().getItems().iterator().next().getId().getSaleable().getImageLarge());
 			dto.setImage1(coupon.getKit().getItems().iterator().next().getId().getSaleable().getImage1());
@@ -78,19 +110,6 @@ public class EntityDTOConverter {
 			dto.setImage3(coupon.getKit().getImage3());
 			dto.setVideo(coupon.getKit().getVideo());
 		}
-
-		/* setting value and priority */
-		int value[] = MoneyHelper.calculate(coupon);
-		dto.setValue(MoneyHelper.toString(value[0]));
-		dto.setValueFinal(value.length == 2 ? MoneyHelper.toString(value[1]) : null);
-		dto.setPriority(screenConfig.getPriority());
-
-		
-		/* setting items */
-		LinkedList<ScreenItemDTO> items = new LinkedList<>();
-		coupon.getKit().getItems().stream().forEach((Item i) -> items.add(parse(i)));
-		dto.setItems(items.toArray(new ScreenItemDTO[0]));
-
 		return dto;
 	}
 
@@ -113,7 +132,9 @@ public class EntityDTOConverter {
 
 	}
 
-	private static String getNameFromItems(Collection<Item> items) {
+	private static String getNameFromCoupon(Coupon coupon) {
+		Collection<Item> items = coupon.getKit().getItems();
+
 		StringBuilder bf = new StringBuilder();
 		String delimiter = items.size() > 1 ? "|" : "";
 		// long count = items.stream().map((Item i) ->
@@ -139,7 +160,8 @@ public class EntityDTOConverter {
 		System.err.println("test" + c + d);
 	}
 
-	private static String getDescriptionsFromItems(Collection<Item> items) {
+	private static String getDescriptionsFromCoupon(Coupon coupon) {
+		Collection<Item> items = coupon.getKit().getItems();
 		StringBuilder bf = new StringBuilder();
 		String delimiter = items.size() > 1 ? "|" : "";
 		items.stream().forEach((Item i) -> bf.append(i.getId().getSaleable().getDescriptions() + delimiter));

@@ -12,7 +12,7 @@ import {AboutComponent} from './about/about.component';
 
 import {ItemComponent} from './item/item.component';
 import {ItemDetailComponent} from './item/item-detail.component';
-
+import {CartComponent} from './cart/cart.component';
 
 const routes: Routes = [{
   path: 'auth',
@@ -20,6 +20,9 @@ const routes: Routes = [{
 }, {
   path: 'about',
   component: AboutComponent
+}, {
+  path: 'cart',
+  component: CartComponent
 }, {
   path: 'profile',
   component: ProfileComponent

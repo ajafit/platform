@@ -10,6 +10,7 @@ import {ProfileService} from './profile/profile.service';
 import {AuthComponent} from './auth/auth.component';
 
 import {ItemService} from './item/item.service';
+import {CartComponent} from './cart/cart.component';
 
 @Component({
   selector: 'app-root',
@@ -19,28 +20,25 @@ import {ItemService} from './item/item.service';
 })
  @Injectable()
 export class AppComponent  implements OnInit {
-  constructor(private profileService: ProfileService, private router: Router, private itemService: ItemService) {}
+  constructor(private ps: ProfileService, private router: Router, private is: ItemService) {}
   title = 'app center';
   profile: Profile;
   cartNumber: number;
-  //cartNumber = 1;
   getProfile(): Profile {
-    this.profile = this.profileService.getSelectedProfile();
-  //  if (this.router.url === '/dashboard' || this.router.url === '/') {
-   // } else if (this.profile == null && this.router.url !== '/auth') {
-   //   this.router.navigate(['/auth']);
-   // }
-  return this.profile;
+    this.profile = this.ps.getSelectedProfile();
+    return this.profile;
   }
   ngOnInit(): void {
-   this.itemService.getCartNumber().then(resp => this.setCartNumber(resp));
+   this.is.getCartNumber().then(resp => this.setCartNumber(resp));
   }
   logout(): void {
-    this.profileService.logout();
+    this.ps.logout();
+    this.setCartNumber(null);
   }
   setCartNumber(n: number): void {
     this.cartNumber = n;
-    console.log('atualizando: '+this.cartNumber);
+    console.log('setting:'+n);
   }
+
 
 }

@@ -4,7 +4,7 @@ import {Router} from '@angular/router';
 import {ProfileService} from '../profile/profile.service';
 import {OnInit} from '@angular/core';
 import {Profile} from '../profile/profile';
-
+import {AppComponent} from '../app.component';
 
 
 @Component({
@@ -13,7 +13,7 @@ import {Profile} from '../profile/profile';
   styleUrls: ['./auth.component.css'],
 })
 export class AuthComponent implements OnInit {
-  constructor(private profileService: ProfileService, private router: Router) {}
+  constructor(private profileService: ProfileService, private router: Router, private appComponent: AppComponent) {}
   login =  '';
   senha = '';
   ngOnInit(): void {
@@ -23,5 +23,6 @@ export class AuthComponent implements OnInit {
   }
   navigate(profile: Profile): void {
     this.router.navigate(['/']);
+    this.appComponent.ngOnInit();
   }
 }

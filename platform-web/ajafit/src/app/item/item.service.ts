@@ -16,6 +16,9 @@ export class ItemService {
   itemURL = 'http://localhost:8080/ajafit/platform/service/screen/detail/';
   itemAddURL = 'http://localhost:8080/ajafit/platform/service/cart/add';
   cartNumberURL = 'http://localhost:8080/ajafit/platform/service/cart/number';
+  cartItemsURL = 'http://localhost:8080/ajafit/platform/service/cart/items';
+  removerItemURL = 'http://localhost:8080/ajafit/platform/service/cart/remove';
+  changeAmountURL = 'http://localhost:8080/ajafit/platform/service/cart/amount';
   constructor(private http: Http) {}
   getItem(screenId: number, couponId: number): Promise<Item> {
     return this.http.get(this.itemURL + screenId + '/' + couponId, opts).toPromise().then(respo => this.parse(respo)).catch(this.error);
@@ -42,7 +45,16 @@ export class ItemService {
   addItem(item: Item): Promise<number> {
    return  this.http.post(this.itemAddURL, item, opts).toPromise().then(respo => this.parse2(respo));
   }
+  removeItem(item: Item): Promise<Boolean> {
+    return this.http.put(this.removerItemURL, item, opts).toPromise().then(r => true);
+  }
+   changeAmountItem(item: Item): Promise<Boolean> {
+    return this.http.put(this.changeAmountURL, item, opts).toPromise().then(r => true);
+  }
    getCartNumber(): Promise<number> {
    return  this.http.get(this.cartNumberURL, opts).toPromise().then(respo => this.parse2(respo));
+  }
+   getCartItems(): Promise<Item[]> {
+   return  this.http.get(this.cartItemsURL, opts).toPromise().then(respo => this.parse(respo));
   }
 }

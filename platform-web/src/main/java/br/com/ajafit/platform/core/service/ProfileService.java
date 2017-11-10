@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.ejb.Stateless;
@@ -25,7 +26,12 @@ import javax.ws.rs.core.MediaType;
 import org.jboss.logging.Logger;
 import org.jboss.resteasy.spi.ResteasyProviderFactory;
 
+import br.com.ajafit.platform.core.domain.Cart;
+import br.com.ajafit.platform.core.domain.Coachee;
+import br.com.ajafit.platform.core.domain.CouponUsage;
+import br.com.ajafit.platform.core.domain.CouponUsagePK;
 import br.com.ajafit.platform.core.domain.Manager;
+import br.com.ajafit.platform.core.domain.Order;
 import br.com.ajafit.platform.core.domain.Person;
 import br.com.ajafit.platform.core.domain.PersonAuthType;
 import br.com.ajafit.platform.core.domain.PersonGender;
@@ -142,6 +148,16 @@ public class ProfileService extends ServiceValidation {
 		if (person == null || (person.getTemp() != null) && person.getTemp() == true) {
 			throw new WebApplicationException("login or password invalid!!", 401);
 		}
+
+		/* caso houver,,,troca carrinho para recem autenticado */
+		try {
+			String token = AccessFilter.getToken(ResteasyProviderFactory.getContextData(HttpServletRequest.class));
+			changeCart(person, token);
+		} catch (Exception e) {
+			/* nao tem carrinho pra trocar */
+			logger.error(e);
+		}
+
 		String token = HashHelper.generateToken(person.getId() + "");
 		person.setToken(token);
 		person.setTokenDate(new Date());
@@ -157,6 +173,78 @@ public class ProfileService extends ServiceValidation {
 		ResteasyProviderFactory.getContextData(HttpServletResponse.class).addCookie(cookie);
 
 		return EntityDTOConverter.parse(person, profiles);
+	}
+
+	private void changeCart(Person person, String token) {
+
+		/* verifica se tem tmpPerson */
+		Person tmpPerson = persistence.getPersonByToken(token);
+		if (tmpPerson != null) {
+			/* se tem,, verifica se person atual tem perfil de coachee */
+			Collection<Profile> col = persistence.getProfilesFromPerson(person);
+
+			Coachee coachee = null;
+			try {
+				coachee = (Coachee) col.stream().filter((Profile p) -> p.getClass().getSimpleName().equals("Coachee"))
+						.findFirst().get();
+			} catch (Exception e) {
+				/* nao tem coachee! ignorar carrinho atual */
+				logger.warn("person: " + person.getEmail()
+						+ " nao tem perfil de coachee. descartando carrinho de compras e tmpperson");
+			}
+
+			/* coachee assume carrinho de tmpperson */
+			Collection<Profile> tmpCol = persistence.getProfilesFromPerson(tmpPerson);
+			Coachee tmpCoachee = (Coachee) tmpCol.stream()
+					.filter((Profile p) -> p.getClass().getSimpleName().equals("Coachee")).findFirst().get();
+
+			Cart tmpCart = this.persistence.getCartByCoachee(tmpCoachee);
+			Collection<Order> tmpOrders = this.persistence.getOrdersByCart(tmpCart);
+			Collection<CouponUsage> oldCouponUsages = tmpOrders.stream().map((Order o) -> o.getCouponUsage())
+					.collect(Collectors.toList());
+
+			if (coachee != null) {
+
+				/* limpar se houve, cart not done e orders de authperson */
+				Cart cart = persistence.getCartByCoachee(coachee);
+				if (cart != null) {
+					Collection<Order> orders = this.persistence.getOrdersByCart(cart);
+					Set<CouponUsage> set = orders.stream().map((Order o) -> o.getCouponUsage())
+							.collect(Collectors.toSet());
+					orders.stream().forEach((Order o) -> persistence.removeOrder(o));
+
+					set.stream().filter((CouponUsage c) -> persistence.getOrdersByCouponUsage(c).isEmpty())
+							.forEach((CouponUsage c) -> persistence.removeCouponUsage(c));
+
+					persistence.removeCart(cart);
+					// persistence.getCouponUsageById(id)
+				}
+
+				/* troca carrinnho de tmpperson pra auth person */
+				
+				final Coachee finalCoachee = coachee;
+				tmpOrders.stream().forEach((Order o) -> o
+						.setCouponUsage(persistence.createOrGetCouponUsage(mountCouponUsage(o, finalCoachee))));
+				oldCouponUsages.stream().forEach((CouponUsage c) -> persistence.removeCouponUsage(c));
+				tmpOrders.stream().forEach((Order o) -> persistence.updateOrder(o));
+			} else {
+				tmpOrders.stream().forEach((Order o) -> persistence.removeOrder(o));
+				persistence.removeCart(tmpCart);
+			}
+
+			this.persistence.removeCouchee(tmpCoachee);
+			this.persistence.removePerson(tmpPerson);
+
+			logger.info("carrinho trocado..");
+
+		}
+
+	}
+
+	private static CouponUsage mountCouponUsage(Order o, Coachee coachee) {
+		CouponUsage c = new CouponUsage(new CouponUsagePK(o.getCouponUsage().getId().getCoupon(), coachee),
+				o.getCouponUsage().getDate(), new ArrayList<>());
+		return c;
 	}
 
 	@PUT

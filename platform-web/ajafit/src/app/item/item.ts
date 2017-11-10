@@ -21,4 +21,5 @@ export class Item {
   rate: string;
   totaReviews: number;
   count: number;
+  amount: number;
 }

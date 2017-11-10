@@ -23,6 +23,7 @@ import {AjafitInterceptor} from './ajafitinterceptor';
 import {ItemService} from './item/item.service';
 import {ItemComponent} from './item/item.component';
 import {ItemDetailComponent} from './item/item-detail.component';
+import {CartComponent} from './cart/cart.component';
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { AngularFontAwesomeModule } from 'angular-font-awesome/angular-font-awesome';
@@ -36,7 +37,8 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome/angular-font-awes
     AboutComponent,
     DashboardComponent,
     ItemComponent,
-    ItemDetailComponent
+    ItemDetailComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,
@@ -49,7 +51,7 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome/angular-font-awes
     NgbModule,
     AngularFontAwesomeModule
   ],
-  providers: [{provide: HTTP_INTERCEPTORS, useClass: AjafitInterceptor, multi: true}, ProfileService, ItemService],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: AjafitInterceptor, multi: true}, ProfileService, ItemService, CartComponent],
  /* providers: [ProfileService],*/
   bootstrap: [AppComponent]
 })

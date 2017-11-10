@@ -1,7 +1,12 @@
 package br.com.ajafit.platform.core.service;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.ejb.Stateless;
 import javax.servlet.http.Cookie;
@@ -10,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
@@ -27,6 +33,7 @@ import br.com.ajafit.platform.core.domain.Order;
 import br.com.ajafit.platform.core.domain.Person;
 import br.com.ajafit.platform.core.domain.Profile;
 import br.com.ajafit.platform.core.domain.ScreenConfig;
+import br.com.ajafit.platform.core.service.dto.EntityDTOConverter;
 import br.com.ajafit.platform.core.service.dto.HashHelper;
 import br.com.ajafit.platform.core.service.dto.ScreenItemDTO;
 
@@ -35,6 +42,33 @@ import br.com.ajafit.platform.core.service.dto.ScreenItemDTO;
 public class CartService extends ServiceValidation {
 
 	private Logger logger = Logger.getLogger(CartService.class);
+
+	@PUT
+	@Consumes(MediaType.APPLICATION_JSON + ";charset=utf-8")
+	@Path("/remove")
+	public void remove(ScreenItemDTO dto) {
+		required(dto.getItemId());
+		Order order = persistence.getOrderById(dto.getItemId());
+		if (order != null) {
+			persistence.removeOrder(order);
+			logger.info("order removed");
+		}
+
+	}
+
+	@PUT
+	@Consumes(MediaType.APPLICATION_JSON + ";charset=utf-8")
+	@Path("/amount")
+	public void changeAmount(ScreenItemDTO dto) {
+		required(dto.getItemId(), dto.getAmount());
+		Order order = persistence.getOrderById(dto.getItemId());
+		if (order != null) {
+			order.setAmount(dto.getAmount());
+			persistence.updateOrder(order);
+			logger.info("order  atualizado");
+		}
+
+	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON + ";charset=utf-8")
@@ -67,7 +101,7 @@ public class CartService extends ServiceValidation {
 			/* se n tem cria */
 			couponUsage = new CouponUsage();
 			couponUsage.setId(new CouponUsagePK(coupon, coachee));
-			couponUsage = this.persistence.createCouponUsage(couponUsage);
+			couponUsage = this.persistence.createOrGetCouponUsage(couponUsage);
 		}
 
 		/* create or get cart */
@@ -84,8 +118,19 @@ public class CartService extends ServiceValidation {
 		} else {
 
 			/* tem order, pega e somar */
-			order = couponUsage.getOrders().stream().filter((Order o) -> !o.getCart().isDone()).findFirst().get();
-			order.setAmount(order.getAmount() + 1);
+			if (couponUsage.getOrders().stream().filter((Order o) -> !o.getCart().isDone()).findFirst().isPresent()) {
+				order = couponUsage.getOrders().stream().filter((Order o) -> !o.getCart().isDone()).findFirst().get();
+				order.setAmount(order.getAmount() + 1);
+
+			} else {
+				/* nao tem order para carrinho not done. */
+				order = new Order();
+				order.setAmount(1);
+				order.setCart(cart);
+				order.setCouponUsage(couponUsage);
+
+			}
+
 			order = this.persistence.createOrder(order);
 
 		}
@@ -160,6 +205,30 @@ public class CartService extends ServiceValidation {
 		}
 
 		return resp;
+
+	}
+
+	@GET
+	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
+	@Path("/items")
+	public Collection<ScreenItemDTO> items() {
+
+		Coachee coachee = getCoachee();
+		Cart cart = persistence.getCartByCoachee(coachee);
+		Collection<Order> col = this.persistence.getOrdersByCart(cart);
+		if (col.isEmpty()) {
+			return new ArrayList<ScreenItemDTO>();
+		}
+		List<ScreenItemDTO> list = col.stream().map((Order o) -> EntityDTOConverter.parse(o))
+				.collect(Collectors.toList());
+
+		list.sort(new Comparator<ScreenItemDTO>() {
+			public int compare(ScreenItemDTO o1, ScreenItemDTO o2) {
+				return o1.getItemId().compareTo(o2.getItemId());
+			}
+		});
+		
+		return list;
 
 	}
 

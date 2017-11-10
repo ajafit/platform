@@ -60,7 +60,7 @@ export class ItemDetailComponent implements OnInit {
     return true;
   }
   setItem(count: number): void {
-    this.message = 'foda-se';
+    this.message = 'Item adicionado em Carrinho..';
     $('#added').modal('toggle');
     //$('#added').modal('show');
     this.a.setCartNumber(count);

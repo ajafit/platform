@@ -14,6 +14,10 @@ import br.com.ajafit.platform.core.domain.Profile;
 
 public abstract class ProfilePersistence extends BasePersistence {
 
+	public void removePerson(Person person) {
+		em.remove(person);
+	}
+
 	public Person createPerson(Person person) {
 		em.persist(person);
 		return person;
@@ -100,6 +104,11 @@ public abstract class ProfilePersistence extends BasePersistence {
 	public Coachee createCouchee(Coachee couchee) {
 		em.persist(couchee);
 		return couchee;
+	}
+
+	public void removeCouchee(Coachee couchee) {
+		em.remove(couchee);
+
 	}
 
 	public Coachee getCoacheeById(long id) {

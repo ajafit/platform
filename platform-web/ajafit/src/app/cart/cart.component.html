@@ -1,0 +1,61 @@
+<div style="margin-left: 20px;">
+	<hr />
+	<div>
+		<h5>Seu Carrinho</h5>
+	</div>
+	<div class="row">
+		<div class="col-9">
+			<div *ngFor="let item of items" style="margin-left: 20px;">
+
+				<div class="row">
+					<div class="col">
+						<div style="width: 100px; height: 100px; display: inline-block;">
+							<img src="../assets/{{item.image1}}" alt="First slide"
+								style="margin: auto; width: 100%; max-height: 300px;">
+						</div>
+						<div
+							style="margin-left: 30px; display: inline-block; vertical-align: middle;">
+							{{item.name}}<br />
+							<div *ngFor="let i of getDescriptions(item.descriptions)">{{i}}</div>
+						</div>
+					</div>
+					<div class="col">
+						<div
+							style="margin-left: 0px; display: inline-block; vertical-align: middle;">
+
+							<span *ngIf="item.valueFinal"
+								style="text-decoration: line-through; font-size: 12px;">R${{item.value}}</span>
+							<span *ngIf="item.valueFinal"
+								style="font-weight: bold; font-size: 14px;">R${{item.valueFinal}}</span>
+							<span *ngIf="!item.valueFinal"
+								style="font-weight: bold; font-size: 14px;">R${{item.value}}</span>
+
+						</div>
+
+						<div
+							style="margin-left: 50px; display: inline-block; vertical-align: middle;">
+							<div class="form-group" style="display: inline-block;">
+								<label for="select1">Quantidade</label> <select [(ngModel)]="item.amount"
+									class="form-control" id="select1" (change)="onChange(item)">
+									
+									<!-- <option *ngFor="let a of getAmountArray(); index as idx;"
+										[selected]="(idx+1) === item.amount" (select)="click()">{{idx+1}}</option>
+									 -->
+									  <option *ngFor="let a of getAmountArray(); index as idx;">{{idx+1}}</option>
+								</select>
+
+							</div>
+							<a routerLink="/cart" style="margin-left: 10px;" (click)="remover(item)">Remover</a>
+
+						</div>
+
+						
+					</div>
+				</div>
+				<hr />
+			</div>
+		</div>
+		<div class="col-3">direita</div>
+
+	</div>
+</div>
