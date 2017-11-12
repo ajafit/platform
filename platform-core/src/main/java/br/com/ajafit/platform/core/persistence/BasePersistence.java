@@ -41,6 +41,17 @@ public abstract class BasePersistence {
 		return query.getResultList();
 	}
 
+	public Region getRegionByDescription(String descriptions) {
+		Query query = em.createQuery("select r from Region r where r.descriptions = :DESC");
+		query.setParameter("DESC", descriptions)
+		return (Region) query.getSingleResult();
+
+	}
+
+	public Region getRegionByID(long id) {
+		return (Region) em.find(Region.class, id);
+	}
+
 	public Collection<ScreenConfig> findCouponsByScreenCode(String code) {
 
 		Query query = em

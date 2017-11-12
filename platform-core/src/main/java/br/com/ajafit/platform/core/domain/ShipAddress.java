@@ -7,6 +7,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Entity
 public class ShipAddress {
 
@@ -17,5 +22,9 @@ public class ShipAddress {
 	@ManyToOne
 	@JoinColumn(name = "region_id")
 	private Region region;
+
+	private String address;
+	private String complement;
+	private String reference;
 
 }

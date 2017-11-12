@@ -1,11 +1,11 @@
-<div style="margin-left: 20px;">
+<div style="margin-left: 20px;" *ngIf="cart">
 	<hr />
 	<div>
 		<h5>Seu Carrinho</h5>
 	</div>
 	<div class="row">
-		<div class="col-9">
-			<div *ngFor="let item of items" style="margin-left: 20px;">
+		<div class="col-8">
+			<div *ngFor="let item of cart.items" style="margin-left: 10px;">
 
 				<div class="row">
 					<div class="col">
@@ -14,7 +14,7 @@
 								style="margin: auto; width: 100%; max-height: 300px;">
 						</div>
 						<div
-							style="margin-left: 30px; display: inline-block; vertical-align: middle;">
+							style="margin-left: 10px; display: inline-block; vertical-align: middle;">
 							{{item.name}}<br />
 							<div *ngFor="let i of getDescriptions(item.descriptions)">{{i}}</div>
 						</div>
@@ -23,8 +23,9 @@
 						<div
 							style="margin-left: 0px; display: inline-block; vertical-align: middle;">
 
-							<span *ngIf="item.valueFinal"
+							<!-- 	<span *ngIf="item.valueFinal"
 								style="text-decoration: line-through; font-size: 12px;">R${{item.value}}</span>
+						 -->
 							<span *ngIf="item.valueFinal"
 								style="font-weight: bold; font-size: 14px;">R${{item.valueFinal}}</span>
 							<span *ngIf="!item.valueFinal"
@@ -35,27 +36,117 @@
 						<div
 							style="margin-left: 50px; display: inline-block; vertical-align: middle;">
 							<div class="form-group" style="display: inline-block;">
-								<label for="select1">Quantidade</label> <select [(ngModel)]="item.amount"
-									class="form-control" id="select1" (change)="onChange(item)">
-									
+								<label for="select1">Quantidade</label> <select
+									[(ngModel)]="item.amount" class="form-control" id="select1"
+									(change)="onChange(item)">
+
 									<!-- <option *ngFor="let a of getAmountArray(); index as idx;"
 										[selected]="(idx+1) === item.amount" (select)="click()">{{idx+1}}</option>
 									 -->
-									  <option *ngFor="let a of getAmountArray(); index as idx;">{{idx+1}}</option>
+									<option *ngFor="let a of getAmountArray(); index as idx;">{{idx+1}}</option>
 								</select>
 
 							</div>
-							<a routerLink="/cart" style="margin-left: 10px;" (click)="remover(item)">Remover</a>
+							<a routerLink="/cart" style="margin-left: 10px;"
+								(click)="remover(item)">Remover</a>
 
 						</div>
 
-						
+
 					</div>
 				</div>
 				<hr />
 			</div>
 		</div>
-		<div class="col-3">direita</div>
+		<div class="col-4">
+
+			<div style="margin-top: 50px; height: 40%;">
+				<div style="font-size: 12px;">
+					<b>Observação:</b><br />
+					<p style="margin-left: 10px;">Frete Grátis Para Compras Acima
+						De R$100,00</p>
+				</div>
+				<hr />
+				<div class="alert alert-info" style="margin-top: 20px;">
+					<h5>Resumo do Pedido</h5>
+				</div>
+				<div>
+					<div style="display: inline-block; width: 50%; margin-left: 10px;">
+						SubTotal do Pedido:</div>
+					<div style="display: inline-block; width: 40%; text-align: right;">
+						<b style="margin-right: 20px;"><span
+							class="bg-faded text-black">R${{cart.subTotalValue}}</span></b>
+					</div>
+				</div>
+				<div style="margin-top: 10px;" *ngIf="cart.region">
+					<div style="display: inline-block; width: 50%; margin-left: 10px;">
+						Frete Estimado:</div>
+					<div style="display: inline-block; width: 40%; text-align: right;">
+						<b style="margin-right: 20px;"><span
+							class="bg-faded text-black">R${{cart.estimatedShipping}}</span></b>
+					</div>
+				</div>
+
+				<div style="margin-top: 10px;" *ngIf="cart.region">
+					<div style="display: inline-block; width: 50%; margin-left: 10px;">
+						Região:</div>
+					<div style="display: inline-block; width: 40%; text-align: right;">
+						<b style="margin-right: 20px;"><span
+							class="bg-faded text-black"> <a href="#"
+								data-toggle="modal" data-target="#region">{{cart.region}}</a>
+
+
+						</span></b>
+					</div>
+
+				</div>
+
+				<div style="margin-top: 10px;" *ngIf="!cart.region">
+					<div style="display: inline-block; width: 50%; margin-left: 10px;">
+						Região:</div>
+					<div style="display: inline-block; width: 40%; text-align: right;">
+						<b style="margin-right: 20px;"><span
+							class="bg-faded text-black"> <a href="#"
+								data-toggle="modal" data-target="#region">Selecionar</a>
+
+
+						</span></b>
+					</div>
+
+
+
+				</div>
+
+
+				<div style="text-align: center; margin-top: 40px;">
+					<a  *ngIf="cart.region" href="#" class="btn btn-primary">FINALIZAR A COMPRA</a>
+					<a  *ngIf="!cart.region" href="#" class="btn btn-primary disabled">FINALIZAR A COMPRA</a>
+				</div>
+			</div>
+		</div>
 
 	</div>
+
+	<div class="modal fade added" id="region">
+		<div class="modal-dialog show" role="document">
+			<div class="modal-content">
+				<div class="modal-header bg-success">
+					<h5 class="modal-title">AjaFit Regiões</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body" class="bg-faded">
+					<h6>Escolha seu bairro para entrega</h6>
+					<app-region></app-region>
+				</div>
+				<div class="modal-footer bg-faded">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
+

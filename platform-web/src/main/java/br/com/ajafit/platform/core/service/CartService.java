@@ -1,8 +1,6 @@
 package br.com.ajafit.platform.core.service;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -17,6 +15,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
@@ -29,12 +28,19 @@ import br.com.ajafit.platform.core.domain.Coachee;
 import br.com.ajafit.platform.core.domain.Coupon;
 import br.com.ajafit.platform.core.domain.CouponUsage;
 import br.com.ajafit.platform.core.domain.CouponUsagePK;
+import br.com.ajafit.platform.core.domain.Deliver;
+import br.com.ajafit.platform.core.domain.Delivery;
 import br.com.ajafit.platform.core.domain.Order;
 import br.com.ajafit.platform.core.domain.Person;
 import br.com.ajafit.platform.core.domain.Profile;
+import br.com.ajafit.platform.core.domain.Region;
 import br.com.ajafit.platform.core.domain.ScreenConfig;
+import br.com.ajafit.platform.core.domain.ShipAddress;
+import br.com.ajafit.platform.core.service.dto.CartDTO;
 import br.com.ajafit.platform.core.service.dto.EntityDTOConverter;
 import br.com.ajafit.platform.core.service.dto.HashHelper;
+import br.com.ajafit.platform.core.service.dto.MoneyHelper;
+import br.com.ajafit.platform.core.service.dto.RegionDTO;
 import br.com.ajafit.platform.core.service.dto.ScreenItemDTO;
 
 @Path("/service/cart")
@@ -49,9 +55,44 @@ public class CartService extends ServiceValidation {
 	public void remove(ScreenItemDTO dto) {
 		required(dto.getItemId());
 		Order order = persistence.getOrderById(dto.getItemId());
+		CouponUsage couponUsage = null;
+		Coachee coachee = null;
+		Cart cart = null;
 		if (order != null) {
+			cart = order.getCart();
+			couponUsage = order.getCouponUsage();
+			coachee = order.getCouponUsage().getId().getCoachee();
+
 			persistence.removeOrder(order);
 			logger.info("order removed");
+		}
+		Collection<Order> col = persistence.getOrdersByCouponUsage(couponUsage);
+		if (col.isEmpty()) {
+			/* copou usage aponta pra nada.. limpar */
+			persistence.removeCouponUsage(couponUsage);
+		}
+		col = persistence.getOrdersByCart(cart);
+		if (col.isEmpty()) {
+			/* zerou as orders,, limpar cart tmpcoache e tmpperson */
+			Delivery delivery = cart.getDelivery();
+			ShipAddress reference = delivery.getShipAddress();
+
+			persistence.removeDelivery(delivery);
+
+			delivery = persistence.findDeliveryByShipAddress(reference);
+			if (delivery == null) {
+				/* limpa shipaddress */
+				persistence.removeShipAddress(reference);
+			}
+
+			persistence.removeCart(cart);
+
+			/*
+			 * if (coachee.getPerson().getTemp() != null && coachee.getPerson().getTemp()) {
+			 * persistence.removeCoachee(coachee);
+			 * persistence.removePerson(coachee.getPerson()); }
+			 */
+
 		}
 
 	}
@@ -68,6 +109,63 @@ public class CartService extends ServiceValidation {
 			logger.info("order  atualizado");
 		}
 
+	}
+
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON + ";charset=utf-8")
+	@Path("/region")
+	public void region(RegionDTO dto) {
+
+		required(dto.getRegionId());
+		Region region = persistence.getRegionByID(dto.getRegionId());
+		if (region == null) {
+			throw new WebApplicationException("parametro invalido", 400);
+		}
+
+		Coachee coachee = getCoachee();
+		Cart cart = persistence.getCartByCoachee(coachee);
+		if (cart.getDelivery() == null) {
+			ShipAddress address = new ShipAddress();
+			address.setRegion(region);
+			address = persistence.createShipAddress(address);
+
+			Delivery d = new Delivery();
+			d.setCart(cart);
+			d.setShipAddress(address);
+
+			d = persistence.createDelivery(d);
+			logger.info("delivery created: " + d);
+		} else {
+			if (!cart.getDelivery().getShipAddress().getRegion().equals(region)) {
+
+				ShipAddress address = new ShipAddress();
+				address.setRegion(region);
+				address = persistence.createShipAddress(address);
+
+				Delivery d = cart.getDelivery();
+				ShipAddress old = d.getShipAddress();
+				d.setShipAddress(address);
+				persistence.updateDelivery(d);
+
+				Delivery delivery = persistence.findDeliveryByShipAddress(old);
+				if (delivery == null) {
+					/* shipaddress orfao,, remover */
+					persistence.removeShipAddress(old);
+				}
+
+				logger.info("delivery  updated: " + d);
+			}
+		}
+
+	}
+
+	@GET
+	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
+	@Path("/region/tree/{filter}")
+	public RegionDTO regions(@PathParam("filter") String filter) {
+		Region region = persistence.findRegionById(Integer.parseInt(filter));
+		RegionDTO dto = EntityDTOConverter.parse(region, true, 1);
+		return dto;
 	}
 
 	@POST
@@ -197,6 +295,10 @@ public class CartService extends ServiceValidation {
 		try {
 			Coachee coachee = getCoachee();
 			Cart cart = persistence.getCartByCoachee(coachee);
+			if (cart == null) {
+				resp.setCount(0);
+				return resp;
+			}
 			Collection<Order> col = this.persistence.getOrdersByCart(cart);
 			int count = col.stream().map((Order o) -> o.getAmount()).reduce(Integer::sum).get();
 			resp.setCount(count);
@@ -210,14 +312,14 @@ public class CartService extends ServiceValidation {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-	@Path("/items")
-	public Collection<ScreenItemDTO> items() {
+	@Path("/cart")
+	public CartDTO items() {
 
 		Coachee coachee = getCoachee();
 		Cart cart = persistence.getCartByCoachee(coachee);
 		Collection<Order> col = this.persistence.getOrdersByCart(cart);
 		if (col.isEmpty()) {
-			return new ArrayList<ScreenItemDTO>();
+			return new CartDTO();
 		}
 		List<ScreenItemDTO> list = col.stream().map((Order o) -> EntityDTOConverter.parse(o))
 				.collect(Collectors.toList());
@@ -227,8 +329,28 @@ public class CartService extends ServiceValidation {
 				return o1.getItemId().compareTo(o2.getItemId());
 			}
 		});
-		
-		return list;
+
+		int finalV = col.stream()
+				.map((Order o) -> MoneyHelper.calculate(o.getCouponUsage().getId().getCoupon()).length == 1
+						? MoneyHelper.calculate(o.getCouponUsage().getId().getCoupon())[0] * o.getAmount()
+						: MoneyHelper.calculate(o.getCouponUsage().getId().getCoupon())[1] * o.getAmount())
+				.reduce(Integer::sum).get();
+
+		CartDTO dto = new CartDTO();
+		dto.setCartId(cart.getId());
+		dto.setItems(list.toArray(new ScreenItemDTO[0]));
+		dto.setSubTotalValue(MoneyHelper.toString(finalV));
+
+		if (cart.getDelivery() != null) {
+			dto.setRegion(cart.getDelivery().getShipAddress().getRegion().getDescriptions());
+			if (finalV > 10000) {
+				dto.setEstimatedShipping("0,00");
+			} else {
+				dto.setEstimatedShipping(MoneyHelper.toString(1000));
+			}
+
+		}
+		return dto;
 
 	}
 

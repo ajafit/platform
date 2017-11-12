@@ -5,9 +5,11 @@ import {OnInit} from '@angular/core';
 
 import {ItemService} from '../item/item.service';
 import {AppComponent} from '../app.component';
+import {RegionComponent} from './region.component';
 
 import {Item} from '../item/item';
-
+import {Cart} from '../cart/cart';
+import {Region} from '../cart/region';
 
 
 
@@ -21,20 +23,20 @@ import {Item} from '../item/item';
 export class CartComponent implements OnInit {
   constructor(private itemService: ItemService, private router: Router, private a: AppComponent) {}
   items: Item[];
-  selected: number;
-  setItems(items: Item[]): void {
-    this.items = items;
-    if (items.length === 0) {
+  cart: Cart;
+  region: Region;
+  setCart(cart: Cart): void {
+    this.cart = cart;
+    if (!cart.items) {
       this.router.navigate(['/']);
     }
   }
   loadItems(): void {
     this.a.ngOnInit();
-    this.itemService.getCartItems().then(resp => this.setItems(resp));
-  }
+    this.itemService.getCartItems().then(resp => this.setCart(resp));
+}
   ngOnInit(): void {
     this.loadItems();
-    this.selected = 10;
   }
   getAmountArray(): number[] {
     return new Array(99);
@@ -47,5 +49,5 @@ export class CartComponent implements OnInit {
   }
   onChange(item: Item) {
     this.itemService.changeAmountItem(item).then(r => this.loadItems());
-}
+  }
 }

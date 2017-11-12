@@ -106,7 +106,7 @@ public abstract class ProfilePersistence extends BasePersistence {
 		return couchee;
 	}
 
-	public void removeCouchee(Coachee couchee) {
+	public void removeCoachee(Coachee couchee) {
 		em.remove(couchee);
 
 	}

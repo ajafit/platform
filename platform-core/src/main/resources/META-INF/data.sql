@@ -90,31 +90,31 @@ insert into region (descriptions,outer_id) select 'Del Castilho', region_id from
 insert into region (descriptions,outer_id) select 'Encantado', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
 insert into region (descriptions,outer_id) select 'Engenho de Dentro', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
 insert into region (descriptions,outer_id) select 'Engenho Novo', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
-insert into region (descriptions,outer_id) select 'Higien√≥polis', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
-insert into region (descriptions,outer_id) select 'Jacar√©', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
+insert into region (descriptions,outer_id) select 'HigienÛpolis', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
+insert into region (descriptions,outer_id) select 'JacarÈ', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
 insert into region (descriptions,outer_id) select 'Jacarezinho', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
 insert into region (descriptions,outer_id) select 'Lins de Vasconcelos', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
 insert into region (descriptions,outer_id) select 'Manguinhos', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
 insert into region (descriptions,outer_id) select 'Maria da Gra√ßa', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
-insert into region (descriptions,outer_id) select 'M√©ier', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
+insert into region (descriptions,outer_id) select 'MÈier', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
 insert into region (descriptions,outer_id) select 'Piedade', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
 insert into region (descriptions,outer_id) select 'Pilares', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
 insert into region (descriptions,outer_id) select 'Riachuelo', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
 insert into region (descriptions,outer_id) select 'Rocha', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
 insert into region (descriptions,outer_id) select 'Sampaio', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
-insert into region (descriptions,outer_id) select 'S√£o Francisco Xavier', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
+insert into region (descriptions,outer_id) select 'S„o Francisco Xavier', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
 insert into region (descriptions,outer_id) select 'Todos os Santos', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
 
 insert into region (descriptions,outer_id) select 'Bonsucesso', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
-insert into region (descriptions,outer_id) select 'Banc√°rios', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
+insert into region (descriptions,outer_id) select 'Banc·rios', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
 insert into region (descriptions,outer_id) select 'Cacuia', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
 insert into region (descriptions,outer_id) select 'Cidade Universit√°ria', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
-insert into region (descriptions,outer_id) select 'Cocot√°', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
+insert into region (descriptions,outer_id) select 'Cocot·', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
 insert into region (descriptions,outer_id) select 'Freguesia', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
-insert into region (descriptions,outer_id) select 'Gale√£o', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
+insert into region (descriptions,outer_id) select 'Gale„o', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
 insert into region (descriptions,outer_id) select 'Jardim Carioca', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
 insert into region (descriptions,outer_id) select 'Jardim Guanabara', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
-insert into region (descriptions,outer_id) select 'Mar√©', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
+insert into region (descriptions,outer_id) select 'MarÈ', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
 insert into region (descriptions,outer_id) select 'Olaria', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
 insert into region (descriptions,outer_id) select 'Pitangueiras', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
 insert into region (descriptions,outer_id) select 'Portuguesa', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
@@ -128,7 +128,7 @@ insert into region (descriptions,outer_id) select 'Acari', region_id from region
 insert into region (descriptions,outer_id) select 'Anchieta', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
 insert into region (descriptions,outer_id) select 'Barros Filho', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
 insert into region (descriptions,outer_id) select 'Bento Ribeiro', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
-insert into region (descriptions,outer_id) select 'Br√°s de Pina', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
+insert into region (descriptions,outer_id) select 'Br·s de Pina', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
 insert into region (descriptions,outer_id) select 'Campinho', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
 insert into region (descriptions,outer_id) select 'Cavalcanti', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
 insert into region (descriptions,outer_id) select 'Cascadura', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
@@ -149,7 +149,7 @@ insert into region (descriptions,outer_id) select 'Marechal Hermes', region_id f
 insert into region (descriptions,outer_id) select 'Oswaldo Cruz', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
 insert into region (descriptions,outer_id) select 'Parada de Lucas', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
 insert into region (descriptions,outer_id) select 'Parque Anchieta', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
-insert into region (descriptions,outer_id) select 'Parque Col√¥mbia', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
+insert into region (descriptions,outer_id) select 'Parque ColÙmbia', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
 insert into region (descriptions,outer_id) select 'Pavuna', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
 insert into region (descriptions,outer_id) select 'Penha', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
 insert into region (descriptions,outer_id) select 'Penha Circular', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
@@ -157,7 +157,7 @@ insert into region (descriptions,outer_id) select 'Quintino Bocaiuva', region_id
 insert into region (descriptions,outer_id) select 'Ricardo de Albuquerque', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
 insert into region (descriptions,outer_id) select 'Rocha Miranda', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
 insert into region (descriptions,outer_id) select 'Tomas Coelho', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
-insert into region (descriptions,outer_id) select 'Turia√ßu', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
+insert into region (descriptions,outer_id) select 'Turiam„', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
 insert into region (descriptions,outer_id) select 'Vaz Lobo', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
 insert into region (descriptions,outer_id) select 'Vicente de Carvalho', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
 insert into region (descriptions,outer_id) select 'Vig·rio Geral', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
@@ -171,41 +171,44 @@ insert into region (descriptions,outer_id) select 'Vista Alegre', region_id from
 
 insert into person (authtype,birth,email,gender,name,password,register,emailvalidation,image) values ('LOCAL',to_date('22/08/1979','dd/MM/yyyy'),'alexandre.deassis@yahoo.com','M','alexandre','alexandre123',now(),true,'person/alexandre.jpg'); 
 insert into PROFILE_ID_Generator (name, sequence)  values ('Profile',1);
-insert into profile (profile_id,manager_id,person_id,region_id) select 1, null, 1, region_id from region where descriptions = 'Barra da tijuca';
-insert into manager (profile_id) values(1);
+with a as (select max(sequence) as sequence from PROFILE_ID_Generator where name = 'Profile'), b as (select person_id from person where email = 'alexandre.deassis@yahoo.com') insert into profile(profile_id,manager_id,person_id) select a.sequence,null,b.person_id from a,b;
+insert into manager (profile_id) select max(sequence) as sequence from PROFILE_ID_Generator;
+update PROFILE_ID_Generator set sequence = (SELECT SEQUENCE+1 FROM PROFILE_ID_Generator WHERE name = 'Profile') WHERE name = 'Profile';
 
 insert into person (authtype,birth,email,gender,name,password,register,emailvalidation,image) values ('LOCAL',to_date('21/08/1982','dd/MM/yyyy'),'deyse.joaquim@gmail.com','F','deyse','deyse123',now(),true,'person/deyse.jpg'); 
-update PROFILE_ID_Generator set sequence = 2 where name = 'Profile';
-insert into profile (profile_id,manager_id,person_id,region_id) select 2, null, 2, region_id from region where descriptions = 'Barra da tijuca';
-insert into balance (cnpj, profile_id) values('102.400.0001-99',2);
+with a as (select max(sequence) as sequence from PROFILE_ID_Generator where name = 'Profile'), b as (select person_id from person where email = 'deyse.joaquim@gmail.com') insert into profile(profile_id,manager_id,person_id) select a.sequence,1,b.person_id from a,b;
+insert into balance (cnpj, profile_id) select '102.400.0001-99', max(profile_id) as profile_id from profile;
 insert into factory (factory_id) select profile_id from balance where cnpj = '102.400.0001-99';
+update PROFILE_ID_Generator set sequence = (SELECT SEQUENCE+1 FROM PROFILE_ID_Generator WHERE name = 'Profile') WHERE name = 'Profile';
 
 /*inserindo destribuicao zona oeste para fabrica deyse */
 with a as (select factory_id from factory f inner join profile p on f.factory_id = p.profile_id inner join person pp on pp.person_id = p.person_id and pp.email = 'deyse.joaquim@gmail.com'), b as (select region_id from region where descriptions = 'Zona oeste - Rio de janeiro')  insert into distribution(region_id, factory_id) select b.*, a.* from a,b;
 
-update PROFILE_ID_Generator set sequence = 3 where name = 'Profile';
-insert into profile (profile_id,manager_id,person_id,region_id) select 3, null, 1, region_id from region where descriptions = 'Rio de janeiro - Cidade';
-insert into balance (cpf, profile_id) values('087.907.357-81',3);
-insert into coach (coach_id) values(3);
-insert into nuttry(coach_id) values(3);
-
-update PROFILE_ID_Generator set sequence = 4 where name = 'Profile';
-insert into profile (profile_id,manager_id,person_id,region_id) select 4, null, 1, region_id from region where descriptions = 'Rio de janeiro - Cidade';
-insert into balance (cpf, profile_id) values('087.907.357-81',4);
-insert into coach (coach_id) values(4);
-insert into trainny(coach_id) values(4);
-
-update PROFILE_ID_Generator set sequence = 5 where name = 'Profile';
-insert into profile (profile_id,manager_id,person_id,region_id) select 5, null, 1, region_id from region where descriptions = 'Rio de janeiro - Cidade';
-insert into balance (cpf, profile_id) values('087.907.357-81',5);
-insert into seller (seller_id) values(5);
-update PROFILE_ID_Generator set sequence = 6 where name = 'Profile';
 
 
-insert into profile (profile_id,manager_id,person_id,region_id) select 6, null, 1, region_id from region where descriptions = 'Rio de janeiro - Cidade';
-insert into balance (cpf, profile_id) values('087.907.357-81',6);
-insert into coachee (profile_id) values(6);
-update PROFILE_ID_Generator set sequence = 7 where name = 'Profile';
+with a as (select max(sequence) as sequence from PROFILE_ID_Generator where name = 'Profile'), b as (select person_id from person where email = 'alexandre.deassis@yahoo.com') insert into profile(profile_id,manager_id,person_id) select a.sequence,1,b.person_id from a,b;
+insert into balance (cpf, profile_id) select '087.907.357-81', max(profile_id) as profile_id from profile; 
+insert into coach (coach_id) select max(profile_id) as profile_id from profile;
+insert into nuttry(coach_id) select max(profile_id) as profile_id from profile;
+update PROFILE_ID_Generator set sequence = (SELECT SEQUENCE+1 FROM PROFILE_ID_Generator WHERE name = 'Profile') WHERE name = 'Profile';
+
+
+with a as (select max(sequence) as sequence from PROFILE_ID_Generator where name = 'Profile'), b as (select person_id from person where email = 'alexandre.deassis@yahoo.com') insert into profile(profile_id,manager_id,person_id) select a.sequence,1,b.person_id from a,b;
+insert into balance (cpf, profile_id) select '087.907.357-81', max(profile_id) as profile_id from profile;
+insert into coach (coach_id) select max(profile_id) as profile_id from profile;
+insert into trainny(coach_id) select max(profile_id) as profile_id from profile;
+update PROFILE_ID_Generator set sequence = (SELECT SEQUENCE+1 FROM PROFILE_ID_Generator WHERE name = 'Profile') WHERE name = 'Profile';
+
+with a as (select max(sequence) as sequence from PROFILE_ID_Generator where name = 'Profile'), b as (select person_id from person where email = 'alexandre.deassis@yahoo.com') insert into profile(profile_id,manager_id,person_id) select a.sequence,1,b.person_id from a,b;
+insert into balance (cpf, profile_id) select '087.907.357-81', max(profile_id) as profile_id from profile;
+insert into seller (seller_id) select max(profile_id) as profile_id from profile;
+update PROFILE_ID_Generator set sequence = (SELECT SEQUENCE+1 FROM PROFILE_ID_Generator WHERE name = 'Profile') WHERE name = 'Profile';
+
+
+with a as (select max(sequence) as sequence from PROFILE_ID_Generator where name = 'Profile'), b as (select person_id from person where email = 'alexandre.deassis@yahoo.com') insert into profile(profile_id,manager_id,person_id) select a.sequence,1,b.person_id from a,b;
+insert into balance (cpf, profile_id) select '087.907.357-81', max(profile_id) as profile_id from profile;
+insert into coachee (profile_id) select max(profile_id) as profile_id from profile;
+update PROFILE_ID_Generator set sequence = (SELECT SEQUENCE+1 FROM PROFILE_ID_Generator WHERE name = 'Profile') WHERE name = 'Profile';
 
 
 insert into nutritiontable(name,unity) values('PorÁ„o','kcal');

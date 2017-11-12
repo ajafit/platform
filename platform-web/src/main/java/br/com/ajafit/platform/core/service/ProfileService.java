@@ -180,6 +180,11 @@ public class ProfileService extends ServiceValidation {
 		/* verifica se tem tmpPerson */
 		Person tmpPerson = persistence.getPersonByToken(token);
 		if (tmpPerson != null) {
+			/* se tmpPErson for igual a person,, nao troca carrinho.. */
+			if (tmpPerson.equals(person)) {
+				return;
+			}
+
 			/* se tem,, verifica se person atual tem perfil de coachee */
 			Collection<Profile> col = persistence.getProfilesFromPerson(person);
 
@@ -221,7 +226,7 @@ public class ProfileService extends ServiceValidation {
 				}
 
 				/* troca carrinnho de tmpperson pra auth person */
-				
+
 				final Coachee finalCoachee = coachee;
 				tmpOrders.stream().forEach((Order o) -> o
 						.setCouponUsage(persistence.createOrGetCouponUsage(mountCouponUsage(o, finalCoachee))));
@@ -232,7 +237,7 @@ public class ProfileService extends ServiceValidation {
 				persistence.removeCart(tmpCart);
 			}
 
-			this.persistence.removeCouchee(tmpCoachee);
+			this.persistence.removeCoachee(tmpCoachee);
 			this.persistence.removePerson(tmpPerson);
 
 			logger.info("carrinho trocado..");
@@ -307,7 +312,6 @@ public class ProfileService extends ServiceValidation {
 
 		Manager manager = new Manager();
 		manager.setPerson(person);
-		manager.setRegion(region);
 		manager.setManager(null);
 		// return persistence.createManager(manager);
 		return null;

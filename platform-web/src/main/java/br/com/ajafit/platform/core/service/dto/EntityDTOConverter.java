@@ -16,6 +16,7 @@ import br.com.ajafit.platform.core.domain.Person;
 import br.com.ajafit.platform.core.domain.Product;
 import br.com.ajafit.platform.core.domain.ProductNutrition;
 import br.com.ajafit.platform.core.domain.Profile;
+import br.com.ajafit.platform.core.domain.Region;
 import br.com.ajafit.platform.core.domain.Review;
 import br.com.ajafit.platform.core.domain.Saleable;
 import br.com.ajafit.platform.core.domain.ScreenConfig;
@@ -36,6 +37,25 @@ public class EntityDTOConverter {
 		}
 
 		return dto;
+	}
+
+	public static RegionDTO parse(Region region, boolean fillInner, int level) {
+
+		RegionDTO dto = new RegionDTO();
+		dto.setDescriptions(region.getDescriptions());
+		dto.setRegionId(region.getId());
+		dto.setLevel(level);
+		if (region.getOuter() != null) {
+			dto.setOuter(parse(region.getOuter(), false, level - 1));
+		}
+
+		if (fillInner)
+			for (Region r : region.getInner()) {
+				dto.getInner().add(parse(r, true, level + 1));
+			}
+
+		return dto;
+
 	}
 
 	public static ScreenItemDTO parse(Order order) {

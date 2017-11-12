@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.OneToOne;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -25,5 +26,8 @@ public class Cart {
 	private long id;
 
 	private boolean done;
+
+	@OneToOne(mappedBy = "cart")
+	private Delivery delivery;
 
 }

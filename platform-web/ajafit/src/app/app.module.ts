@@ -24,6 +24,7 @@ import {ItemService} from './item/item.service';
 import {ItemComponent} from './item/item.component';
 import {ItemDetailComponent} from './item/item-detail.component';
 import {CartComponent} from './cart/cart.component';
+import {RegionComponent} from './cart/region.component';
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { AngularFontAwesomeModule } from 'angular-font-awesome/angular-font-awesome';
@@ -38,7 +39,8 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome/angular-font-awes
     DashboardComponent,
     ItemComponent,
     ItemDetailComponent,
-    CartComponent
+    CartComponent,
+    RegionComponent
   ],
   imports: [
     BrowserModule,
@@ -51,8 +53,7 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome/angular-font-awes
     NgbModule,
     AngularFontAwesomeModule
   ],
-  providers: [{provide: HTTP_INTERCEPTORS, useClass: AjafitInterceptor, multi: true}, ProfileService, ItemService, CartComponent],
- /* providers: [ProfileService],*/
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: AjafitInterceptor, multi: true}, ProfileService, ItemService, CartComponent, RegionComponent, AppComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

@@ -33,10 +33,6 @@ public abstract class Profile {
 	private Person person;
 
 	@ManyToOne
-	@JoinColumn(name = "region_id")
-	private Region region;
-
-	@ManyToOne
 	@JoinColumn(name = "manager_id", nullable = true)
 	private Manager manager;
 

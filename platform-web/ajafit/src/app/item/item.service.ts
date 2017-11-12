@@ -1,5 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Item} from './item';
+import {Cart} from '../cart/cart';
+import {Region} from '../cart/region';
 
 import {Http, Headers, Response, RequestOptions} from '@angular/http';
 import {HttpHeaders} from '@angular/common/http';
@@ -16,7 +18,9 @@ export class ItemService {
   itemURL = 'http://localhost:8080/ajafit/platform/service/screen/detail/';
   itemAddURL = 'http://localhost:8080/ajafit/platform/service/cart/add';
   cartNumberURL = 'http://localhost:8080/ajafit/platform/service/cart/number';
-  cartItemsURL = 'http://localhost:8080/ajafit/platform/service/cart/items';
+  cartItemsURL = 'http://localhost:8080/ajafit/platform/service/cart/cart';
+  cartRegionURL = 'http://localhost:8080/ajafit/platform/service/cart/region';
+  regionTreeURL = 'http://localhost:8080/ajafit/platform/service/cart/region/tree/';
   removerItemURL = 'http://localhost:8080/ajafit/platform/service/cart/remove';
   changeAmountURL = 'http://localhost:8080/ajafit/platform/service/cart/amount';
   constructor(private http: Http) {}
@@ -38,23 +42,35 @@ export class ItemService {
     console.log(x);
     return x.count;
   }
+  parse3(data: Response): Cart {
+    return (data.json() as Cart);
+  }
+  parse4(data: Response): Region {
+    return (data.json() as Region);
+  }
   private error(error: any): Promise<any> {
     console.log('deu merda!!');
     return Promise.reject('>>' + error.status + '<<' || error);
   }
   addItem(item: Item): Promise<number> {
-   return  this.http.post(this.itemAddURL, item, opts).toPromise().then(respo => this.parse2(respo));
+    return this.http.post(this.itemAddURL, item, opts).toPromise().then(respo => this.parse2(respo));
   }
   removeItem(item: Item): Promise<Boolean> {
     return this.http.put(this.removerItemURL, item, opts).toPromise().then(r => true);
   }
-   changeAmountItem(item: Item): Promise<Boolean> {
+  changeAmountItem(item: Item): Promise<Boolean> {
     return this.http.put(this.changeAmountURL, item, opts).toPromise().then(r => true);
   }
-   getCartNumber(): Promise<number> {
-   return  this.http.get(this.cartNumberURL, opts).toPromise().then(respo => this.parse2(respo));
+  cartRegion(region: Region): Promise<Boolean> {
+    return this.http.post(this.cartRegionURL, region, opts).toPromise().then(r => true);
   }
-   getCartItems(): Promise<Item[]> {
-   return  this.http.get(this.cartItemsURL, opts).toPromise().then(respo => this.parse(respo));
+  getCartNumber(): Promise<number> {
+    return this.http.get(this.cartNumberURL, opts).toPromise().then(respo => this.parse2(respo));
+  }
+  getCartItems(): Promise<Cart> {
+    return this.http.get(this.cartItemsURL, opts).toPromise().then(respo => this.parse3(respo));
+  }
+  getRegionTree(regionId: number): Promise<Region> {
+    return this.http.get(this.regionTreeURL + regionId, opts).toPromise().then(respo => this.parse4(respo));
   }
 }

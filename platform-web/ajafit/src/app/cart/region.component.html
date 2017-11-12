@@ -1,0 +1,22 @@
+<div *ngIf="region">
+	
+	<a *ngIf="region.level === 6" href="#flamengo{{region.regionId}}" data-toggle="collapse" (click)="choose(region)" >{{region.descriptions}}</a>
+	<a *ngIf="region.level !== 6" href="#flamengo{{region.regionId}}" data-toggle="collapse">{{region.descriptions}}</a>
+
+	<div *ngIf="region.level === 5">
+		<div class="collapse" id="flamengo{{region.regionId}}">
+			<div *ngFor="let r of region.inner" style="margin-left: 20px;">
+					<app-region [region]="r"></app-region>
+			</div>
+		</div>
+	</div>
+	<div *ngIf="region.level !== 5">
+		<div>
+			<div *ngFor="let r of region.inner" style="margin-left: 20px;">
+					<app-region [region]="r"></app-region>
+			</div>
+		</div>
+	</div>
+
+</div>
+

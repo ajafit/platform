@@ -11,6 +11,8 @@ import {AuthComponent} from './auth/auth.component';
 
 import {ItemService} from './item/item.service';
 import {CartComponent} from './cart/cart.component';
+import {Region} from './cart/region';
+import {RegionComponent} from './cart/region.component';
 
 @Component({
   selector: 'app-root',
@@ -24,6 +26,8 @@ export class AppComponent  implements OnInit {
   title = 'app center';
   profile: Profile;
   cartNumber: number;
+  region: Region;
+
   getProfile(): Profile {
     this.profile = this.ps.getSelectedProfile();
     return this.profile;
@@ -37,8 +41,6 @@ export class AppComponent  implements OnInit {
   }
   setCartNumber(n: number): void {
     this.cartNumber = n;
-    console.log('setting:'+n);
   }
-
 
 }
