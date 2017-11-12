@@ -30,6 +30,7 @@ import br.com.ajafit.platform.core.domain.Cart;
 import br.com.ajafit.platform.core.domain.Coachee;
 import br.com.ajafit.platform.core.domain.CouponUsage;
 import br.com.ajafit.platform.core.domain.CouponUsagePK;
+import br.com.ajafit.platform.core.domain.Delivery;
 import br.com.ajafit.platform.core.domain.Manager;
 import br.com.ajafit.platform.core.domain.Order;
 import br.com.ajafit.platform.core.domain.Person;
@@ -37,6 +38,7 @@ import br.com.ajafit.platform.core.domain.PersonAuthType;
 import br.com.ajafit.platform.core.domain.PersonGender;
 import br.com.ajafit.platform.core.domain.Profile;
 import br.com.ajafit.platform.core.domain.Region;
+import br.com.ajafit.platform.core.domain.ShipAddress;
 import br.com.ajafit.platform.core.service.dto.EntityDTO;
 import br.com.ajafit.platform.core.service.dto.EntityDTOConverter;
 import br.com.ajafit.platform.core.service.dto.HashHelper;
@@ -220,6 +222,19 @@ public class ProfileService extends ServiceValidation {
 
 					set.stream().filter((CouponUsage c) -> persistence.getOrdersByCouponUsage(c).isEmpty())
 							.forEach((CouponUsage c) -> persistence.removeCouponUsage(c));
+
+					/*limpa o delivery do cart*/
+					Delivery delivery = cart.getDelivery();
+					if (delivery != null) {
+						ShipAddress reference = delivery.getShipAddress();
+						persistence.removeDelivery(delivery);
+
+						delivery = persistence.findDeliveryByShipAddress(reference);
+						if (delivery == null) {
+							/* limpa shipaddress */
+							persistence.removeShipAddress(reference);
+						}
+					}
 
 					persistence.removeCart(cart);
 					// persistence.getCouponUsageById(id)

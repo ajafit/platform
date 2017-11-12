@@ -37,7 +37,7 @@ export class AppComponent  implements OnInit {
   }
   logout(): void {
     this.ps.logout();
-    this.setCartNumber(null);
+    this.setCartNumber(0);
   }
   setCartNumber(n: number): void {
     this.cartNumber = n;
