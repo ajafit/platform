@@ -75,14 +75,15 @@ public class CartService extends ServiceValidation {
 		if (col.isEmpty()) {
 			/* zerou as orders,, limpar cart tmpcoache e tmpperson */
 			Delivery delivery = cart.getDelivery();
-			ShipAddress reference = delivery.getShipAddress();
+			if (delivery != null) {
+				ShipAddress reference = delivery.getShipAddress();
+				persistence.removeDelivery(delivery);
 
-			persistence.removeDelivery(delivery);
-
-			delivery = persistence.findDeliveryByShipAddress(reference);
-			if (delivery == null) {
-				/* limpa shipaddress */
-				persistence.removeShipAddress(reference);
+				delivery = persistence.findDeliveryByShipAddress(reference);
+				if (delivery == null) {
+					/* limpa shipaddress */
+					persistence.removeShipAddress(reference);
+				}
 			}
 
 			persistence.removeCart(cart);
