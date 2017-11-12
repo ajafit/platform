@@ -314,7 +314,7 @@ public class CartService extends ServiceValidation {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
 	@Path("/cart")
-	public CartDTO items() {
+	public CartDTO cart() {
 
 		Coachee coachee = getCoachee();
 		Cart cart = persistence.getCartByCoachee(coachee);

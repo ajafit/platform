@@ -1,6 +1,6 @@
 package br.com.ajafit.platform.core.domain;
 
-import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,7 +29,7 @@ public class Region {
 	private Region outer;
 
 	@OneToMany(mappedBy = "outer")
-	private Collection<Region> inner;
+	private List<Region> inner;
 
 	private String descriptions;
 

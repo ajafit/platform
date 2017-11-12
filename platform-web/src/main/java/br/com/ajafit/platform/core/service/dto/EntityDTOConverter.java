@@ -3,6 +3,7 @@ package br.com.ajafit.platform.core.service.dto;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -49,10 +50,17 @@ public class EntityDTOConverter {
 			dto.setOuter(parse(region.getOuter(), false, level - 1));
 		}
 
-		if (fillInner)
+		if (fillInner) {
+			region.getInner().sort(new Comparator<Region>() {
+				public int compare(Region o1, Region o2) {
+					return o1.getDescriptions().compareTo(o2.getDescriptions());
+				}
+
+			});
 			for (Region r : region.getInner()) {
 				dto.getInner().add(parse(r, true, level + 1));
 			}
+		}
 
 		return dto;
 

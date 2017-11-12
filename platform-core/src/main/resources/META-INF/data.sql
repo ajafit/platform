@@ -55,9 +55,9 @@ insert into region (descriptions,outer_id) select 'Copacabana', region_id from r
 insert into region (descriptions,outer_id) select 'Cosme Velho', region_id from region where descriptions = 'Zona sul - Rio de janeiro';
 insert into region (descriptions,outer_id) select 'Flamengo', region_id from region where descriptions = 'Zona sul - Rio de janeiro';
 insert into region (descriptions,outer_id) select 'G·vea', region_id from region where descriptions = 'Zona sul - Rio de janeiro';
-insert into region (descriptions,outer_id) select 'Humait·°', region_id from region where descriptions = 'Zona sul - Rio de janeiro';
+insert into region (descriptions,outer_id) select 'Humait·', region_id from region where descriptions = 'Zona sul - Rio de janeiro';
 insert into region (descriptions,outer_id) select 'Ipanema', region_id from region where descriptions = 'Zona sul - Rio de janeiro';
-insert into region (descriptions,outer_id) select 'Jardim Bot√¢nico', region_id from region where descriptions = 'Zona sul - Rio de janeiro';
+insert into region (descriptions,outer_id) select 'Jardim Bot‚nico', region_id from region where descriptions = 'Zona sul - Rio de janeiro';
 insert into region (descriptions,outer_id) select 'Lagoa', region_id from region where descriptions = 'Zona sul - Rio de janeiro';
 insert into region (descriptions,outer_id) select 'Laranjeiras', region_id from region where descriptions = 'Zona sul - Rio de janeiro';
 insert into region (descriptions,outer_id) select 'Leblon', region_id from region where descriptions = 'Zona sul - Rio de janeiro';
@@ -95,7 +95,7 @@ insert into region (descriptions,outer_id) select 'JacarÈ', region_id from regio
 insert into region (descriptions,outer_id) select 'Jacarezinho', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
 insert into region (descriptions,outer_id) select 'Lins de Vasconcelos', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
 insert into region (descriptions,outer_id) select 'Manguinhos', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
-insert into region (descriptions,outer_id) select 'Maria da Gra√ßa', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
+insert into region (descriptions,outer_id) select 'Maria da GraÁa', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
 insert into region (descriptions,outer_id) select 'MÈier', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
 insert into region (descriptions,outer_id) select 'Piedade', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
 insert into region (descriptions,outer_id) select 'Pilares', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
@@ -108,7 +108,7 @@ insert into region (descriptions,outer_id) select 'Todos os Santos', region_id f
 insert into region (descriptions,outer_id) select 'Bonsucesso', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
 insert into region (descriptions,outer_id) select 'Banc·rios', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
 insert into region (descriptions,outer_id) select 'Cacuia', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
-insert into region (descriptions,outer_id) select 'Cidade Universit√°ria', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
+insert into region (descriptions,outer_id) select 'Cidade Universit·ria', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
 insert into region (descriptions,outer_id) select 'Cocot·', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
 insert into region (descriptions,outer_id) select 'Freguesia', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
 insert into region (descriptions,outer_id) select 'Gale„o', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
@@ -121,7 +121,7 @@ insert into region (descriptions,outer_id) select 'Portuguesa', region_id from r
 insert into region (descriptions,outer_id) select 'Praia da Bandeira', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
 insert into region (descriptions,outer_id) select 'Ramos', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
 insert into region (descriptions,outer_id) select 'Ribeira', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
-insert into region (descriptions,outer_id) select 'Tau√', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
+insert into region (descriptions,outer_id) select 'Tau·', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
 insert into region (descriptions,outer_id) select 'Zumbi', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
 
 insert into region (descriptions,outer_id) select 'Acari', region_id from region where descriptions = 'Zona norte - Rio de janeiro';
