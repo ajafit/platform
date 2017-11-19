@@ -51,8 +51,20 @@ public abstract class ProfilePersistence extends BasePersistence {
 
 	}
 
+	public Person getPersonByEmail(String email) {
+		Query query = em.createQuery("from Person p where p.email = :EMAIL");
+		query.setParameter("EMAIL", email);
+		Collection<Person> col = query.getResultList();
+		if (col.isEmpty()) {
+			return null;
+		} else {
+			return (Person) col.iterator().next();
+		}
+
+	}
+
 	public Person getPersonByEmailAndPassword(String email, String password) {
-		Query query = em.createQuery("from Person p where p.email = :EMAIL and p.password = :PASSWORD");
+		Query query = em.createQuery("from Person p where p.email = :EMAIL and p.password = :PASSWORD and p.emailValidation is true");
 		query.setParameter("EMAIL", email).setParameter("PASSWORD", password);
 		Collection<Person> col = query.getResultList();
 		if (col.isEmpty()) {

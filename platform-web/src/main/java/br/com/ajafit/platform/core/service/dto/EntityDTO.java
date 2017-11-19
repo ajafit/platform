@@ -26,11 +26,13 @@ public class EntityDTO {
 	private String email;
 	private String descriptions;
 	private Date date;
-	private String validation;
+	private String validationHash;
+	private String validationChoose;
 	private String validationIMGReference;
 	private byte[] validationIMG;
 	private String accessToken;
 	private String[] profiles;
-
+	private String[] icons;
+	private String iconTips;
 
 }

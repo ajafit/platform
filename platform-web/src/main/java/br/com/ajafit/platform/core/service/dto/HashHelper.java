@@ -2,8 +2,9 @@ package br.com.ajafit.platform.core.service.dto;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-
-import org.bouncycastle.crypto.RuntimeCryptoException;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedList;
 
 public class HashHelper {
 
@@ -14,13 +15,18 @@ public class HashHelper {
 	}
 
 	public static String generateToken(String userContext) {
+		String text = SEED + "_" + userContext + System.currentTimeMillis();
+		return hash(text);
+
+	}
+
+	public static String hash(String v) {
 
 		try {
-			String text = SEED + "_" + userContext + System.currentTimeMillis();
 			StringBuffer hexString = new StringBuffer();
 
 			MessageDigest md = MessageDigest.getInstance("SHA-256");
-			md.update(text.getBytes());
+			md.update(v.getBytes());
 			byte[] hash = md.digest();
 
 			for (int i = 0; i < hash.length; i++) {
@@ -38,8 +44,27 @@ public class HashHelper {
 
 	}
 
+	public static Collection<Icon> shuffle(int size) {
+
+		LinkedList<Icon> list = new LinkedList<>();
+		list.add(new Icon("calculator", "Calculadora"));
+		list.add(new Icon("bicycle", "Bicicleta"));
+		list.add(new Icon("bath", "Banheira"));
+		list.add(new Icon("bell", "Sino"));
+		list.add(new Icon("envelope", "Envelope"));
+		list.add(new Icon("heart", "Coração"));
+		list.add(new Icon("home", "Casa"));
+		list.add(new Icon("truck", "Caminhão"));
+		list.add(new Icon("tree", "Arvore"));
+
+		Collections.shuffle(list);
+		return list.subList(0, size);
+	}
+
 	public static void main(String[] args) throws NoSuchAlgorithmException, CloneNotSupportedException {
-		for (int i = 0; i < 10; i++)
-			System.err.println("resp:" + generateToken("alexandre"));
+
+		for (Icon i : shuffle(5)) {
+			System.err.println(i);
+		}
 	}
 }

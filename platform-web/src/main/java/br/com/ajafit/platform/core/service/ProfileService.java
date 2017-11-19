@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -22,6 +23,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.jboss.logging.Logger;
 import org.jboss.resteasy.spi.ResteasyProviderFactory;
@@ -39,9 +41,12 @@ import br.com.ajafit.platform.core.domain.PersonGender;
 import br.com.ajafit.platform.core.domain.Profile;
 import br.com.ajafit.platform.core.domain.Region;
 import br.com.ajafit.platform.core.domain.ShipAddress;
+import br.com.ajafit.platform.core.integration.MailMessage;
+import br.com.ajafit.platform.core.integration.SendMailIntegration;
 import br.com.ajafit.platform.core.service.dto.EntityDTO;
 import br.com.ajafit.platform.core.service.dto.EntityDTOConverter;
 import br.com.ajafit.platform.core.service.dto.HashHelper;
+import br.com.ajafit.platform.core.service.dto.Icon;
 
 @Path("/service/profile")
 @Stateless
@@ -51,6 +56,53 @@ public class ProfileService extends ServiceValidation {
 
 	@Inject
 	private ServletContext context;
+
+	@GET
+	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
+	@Path("/activate/{token}")
+	public Response activate(@PathParam("token") String token) {
+
+		try {
+			required(token);
+		} catch (Exception e) {
+			EntityDTO resp = new EntityDTO();
+			resp.setDescriptions("Parametros invalidos");
+			return Response.status(Response.Status.BAD_REQUEST).entity(resp).build();
+		}
+
+		Person person = this.persistence.getPersonByToken(token);
+		if (person == null) {
+			EntityDTO resp = new EntityDTO();
+			resp.setDescriptions("Parametros invalidos");
+			return Response.status(Response.Status.BAD_REQUEST).entity(resp).build();
+		}
+
+		if (person.isEmailValidation() == true) {
+
+			return Response.status(Response.Status.MOVED_PERMANENTLY).header("Location", "http://localhost:4200")
+					.build();
+		}
+		person.setEmailValidation(true);
+		token = HashHelper.generateToken(person.getId() + "");
+		person.setToken(token);
+		person.setTokenDate(new Date());
+
+		persistence.updatePerson(person);
+		
+		
+		Cookie cookie = new Cookie("authorization", person.getToken());
+		cookie.setDomain("www.ajafit.com.br");
+		cookie.setPath("/");
+		cookie.setMaxAge(-1);
+		logger.info("create cookie");
+		ResteasyProviderFactory.getContextData(HttpServletResponse.class).addCookie(cookie);
+		
+
+		return Response.status(Response.Status.MOVED_PERMANENTLY).header("Location", "http://localhost:4200")
+				.build();
+		
+
+	}
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
@@ -67,29 +119,6 @@ public class ProfileService extends ServiceValidation {
 	public EntityDTO personRegistered() {
 
 		return new EntityDTO();
-	}
-
-	@POST
-	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-	@Consumes(MediaType.APPLICATION_JSON + ";charset=utf-8")
-	@Path("/person/register")
-	public EntityDTO personRegister(EntityDTO dto) {
-
-		required(dto.getName(), dto.getEmail(), dto.getValidation());
-		captcha(dto.getValidation(), dto.getValidationIMGReference());
-
-		Person person = new Person();
-		person.setName(dto.getName());
-		person.setEmail(dto.getEmail());
-		person.setRegister(new Date());
-		person.setAuthType(PersonAuthType.LOCAL);
-
-		person = persistence.createPerson(person);
-		logger.info("register " + person);
-
-		dto.setId(person.getId());
-
-		return dto;
 	}
 
 	@GET
@@ -133,7 +162,7 @@ public class ProfileService extends ServiceValidation {
 		persistence.updatePerson(person);
 
 		Cookie cookie = new Cookie("authorization", person.getToken());
-		cookie.setDomain("localhost");
+		cookie.setDomain("www.ajafit.com.br");
 		cookie.setPath("/");
 		cookie.setMaxAge(0);
 		logger.info("create cookie");
@@ -141,14 +170,135 @@ public class ProfileService extends ServiceValidation {
 
 	}
 
+	@GET
+	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
+	@Path("/person/validation")
+	public EntityDTO validation() {
+
+		EntityDTO dto = new EntityDTO();
+		Collection<Icon> icons = HashHelper.shuffle(5);
+
+		String codes[] = icons.stream().map((Icon i) -> i.getCode()).collect(Collectors.toList())
+				.toArray(new String[0]);
+		String label[] = icons.stream().map((Icon i) -> i.getLabel()).collect(Collectors.toList())
+				.toArray(new String[0]);
+
+		dto.setIcons(codes);
+		int random = new Random().nextInt(label.length - 1);
+		dto.setIconTips(label[random]);
+		dto.setValidationHash(HashHelper.hash(codes[random]));
+		return dto;
+	}
+
+	@POST
+	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
+	@Path("/person/register")
+	public Response register(EntityDTO dto) {
+		try {
+			required(dto.getEmail(), dto.getPassword(), dto.getValidationHash(), dto.getValidationChoose());
+		} catch (Exception e) {
+			EntityDTO resp = new EntityDTO();
+			resp.setDescriptions("Parametros invalidos..");
+			return Response.status(Response.Status.BAD_REQUEST).entity(resp).build();
+		}
+		String choose = HashHelper.hash(dto.getValidationChoose());
+		if (!choose.equals(dto.getValidationHash())) {
+			EntityDTO resp = new EntityDTO();
+			resp.setDescriptions("Ops.. " + dto.getValidationChoose() + " n�o era a op��o correta..");
+			return Response.status(Response.Status.UNAUTHORIZED).entity(resp).build();
+		}
+
+		Person person = persistence.getPersonByEmail(dto.getEmail());
+		if (person != null) {
+			EntityDTO resp = new EntityDTO();
+			resp.setDescriptions("Ja existe um usuario cadastrado com este E-mail!");
+			return Response.status(Response.Status.UNAUTHORIZED).entity(resp).build();
+		}
+
+		person = new Person();
+		person.setEmail(dto.getEmail());
+		person.setPassword(dto.getPassword());
+
+		person.setEmailValidation(false);
+
+		person = this.persistence.createPerson(person);
+		String token = HashHelper.generateToken(person.getId() + "");
+		person.setToken(token);
+		person.setTokenDate(new Date());
+
+		/* create coachee profile */
+		Coachee coachee = new Coachee();
+		coachee.setPerson(person);
+		coachee = this.persistence.createCouchee(coachee);
+
+		StringBuilder ss = new StringBuilder();
+		ss.append("<HTML><BODY>");
+		ss.append("Obrigado por se registrar na AjaFit");
+		ss.append("<br/>");
+		ss.append("Você acaba de dar um grande passo na busca por uma qualidade de vida melhor.");
+		ss.append("<br/><br/>");
+		ss.append("Agora falta pouco..<br/>Clique no link abaixo e complete a ativação de sua conta..");
+		ss.append("<br/>");
+		ss.append("<br/>");
+		ss.append("<div>");
+		ss.append(generateActivationLink(person));
+		ss.append("</div>");
+		ss.append("<br/>");
+		ss.append("<br/>");
+		ss.append("<br/>");
+		ss.append("AjaFit - Por Uma Vida Saudável");
+		ss.append("</BODY></HTML>");
+		try {
+			SendMailIntegration.send(new MailMessage(person.getEmail(), "AjaFit - Ativação de conta", ss.toString()));
+			EntityDTO resp = new EntityDTO();
+			resp.setDescriptions("Enviamos um e-mail para: " + person.getEmail()
+					+ " com as informações necessárias para a ativação de sua conta!");
+			resp.setEmail(person.getEmail());
+			return Response.status(Response.Status.ACCEPTED).entity(resp).build();
+
+		} catch (Exception e) {
+
+			EntityDTO resp = new EntityDTO();
+			resp.setDescriptions("Tivemos alguns problemas ao enviar o link de ativação para este email: "
+					+ person.getEmail()
+					+ "\n Você pode tentar repetir o registro ou pode tentar regitrar com uma outra conta de e-mail..");
+			resp.setEmail(person.getEmail());
+			return Response.status(Response.Status.BAD_REQUEST).entity(resp).build();
+
+		}
+
+	}
+
+	private String generateActivationLink(Person person) {
+
+		String link = "<a href=\"http://www.ajafit.com.br/ajafit/platform/service/profile/activate/" + person.getToken()
+				+ "\">Clique aqui para ativar sua conta AjaFit</a>";
+		return link;
+	}
+
 	@POST
 	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
 	@Path("/person/login")
-	public EntityDTO login(EntityDTO dto) {
-		required(dto.getEmail(), dto.getPassword());
+	public Response login(EntityDTO dto) {
+		try {
+			required(dto.getEmail(), dto.getPassword(), dto.getValidationHash(), dto.getValidationChoose());
+		} catch (Exception e) {
+			EntityDTO resp = new EntityDTO();
+			resp.setDescriptions("Parametros invalidos..");
+			return Response.status(Response.Status.BAD_REQUEST).entity(resp).build();
+		}
+		String choose = HashHelper.hash(dto.getValidationChoose());
+		if (!choose.equals(dto.getValidationHash())) {
+			EntityDTO resp = new EntityDTO();
+			resp.setDescriptions("Ops.. " + dto.getValidationChoose() + " n�o era a op��o correta..");
+			return Response.status(Response.Status.UNAUTHORIZED).entity(resp).build();
+		}
 		Person person = persistence.getPersonByEmailAndPassword(dto.getEmail(), dto.getPassword());
 		if (person == null || (person.getTemp() != null) && person.getTemp() == true) {
-			throw new WebApplicationException("login or password invalid!!", 401);
+			// throw new WebApplicationException("login or password invalid!!", 401);
+			EntityDTO resp = new EntityDTO();
+			resp.setDescriptions("E-mail ou Senha Invalidos!!");
+			return Response.status(Response.Status.UNAUTHORIZED).entity(resp).build();
 		}
 
 		/* caso houver,,,troca carrinho para recem autenticado */
@@ -168,13 +318,14 @@ public class ProfileService extends ServiceValidation {
 				.filter((Profile p) -> !p.getClass().getSimpleName().equals("Coach")).collect(Collectors.toList());
 
 		Cookie cookie = new Cookie("authorization", person.getToken());
-		cookie.setDomain("localhost");
+		cookie.setDomain("www.ajafit.com.br");
 		cookie.setPath("/");
 		cookie.setMaxAge(-1);
 		logger.info("create cookie");
 		ResteasyProviderFactory.getContextData(HttpServletResponse.class).addCookie(cookie);
 
-		return EntityDTOConverter.parse(person, profiles);
+		EntityDTO entity = EntityDTOConverter.parse(person, profiles);
+		return Response.status(Response.Status.ACCEPTED).entity(entity).build();
 	}
 
 	private void changeCart(Person person, String token) {
@@ -223,7 +374,7 @@ public class ProfileService extends ServiceValidation {
 					set.stream().filter((CouponUsage c) -> persistence.getOrdersByCouponUsage(c).isEmpty())
 							.forEach((CouponUsage c) -> persistence.removeCouponUsage(c));
 
-					/*limpa o delivery do cart*/
+					/* limpa o delivery do cart */
 					Delivery delivery = cart.getDelivery();
 					if (delivery != null) {
 						ShipAddress reference = delivery.getShipAddress();

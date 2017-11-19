@@ -12,11 +12,13 @@ opts.withCredentials = true;
 @Injectable()
 export class ProfileService {
   profile: Profile;
-  profilesURL = 'http://localhost:8080/ajafit/platform/service/profile/persons/';
-  profileUpdateURL = 'http://localhost:8080/ajafit/platform/service/profile/person/update';
-  profileLoginURL = 'http://localhost:8080/ajafit/platform/service/profile/person/login';
-  profileLogoutURL = 'http://localhost:8080/ajafit/platform/service/profile/person/logout';
-  profileCurrentURL = 'http://localhost:8080/ajafit/platform/service/profile/person/current';
+  profilesURL = 'http://www.ajafit.com.br/ajafit/platform/service/profile/persons/';
+  profileRegisterURL = 'http://www.ajafit.com.br/ajafit/platform/service/profile/person/register';
+  validationURL = 'http://www.ajafit.com.br/ajafit/platform/service/profile/person/validation';
+  profileUpdateURL = 'http://www.ajafit.com.br/ajafit/platform/service/profile/person/update';
+  profileLoginURL = 'http://www.ajafit.com.br/ajafit/platform/service/profile/person/login';
+  profileLogoutURL = 'http://www.ajafit.com.br/ajafit/platform/service/profile/person/logout';
+  profileCurrentURL = 'http://www.ajafit.com.br/ajafit/platform/service/profile/person/current';
   constructor(private http: Http) {
   this.loadCurrentProfile();
   }
@@ -35,8 +37,15 @@ export class ProfileService {
      this.http.get(a,  { withCredentials: true }).toPromise().then(respo => this.setSelectedProfile(this.parse1(respo))).catch(this.error);
     }
   }
-  setSelectedProfile(profile: Profile): void {
+  loadValidation(): Promise<Profile> {
+     const a = this.validationURL;
+     return this.http.get(a,  { withCredentials: true }).toPromise().then(respo => this.parse1(respo));
+  }
+
+  setSelectedProfile(profile: Profile): Profile {
     this.profile = profile;
+    sessionStorage.setItem('_ajafit_logged', 'true');
+    return this.profile;
   }
   getSelectedProfile(): Profile {
     return this.profile;
@@ -55,7 +64,7 @@ export class ProfileService {
   parse2(data: Response): Profile {
     this.profile = (data.json() as Profile);
     sessionStorage.setItem('_ajafit_logged', 'true');
-    return this.profile;
+    return (data.json() as Profile);
   }
   getProfilesSlowly(): Promise<Profile[]> {
     return new Promise((resolve, resolver) => {
@@ -63,17 +72,19 @@ export class ProfileService {
     });
   }
   private error(error: any): Promise<any> {
-    return Promise.reject('>>' + error.status + '<<' || error);
+    console.log('vai:' + this.parse1(error).descriptions);
+    return Promise.reject(this.parse1(error).descriptions);
   }
   updateProfile(profile: Profile): Promise<Profile> {
     profile.accessToken = '123';
     return this.http.put(this.profileUpdateURL, profile, opts).toPromise().then(respo => this.parse1(respo));
   }
-  login(email: string, senha: string): Promise<Profile> {
-    const profile = new Profile();
-    profile.email = email;
-    profile.password = senha;
-    return this.http.post(this.profileLoginURL, profile, opts).toPromise().then(respo => this.parse2(respo));
+  login(profile: Profile): Promise<Profile> {
+    return this.http.post(this.profileLoginURL, profile, opts).toPromise().then(respo => this.setSelectedProfile(this.parse2(respo))).catch(r => this.error(r));
+   }
+
+   register(profile: Profile): Promise<Profile> {
+    return this.http.post(this.profileRegisterURL, profile, opts).toPromise().then(respo => this.parse2(respo)).catch(r => this.error(r));
    }
    logout(): void {
      this.http.post(this.profileLogoutURL, {}, opts).toPromise().then();

@@ -1,6 +1,6 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 import {HttpModule} from '@angular/http';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
@@ -51,8 +51,10 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome/angular-font-awes
     TooltipModule.forRoot(),
     ModalModule.forRoot(),
     NgbModule,
-    AngularFontAwesomeModule
+    AngularFontAwesomeModule,
+    ReactiveFormsModule
   ],
+  exports:[ReactiveFormsModule],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AjafitInterceptor, multi: true}, ProfileService, ItemService, CartComponent, RegionComponent, AppComponent],
   bootstrap: [AppComponent]
 })

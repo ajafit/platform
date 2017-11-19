@@ -276,7 +276,7 @@ public class CartService extends ServiceValidation {
 
 			/* responder cookie para temp person */
 			Cookie cookie = new Cookie("authorization", person.getToken());
-			cookie.setDomain("localhost");
+			cookie.setDomain("www.ajafit.com.br");
 			cookie.setPath("/");
 			cookie.setMaxAge(-1);
 			logger.info("create cookie");

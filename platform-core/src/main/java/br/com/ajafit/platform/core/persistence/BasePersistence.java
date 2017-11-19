@@ -43,7 +43,7 @@ public abstract class BasePersistence {
 
 	public Region getRegionByDescription(String descriptions) {
 		Query query = em.createQuery("select r from Region r where r.descriptions = :DESC");
-		query.setParameter("DESC", descriptions)
+		query.setParameter("DESC", descriptions);
 		return (Region) query.getSingleResult();
 
 	}

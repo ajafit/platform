@@ -8,7 +8,7 @@
 			<div *ngFor="let item of cart.items" style="margin-left: 10px;">
 
 				<div class="row">
-					<div class="col">
+					<div class="col-8">
 						<div style="width: 100px; height: 100px; display: inline-block;">
 							<img src="../assets/{{item.image1}}" alt="First slide"
 								style="margin: auto; width: 100%; max-height: 300px;">
@@ -19,7 +19,7 @@
 							<div *ngFor="let i of getDescriptions(item.descriptions)">{{i}}</div>
 						</div>
 					</div>
-					<div class="col">
+					<div class="col-4">
 						<div
 							style="margin-left: 0px; display: inline-block; vertical-align: middle;">
 
@@ -34,7 +34,7 @@
 						</div>
 
 						<div
-							style="margin-left: 50px; display: inline-block; vertical-align: middle;">
+							style="margin-left: 20px; display: inline-block; vertical-align: middle;">
 							<div class="form-group" style="display: inline-block;">
 								<label for="select1">Quantidade</label> <select
 									[(ngModel)]="item.amount" class="form-control" id="select1"

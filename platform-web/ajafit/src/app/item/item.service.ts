@@ -14,15 +14,15 @@ opts.withCredentials = true;
 
 @Injectable()
 export class ItemService {
-  itemsURL = 'http://localhost:8080/ajafit/platform/service/screen/list/';
-  itemURL = 'http://localhost:8080/ajafit/platform/service/screen/detail/';
-  itemAddURL = 'http://localhost:8080/ajafit/platform/service/cart/add';
-  cartNumberURL = 'http://localhost:8080/ajafit/platform/service/cart/number';
-  cartItemsURL = 'http://localhost:8080/ajafit/platform/service/cart/cart';
-  cartRegionURL = 'http://localhost:8080/ajafit/platform/service/cart/region';
-  regionTreeURL = 'http://localhost:8080/ajafit/platform/service/cart/region/tree/';
-  removerItemURL = 'http://localhost:8080/ajafit/platform/service/cart/remove';
-  changeAmountURL = 'http://localhost:8080/ajafit/platform/service/cart/amount';
+  itemsURL = 'http://www.ajafit.com.br/ajafit/platform/service/screen/list/';
+  itemURL = 'http://www.ajafit.com.br/ajafit/platform/service/screen/detail/';
+  itemAddURL = 'http://www.ajafit.com.br/ajafit/platform/service/cart/add';
+  cartNumberURL = 'http://www.ajafit.com.br/ajafit/platform/service/cart/number';
+  cartItemsURL = 'http://www.ajafit.com.br/ajafit/platform/service/cart/cart';
+  cartRegionURL = 'http://www.ajafit.com.br/ajafit/platform/service/cart/region';
+  regionTreeURL = 'http://www.ajafit.com.br/ajafit/platform/service/cart/region/tree/';
+  removerItemURL = 'http://www.ajafit.com.br/ajafit/platform/service/cart/remove';
+  changeAmountURL = 'http://www.ajafit.com.br/ajafit/platform/service/cart/amount';
   constructor(private http: Http) {}
   getItem(screenId: number, couponId: number): Promise<Item> {
     return this.http.get(this.itemURL + screenId + '/' + couponId, opts).toPromise().then(respo => this.parse(respo)).catch(this.error);

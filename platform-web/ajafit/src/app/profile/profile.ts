@@ -6,4 +6,7 @@ export class Profile {
   accessToken: string;
   profiles: string[];
   profile: string;
+  descriptions: string;
+  validationHash: string;
+  validationChoose: string;
 }

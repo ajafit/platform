@@ -1,7 +1,11 @@
 eclipse.preferences.version=1
 encoding//ajafit/src/app/about/about.component.html=UTF-8
 encoding//ajafit/src/app/app.component.html=UTF-8
+encoding//ajafit/src/app/auth/auth.component.css=UTF-8
+encoding//ajafit/src/app/auth/auth.component.html=UTF-8
+encoding//ajafit/src/app/auth/auth.component.ts=UTF-8
 encoding//ajafit/src/app/cart/cart.component.html=UTF-8
 encoding//ajafit/src/app/dashboard/dashboard.component.html=UTF-8
 encoding//ajafit/src/app/item/item-detail.component.html=UTF-8
+encoding//src/main/java/br/com/ajafit/platform/core/service/ProfileService.java=UTF-8
 encoding/ajafit=UTF-8
